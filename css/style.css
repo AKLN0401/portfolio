@@ -1250,3 +1250,68 @@ svg text {
   .lab-figure { padding: 8px; }
   .lab-feature { max-width: none; }
 }
+
+/* ------------------------------------------------------------
+   Flip-flop mechanism figures
+   ------------------------------------------------------------ */
+
+.dq-figure {
+  margin: 0;
+}
+
+.dq-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.dq-figure figcaption {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+@media (max-width: 680px) {
+  .dq-figure figcaption { flex-direction: column; gap: 4px; }
+}
+
+.fig-note {
+  margin-top: 26px;
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+.fig-note code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.fig-refs {
+  margin-top: 18px;
+  max-width: 68ch;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  border-left: 2px solid var(--line);
+  padding-left: 14px;
+}
+
+.fig-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 680px) {
+  .fig-scroll svg { min-width: 580px; }
+  .dq-figure figcaption::after {
+    content: "scroll to read \2192";
+    color: var(--line);
+  }
+}
