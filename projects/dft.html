@@ -105,6 +105,40 @@
       </ol>
     </div>
   </section>
+
+  <section class="section" id="disclosure">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Disclosure</h2>
+        <span class="section-index">02 / SCOPE</span>
+      </div>
+
+      <div class="disclosure">
+        <div class="disclosure-col">
+          <p class="label">Open to walk through</p>
+          <ul class="disclosure-list">
+            <li>How the fault-detection architectures differ structurally, and the reasoning behind each one's cost profile.</li>
+            <li>DFT insertion strategy: scan architecture, how insertion changes the netlist, and which assumptions had to be re-checked afterwards.</li>
+            <li>Equivalence-checking methodology once the netlist no longer matches RTL structurally, and what counts as a clean result.</li>
+            <li>How timing was re-closed after insertion, and where the schemes push hardest on the critical path.</li>
+            <li>The comparison framework: holding synthesis, timing and operating conditions identical across circuits so the schemes are measured against each other rather than against their tuning.</li>
+          </ul>
+        </div>
+
+        <div class="disclosure-col disclosure-held">
+          <p class="label">Not published here</p>
+          <ul class="disclosure-list">
+            <li>Quantified per-scheme area, power and coverage overhead &mdash; held until the associated paper is published.</li>
+            <li>Absolute area and power figures in the target process, which describe the library rather than the design.</li>
+            <li>The foundry and PDK revision, library and cell names, and benchmark circuit sources under restricted access.</li>
+            <li>RTL, netlists, constraint files, test patterns and tool scripts.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclosure-note">This work is carried out with the CMOS Design and Reliability Group at the University of Waterloo under licensed academic access to a 12&nbsp;nm FinFET PDK. The methodology is open to discussion in full; the figures are held pending publication rather than withheld as a matter of course.</p>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">

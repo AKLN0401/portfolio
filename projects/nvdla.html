@@ -69,7 +69,7 @@
   <section class="section" style="border-top:none; padding-top:0;">
     <div class="wrap two-col">
       <div class="prose">
-        <p>NVDLA (NVIDIA Deep Learning Accelerator) is an open-source hardware accelerator architecture for deep learning inference. I took this on independently &mdash; outside of coursework and outside supervised research &mdash; and carried the open-source RTL through a full physical design flow in a 12-nm FinFET process, rather than stopping at synthesis or simulation.</p>
+        <p>NVDLA (NVIDIA Deep Learning Accelerator) is an open-source hardware accelerator architecture for deep learning inference. I took this on as a self-directed project &mdash; outside of coursework, and scoped by me rather than assigned &mdash; using tool and PDK access provided through the CMOS Design and Reliability Group, and carried the open-source RTL through a full physical design flow in a 12-nm FinFET process rather than stopping at synthesis or simulation.</p>
         <p>The work spanned synthesis, timing analysis, and power analysis at the netlist level, then moved into physical implementation: floorplanning, placement, routing, and physical verification, treating each step's timing and congestion feedback as an input to the next.</p>
         <p>Because NVDLA is a substantially larger and more structurally complex design than a typical class-project block, a significant part of the work was in managing the flow itself — partitioning the problem, debugging RTL-to-netlist mismatches, and iterating on timing closure across a design with many more instances and nets than a small benchmark circuit.</p>
       </div>
@@ -77,7 +77,7 @@
       <div>
         <table class="spec-table">
           <tbody>
-            <tr><th>Context</th><td>Self-directed independent project</td></tr>
+            <tr><th>Context</th><td>Self-directed project, under group tool and PDK access</td></tr>
             <tr><th>Design</th><td>NVIDIA Deep Learning Accelerator (NVDLA), open-source</td></tr>
             <tr><th>Process node</th><td>12 nm FinFET</td></tr>
             <tr><th>Flow stages</th><td>Synthesis &middot; Timing analysis &middot; Power analysis &middot; Floorplanning &middot; Placement &middot; Routing &middot; Physical verification</td></tr>
@@ -112,8 +112,50 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
+        <h2>Place &amp; route</h2>
+        <span class="section-index">02 / INNOVUS</span>
+      </div>
+
+      <p class="pd-lede">The floorplan above fixes the die geometry; the views below are what comes back out of it. All three are the same routed database at three zoom levels — the whole die, one block of cell rows, and a handful of rows close enough to read individual nets.</p>
+
+      <div class="pd-gallery">
+        <figure class="pd-figure diagram-frame" style="max-width:620px;">
+          <a href="../assets/nvdla-pd-full-2400.webp" target="_blank" rel="noopener">
+            <img src="../assets/nvdla-pd-full.webp" alt="Full-die view of the routed NVDLA database in Innovus: a dense standard-cell field filling the core area, two tall columns of regularly tiled SRAM macros with power stripes running over them on either side of the core, clusters of differently coloured cells concentrated along the top and bottom edges, and the I/O pad ring at the die boundary." width="1200" height="1199" loading="lazy" decoding="async" />
+          </a>
+          <figcaption>
+            <span>FIG. 02 — ROUTED DIE, FULL VIEW</span>
+            <span>OPEN FULL SIZE &rarr;</span>
+          </figcaption>
+          <p class="pd-note">The two tiled columns flanking the core are the SRAM macro banks, placed as hard macros with their own power stripes before the standard cells were placed around them. The core itself is filled almost edge to edge; the regions where the colouring breaks up are where cell density and routing demand are highest.</p>
+        </figure>
+
+        <figure class="pd-figure diagram-frame">
+          <img src="../assets/nvdla-pd-block.webp" alt="Zoomed view of the routed design: horizontal standard-cell rows separated by power rails, each row carrying labelled register instances, with metal routing running over and between the rows and gaps where rows are filled less densely." width="1280" height="686" loading="lazy" decoding="async" />
+          <figcaption>
+            <span>FIG. 03 — ROUTED BLOCK, CELL ROWS</span>
+            <span>DETAIL</span>
+          </figcaption>
+          <p class="pd-note">At block level the structure of the placement is readable: standard-cell rows abutting the power rails, sequential elements labelled with their RTL instance names, and routing crossing the rows rather than running inside them. The dark gaps are rows that placement left partly empty — headroom the router used rather than wasted area.</p>
+        </figure>
+
+        <figure class="pd-figure diagram-frame">
+          <img src="../assets/nvdla-pd-detail.webp" alt="Close-up of a few standard-cell rows showing individual routed nets: metal segments on several layers, via stacks between them, pin shapes on the cells, and per-instance labels from the NVDLA CDP datapath." width="1280" height="686" loading="lazy" decoding="async" />
+          <figcaption>
+            <span>FIG. 04 — ROUTE DETAIL</span>
+            <span>NET LEVEL</span>
+          </figcaption>
+          <p class="pd-note">Zoomed far enough in to follow single nets: metal segments on several routing layers, the via stacks that connect them, and pin access on the cells underneath. The instances labelled here belong to the CDP datapath's <code>bufferin_data_shift</code> registers — one small slice of the 6.89 M instances in the design.</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
         <h2>Flow</h2>
-        <span class="section-index">02 / STAGES</span>
+        <span class="section-index">03 / STAGES</span>
       </div>
       <ol class="process-list">
         <li><div><h4>Synthesis</h4><p>Mapping the open-source NVDLA RTL to a 12-nm FinFET standard cell library.</p></div></li>
@@ -129,20 +171,21 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Synthesis results</h2>
-        <span class="section-index">03 / GENUS</span>
+        <span class="section-index">04 / GENUS</span>
       </div>
 
       <div class="stat-row">
         <div class="stat-tile"><span class="stat-num">6.89 M</span><span class="stat-lab">Instances</span></div>
-        <div class="stat-tile"><span class="stat-num">4.96 mm&sup2;</span><span class="stat-lab">Total area</span></div>
-        <div class="stat-tile"><span class="stat-num">7.79 W</span><span class="stat-lab">Total power</span></div>
+        <div class="stat-tile"><span class="stat-num">128</span><span class="stat-lab">Dual-port SRAM macros</span></div>
+        <div class="stat-tile"><span class="stat-num">24.2%</span><span class="stat-lab">Of cell area in SRAM</span></div>
       </div>
 
       <div class="two-col" style="margin-top:48px;">
         <div class="prose">
-          <p>Synthesized in Genus 23.14 against a 12 nm FinFET low-V<sub>t</sub> standard-cell library at the slow-slow process corner with worst-case RC, using physical-library area estimation and global interconnect. The mapped design comes out at 6,892,634 instances and 4.96&nbsp;mm&sup2; of total area, drawing 7.79&nbsp;W.</p>
-          <p>The area is not distributed the way the instance counts suggest. <code>u_partition_c</code> holds 13.2% of the instances but 28.3% of the area &mdash; the largest of the six &mdash; because it contains CBUF, the convolution buffer. CBUF is 94,024 instances, 1.4% of the design, yet occupies 0.93&nbsp;mm&sup2;, nearly a fifth of the whole chip, since it is built almost entirely from SRAM macros rather than standard cells.</p>
-          <p>That shows up again in the cell-area breakdown: 128 dual-port SRAM macro instances &mdash; 96 of one configuration and 32 of another &mdash; account for 24.2% of all cell area. Power splits the other way: internal switching dominates at 4.52&nbsp;W (58%), net switching contributes 3.01&nbsp;W (39%), and leakage is 0.26&nbsp;W (3.4%).</p>
+          <p>Synthesized in Genus 23.14 against a 12 nm FinFET low-V<sub>t</sub> standard-cell library at the slow-slow process corner with worst-case RC, using physical-library area estimation and global interconnect. The mapped design comes out at 6,892,634 instances across six placement partitions.</p>
+          <p>The area is not distributed the way the instance counts suggest. <code>u_partition_c</code> holds 13.2% of the instances but 28.3% of the area &mdash; the largest share of the six &mdash; because it contains CBUF, the convolution buffer. CBUF is 94,024 instances, 1.4% of the design by count, yet takes 19% of total design area, since it is built almost entirely from SRAM macros rather than standard cells.</p>
+          <p>That shows up again in the cell-area breakdown: 128 dual-port SRAM macro instances, across two configurations, account for 24.2% of all cell area. Power splits the other way: internal switching dominates at 58% of the total, net switching contributes 39%, and leakage 3.4%.</p>
+          <p class="note">Area and power are reported as shares of the design total rather than in mm&sup2; and watts. See <a href="#disclosure">Disclosure</a>.</p>
         </div>
 
         <div>
@@ -151,9 +194,9 @@
               <tr><th>Tool</th><td>Genus 23.14-s090_1</td></tr>
               <tr><th>Library</th><td>12 nm FinFET standard-cell library, low-V<sub>t</sub></td></tr>
               <tr><th>Corner</th><td>Slow-slow process, worst-case RC, 125 &deg;C</td></tr>
-              <tr><th>Cell area</th><td>3.54 mm&sup2;</td></tr>
-              <tr><th>Net area</th><td>1.42 mm&sup2;</td></tr>
+              <tr><th>Cell vs net area</th><td>71% / 29% of total</td></tr>
               <tr><th>SRAM macros</th><td>128 instances, 24.2% of cell area</td></tr>
+              <tr><th>Reported figures</th><td>Normalized to design total</td></tr>
             </tbody>
           </table>
         </div>
@@ -161,28 +204,28 @@
 
       <div class="chart-frame">
         <svg viewBox="0 0 460 168" role="img" aria-labelledby="areaT areaD">
-  <title id="areaT">Total area by partition</title>
-  <desc id="areaD">Horizontal bar chart of synthesized total area per NVDLA partition, largest first: u_partition_c 1.41 square millimetres, u_partition_o 1.22, u_partition_p 0.75, u_partition_a 0.56, u_partition_ma 0.51, u_partition_mb 0.51.</desc>
-  <text x="0" y="12" font-size="8.5" fill="#6c6b67" letter-spacing="0.06em">TOTAL AREA BY PARTITION</text>
+  <title id="areaT">Area share by partition</title>
+  <desc id="areaD">Horizontal bar chart of each NVDLA partition's share of total synthesized area, largest first: u_partition_c 28.3 percent, u_partition_o 24.5 percent, u_partition_p 15.1 percent, u_partition_a 11.3 percent, u_partition_ma 10.3 percent, u_partition_mb 10.3 percent.</desc>
+  <text x="0" y="12" font-size="8.5" fill="#6c6b67" letter-spacing="0.06em">AREA SHARE BY PARTITION</text>
   <line x1="104" y1="26" x2="104" y2="158" stroke="#c9c6bd" stroke-width="1" />
   <text x="96" y="39" text-anchor="end" font-size="8.5" fill="#17191c">u_partition_c</text>
   <path d="M104,30 L370.0,30 Q374.0,30 374.0,34 L374.0,38 Q374.0,42 370.0,42 L104,42 Z" fill="#3b5fa0" />
-  <text x="381.0" y="39" font-size="8.5" fill="#6c6b67">1.41 mm²</text>
+  <text x="381.0" y="39" font-size="8.5" fill="#6c6b67">28.3%</text>
   <text x="96" y="61" text-anchor="end" font-size="8.5" fill="#17191c">u_partition_o</text>
   <path d="M104,52 L333.5130535211214,52 Q337.5130535211214,52 337.5130535211214,56 L337.5130535211214,60 Q337.5130535211214,64 333.5130535211214,64 L104,64 Z" fill="#3b5fa0" />
-  <text x="344.5" y="61" font-size="8.5" fill="#6c6b67">1.22 mm²</text>
+  <text x="344.5" y="61" font-size="8.5" fill="#6c6b67">24.5%</text>
   <text x="96" y="83" text-anchor="end" font-size="8.5" fill="#17191c">u_partition_p</text>
   <path d="M104,74 L244.396731305726,74 Q248.396731305726,74 248.396731305726,78 L248.396731305726,82 Q248.396731305726,86 244.396731305726,86 L104,86 Z" fill="#3b5fa0" />
-  <text x="255.4" y="83" font-size="8.5" fill="#6c6b67">0.75 mm²</text>
+  <text x="255.4" y="83" font-size="8.5" fill="#6c6b67">15.1%</text>
   <text x="96" y="105" text-anchor="end" font-size="8.5" fill="#17191c">u_partition_a</text>
   <path d="M104,96 L207.9051967339587,96 Q211.9051967339587,96 211.9051967339587,100 L211.9051967339587,104 Q211.9051967339587,108 207.9051967339587,108 L104,108 Z" fill="#3b5fa0" />
-  <text x="218.9" y="105" font-size="8.5" fill="#6c6b67">0.56 mm²</text>
+  <text x="218.9" y="105" font-size="8.5" fill="#6c6b67">11.3%</text>
   <text x="96" y="127" text-anchor="end" font-size="8.5" fill="#17191c">u_partition_ma</text>
   <path d="M104,118 L198.23682192747134,118 Q202.23682192747134,118 202.23682192747134,122 L202.23682192747134,126 Q202.23682192747134,130 198.23682192747134,130 L104,130 Z" fill="#3b5fa0" />
-  <text x="209.2" y="127" font-size="8.5" fill="#6c6b67">0.51 mm²</text>
+  <text x="209.2" y="127" font-size="8.5" fill="#6c6b67">10.3%</text>
   <text x="96" y="149" text-anchor="end" font-size="8.5" fill="#17191c">u_partition_mb</text>
   <path d="M104,140 L198.23682192747134,140 Q202.23682192747134,140 202.23682192747134,144 L202.23682192747134,148 Q202.23682192747134,152 198.23682192747134,152 L104,152 Z" fill="#3b5fa0" />
-  <text x="209.2" y="149" font-size="8.5" fill="#6c6b67">0.51 mm²</text>
+  <text x="209.2" y="149" font-size="8.5" fill="#6c6b67">10.3%</text>
 </svg>
       </div>
 
@@ -211,21 +254,54 @@
       <table class="data-table">
         <caption>Per-partition synthesis results</caption>
         <thead>
-          <tr><th>Partition</th><th>Instances</th><th>Share</th><th>Total area (mm&sup2;)</th><th>Share</th><th>Power (W)</th></tr>
+          <tr><th>Partition</th><th>Instances</th><th>Instance share</th><th>Area share</th><th>Power share</th></tr>
         </thead>
         <tbody>
-            <tr><td>u_partition_o</td><td>1,942,960</td><td>28.19%</td><td>1.215</td><td>24.5%</td><td>2.130</td></tr>
-            <tr><td>u_partition_p</td><td>1,245,049</td><td>18.06%</td><td>0.751</td><td>15.1%</td><td>1.436</td></tr>
-            <tr><td>u_partition_a</td><td>975,643</td><td>14.15%</td><td>0.562</td><td>11.3%</td><td>0.916</td></tr>
-            <tr><td>u_partition_ma</td><td>910,060</td><td>13.20%</td><td>0.511</td><td>10.3%</td><td>0.947</td></tr>
-            <tr><td>u_partition_mb</td><td>910,060</td><td>13.20%</td><td>0.511</td><td>10.3%</td><td>0.974</td></tr>
-            <tr><td>u_partition_c</td><td>908,862</td><td>13.19%</td><td>1.405</td><td>28.3%</td><td>1.390</td></tr>
+            <tr><td>u_partition_o</td><td>1,942,960</td><td>28.19%</td><td>24.5%</td><td>27.3%</td></tr>
+            <tr><td>u_partition_p</td><td>1,245,049</td><td>18.06%</td><td>15.1%</td><td>18.4%</td></tr>
+            <tr><td>u_partition_a</td><td>975,643</td><td>14.15%</td><td>11.3%</td><td>11.8%</td></tr>
+            <tr><td>u_partition_ma</td><td>910,060</td><td>13.20%</td><td>10.3%</td><td>12.2%</td></tr>
+            <tr><td>u_partition_mb</td><td>910,060</td><td>13.20%</td><td>10.3%</td><td>12.5%</td></tr>
+            <tr><td>u_partition_c</td><td>908,862</td><td>13.19%</td><td>28.3%</td><td>17.8%</td></tr>
         </tbody>
         <tfoot>
-          <tr><td>NV_nvdla</td><td>6,892,634</td><td>100%</td><td>4.960</td><td>100%</td><td>7.792</td></tr>
+          <tr><td>NV_nvdla</td><td>6,892,634</td><td>100%</td><td>100%</td><td>100%</td></tr>
         </tfoot>
       </table>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="disclosure">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Disclosure</h2>
+        <span class="section-index">05 / SCOPE</span>
+      </div>
+
+      <div class="disclosure">
+        <div class="disclosure-col">
+          <p class="label">Open to walk through</p>
+          <ul class="disclosure-list">
+            <li>Flow architecture end to end: hierarchical per-partition synthesis, MMMC setup, constraint and corner strategy, and how each stage's feedback fed the next.</li>
+            <li>Why the partitioning came out the way it did, and what CBUF's macro content does to the area and utilization balance.</li>
+            <li>Floorplan iteration: how <code>u_partition_c</code> arrived at 194% utilization, what that forced, and how the region was resized to place and route.</li>
+            <li>Memory compiler integration &mdash; replacing NVDLA's behavioural RAM models with hard-macro views to unblock synthesis and place-and-route.</li>
+            <li>Every relative figure on this page: instance counts, area and power shares, cell-type breakdown, and how they were extracted.</li>
+          </ul>
+        </div>
+
+        <div class="disclosure-col disclosure-held">
+          <p class="label">Not published here</p>
+          <ul class="disclosure-list">
+            <li>Absolute area in mm&sup2; and absolute power in watts. Against a named library these describe the process, not the design, so they are given as shares of the design total instead.</li>
+            <li>The foundry and PDK revision, library and cell names, and memory-compiler configuration strings.</li>
+            <li>Timing reports, constraint files, technology LEF and library data, and any GDS.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclosure-note">The RTL is NVIDIA's open-source NVDLA. The implementation was carried out under licensed academic access to a 12&nbsp;nm FinFET PDK, so figures that would characterize the process library rather than the design are normalized throughout. Nothing above is withheld to obscure the result &mdash; the relative numbers carry the whole argument, and the methodology is open to discussion in full.</p>
     </div>
   </section>
 

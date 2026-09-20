@@ -102,6 +102,39 @@
       </ol>
     </div>
   </section>
+
+  <section class="section" id="disclosure">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Disclosure</h2>
+        <span class="section-index">02 / SCOPE</span>
+      </div>
+
+      <div class="disclosure">
+        <div class="disclosure-col">
+          <p class="label">Open to walk through</p>
+          <ul class="disclosure-list">
+            <li>How the fault-detection structures attach to an RV32IM core, and which parts of the pipeline constrain where they can go.</li>
+            <li>Fault models used, how ATPG coverage was generated and measured, and what the pattern set does and does not reach.</li>
+            <li>How overhead was measured against the un-instrumented baseline so the comparison stays honest.</li>
+            <li>The shape of the trade-off curve &mdash; where coverage starts costing timing margin rather than just area.</li>
+          </ul>
+        </div>
+
+        <div class="disclosure-col disclosure-held">
+          <p class="label">Not published here</p>
+          <ul class="disclosure-list">
+            <li>Quantified coverage, area and power figures &mdash; held until the associated paper is published.</li>
+            <li>Absolute area and power in the target process, which characterize the library rather than the design.</li>
+            <li>The foundry and PDK revision, and library and cell names.</li>
+            <li>Netlists, constraint files, generated pattern sets and tool scripts.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclosure-note">This work is carried out with the CMOS Design and Reliability Group at the University of Waterloo under licensed academic access to a 12&nbsp;nm FinFET PDK. The core itself is an open-source RV32IM implementation; what is held back is the measured result, not the method.</p>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">

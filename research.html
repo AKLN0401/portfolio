@@ -178,12 +178,12 @@
         </svg>
       </div>
 
-      <p style="margin-top:24px; max-width:62ch; color:var(--muted); font-size:14.5px;">The variable delay element above is itself built from chained standard cells — inverters and gates whose transistor-level layout sets the actual delay-per-stage. The layouts below show three cells from the same library at the mask-layer level: N-well and diffusion, poly gates, and metal-1/contacts, color-coded by layer the way a layout tool renders them.</p>
+      <p style="margin-top:24px; max-width:62ch; color:var(--muted); font-size:14.5px;">The variable delay element above is itself built from chained standard cells — inverters and gates whose transistor-level layout sets the actual delay-per-stage. The sketches below are generic illustrations of that cell structure, not views of any specific library: how N-well and diffusion, poly gates, and metal-1 with contacts stack up in an inverter, a 2-input NAND, and a 2-input NOR, color-coded by layer the way a layout tool renders them.</p>
 
       <div class="diagram-frame" style="max-width:720px; margin-top:20px;">
         <svg viewBox="0 0 460 300" role="img" aria-labelledby="cellsTitle cellsDesc">
-          <title id="cellsTitle">Standard-cell mask layouts: INV_X1, NAND2_X1, NOR2_X1</title>
-          <desc id="cellsDesc">Layer-colored layout views of three standard cells sharing one track height and rail structure: an inverter with one poly gate, a 2-input NAND with two series NMOS transistors, and a 2-input NOR with two series PMOS transistors, each showing N-well, diffusion, poly, contacts, and metal-1 rails.</desc>
+          <title id="cellsTitle">Generic standard-cell layout sketches: inverter, 2-input NAND, 2-input NOR</title>
+          <desc id="cellsDesc">Illustrative layer-colored sketches of three generic standard cells sharing one track height and rail structure: an inverter with one poly gate, a 2-input NAND with two series NMOS transistors, and a 2-input NOR with two series PMOS transistors, each showing N-well, diffusion, poly, contacts, and metal-1 rails. These are schematic illustrations of cell structure, not views of a specific cell library.</desc>
           <defs>
             <pattern id="cellGrid" width="10" height="10" patternUnits="userSpaceOnUse">
               <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#c9c6bd" stroke-width="0.4" opacity="0.5" />
@@ -312,7 +312,7 @@
           <p>The variable D-Q delay flip-flop was implemented in an open-source 32-bit RV32IM RISC-V core, synthesized standalone in a 12 nm FinFET process at a 1 GHz target frequency, followed by scan insertion, ATPG, and static timing analysis.</p>
           <p>Rather than instrumenting every path, the delay flip-flop was applied progressively to the most timing-critical fraction of paths by slack, at several coverage levels up to full coverage, and compared against established delay-fault detection flip-flop architectures under identical synthesis, timing, and operating conditions. Power was evaluated in Cadence Joules against a functional program exercising the processor; area came from Genus's mapped standard-cell reporting.</p>
           <p>Every instrumented configuration closed timing at the 1 GHz target with zero total negative slack. Because the technique reuses the existing transmitting flip-flop rather than adding a shadow register and comparison logic, it carries lower area and power overhead than the alternatives evaluated, and the margin widens as coverage increases.</p>
-          <p class="note">Quantified overhead figures are held back until the paper is published.</p>
+          <p class="note">Quantified overhead figures are held back until the paper is published. See <a href="#disclosure">Disclosure</a>.</p>
         </div>
         <div>
           <table class="spec-table">
@@ -326,6 +326,40 @@
           </table>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="disclosure">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Disclosure</h2>
+        <span class="section-index">03 / SCOPE</span>
+      </div>
+
+      <div class="disclosure">
+        <div class="disclosure-col">
+          <p class="label">Open to walk through</p>
+          <ul class="disclosure-list">
+            <li>The mechanism in full: why running the same vectors at nominal and extended delay turns a transition fault into a difference between two captured responses.</li>
+            <li>Why reusing the transmitting flip-flop avoids the shadow register and comparison logic that the alternatives need, and where that saving comes from.</li>
+            <li>The coverage-selection method &mdash; instrumenting paths by slack rather than uniformly, and why that ordering matters.</li>
+            <li>The evaluation setup: synthesis and timing conditions held identical across architectures, the 1&nbsp;GHz target, the functional program used for power, and how area was extracted.</li>
+            <li>On the fabrication side, every process step run at the Nano-Systems Fabrication Laboratory and the characterization behind it.</li>
+          </ul>
+        </div>
+
+        <div class="disclosure-col disclosure-held">
+          <p class="label">Not published here</p>
+          <ul class="disclosure-list">
+            <li>Quantified area, power and overhead figures, and the head-to-head numbers against the comparison architectures &mdash; held until the paper is published.</li>
+            <li>Absolute area and power in the target process, which characterize the library rather than the design.</li>
+            <li>The foundry and PDK revision, library and cell names, and the transistor-level schematic and layout of the flip-flop itself.</li>
+            <li>RTL, netlists, constraint files and tool scripts.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclosure-note">The Waterloo thread is carried out with the CMOS Design and Reliability Group under licensed academic access to a 12&nbsp;nm FinFET PDK, and its results are under embargo until publication. The method, the reasoning and the negative results are all open to discussion &mdash; ask, and I will walk through any of it.</p>
     </div>
   </section>
 </main>
