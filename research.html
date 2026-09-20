@@ -124,9 +124,9 @@
           <text x="152" y="95" font-size="9" fill="#6c6b67">MASTER-</text>
           <text x="152" y="108" font-size="9" fill="#6c6b67">SLAVE FF</text>
           <line x1="230" y1="100" x2="260" y2="100" stroke="#17191c" />
-          <rect x="260" y="75" width="60" height="50" fill="none" stroke="#b84a32" stroke-dasharray="3 2" />
-          <text x="266" y="96" font-size="8" fill="#b84a32">VARIABLE</text>
-          <text x="266" y="108" font-size="8" fill="#b84a32">DELAY</text>
+          <rect x="260" y="75" width="60" height="50" fill="none" stroke="#2c5aa0" stroke-dasharray="3 2" />
+          <text x="266" y="96" font-size="8" fill="#2c5aa0">VARIABLE</text>
+          <text x="266" y="108" font-size="8" fill="#2c5aa0">DELAY</text>
           <line x1="320" y1="100" x2="360" y2="100" stroke="#17191c" />
           <text x="330" y="90" font-size="10" fill="#17191c">Q</text>
           <line x1="290" y1="125" x2="290" y2="155" stroke="#6c6b67" />
@@ -142,7 +142,7 @@
           <desc id="invDesc">Transistor-level layout of a CMOS inverter standard cell: an N-well containing the PMOS diffusion at top, NMOS diffusion in the substrate below, a shared vertical poly gate crossing both, source and drain contacts, VDD and VSS metal-1 rails at the top and bottom edges, and a metal-1 output stub tying the drains together and routing to the cell edge.</desc>
           <defs>
             <pattern id="invHatchAccent" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="0" y2="5" stroke="#b84a32" stroke-width="1" />
+              <line x1="0" y1="0" x2="0" y2="5" stroke="#2c5aa0" stroke-width="1" />
             </pattern>
             <pattern id="invHatchLine" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
               <line x1="0" y1="0" x2="0" y2="5" stroke="#6c6b67" stroke-width="1" />
@@ -167,9 +167,9 @@
           <rect x="60" y="140" width="280" height="22" fill="url(#invHatchLine)" stroke="#17191c" />
           <text x="292" y="178" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#17191c">NMOS</text>
 
-          <rect x="193" y="25" width="14" height="160" fill="#b84a32" />
-          <line x1="207" y1="30" x2="218" y2="24" stroke="#b84a32" stroke-width="1" />
-          <text x="220" y="22" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#b84a32">IN (POLY)</text>
+          <rect x="193" y="25" width="14" height="160" fill="#2c5aa0" />
+          <line x1="207" y1="30" x2="218" y2="24" stroke="#2c5aa0" stroke-width="1" />
+          <text x="220" y="22" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#2c5aa0">IN (POLY)</text>
 
           <rect x="100" y="53" width="6" height="6" fill="#17191c" />
           <rect x="270" y="53" width="6" height="6" fill="#17191c" />
@@ -184,6 +184,34 @@
 
           <text x="20" y="218" font-family="IBM Plex Mono, monospace" font-size="7" fill="#6c6b67">1× TRACK HEIGHT</text>
         </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Results</h2>
+        <span class="section-index">03 / EVALUATION</span>
+      </div>
+      <div class="two-col">
+        <div class="prose">
+          <p>The variable D-Q delay flip-flop was implemented in an open-source 32-bit RV32IM RISC-V core (UltraEmbedded's core/riscv), synthesized standalone in GF12LPplus at a 1 GHz target frequency, followed by scan insertion, ATPG, and static timing analysis. The baseline netlist contains 2,319 scan flip-flops and 4,739 distinct timing paths.</p>
+          <p>Rather than instrumenting every path, the delay flip-flop was applied progressively to the worst 5%, 10%, and 100% of paths by timing slack (237, 474, and all 4,739 paths respectively), and compared against Shadow FF, Razor, and Data Delay flip-flop implementations under identical synthesis, timing, and operating conditions. Power was evaluated in Cadence Joules against a functional program exercising the processor; area came from Genus's mapped standard-cell reporting.</p>
+          <p>At the 10%-worst-paths configuration, both the instrumented and baseline designs closed timing at 1 GHz with zero total negative slack. The proposed flip-flop kept area overhead to 8.30% and power overhead to 6.02%, against 11.74%/24.38% (Shadow FF) and 16.61%/18.53% (Data Delay) &mdash; a reduction of at least 9.4% in power and 3.1% in area versus the next-best technique at equivalent fault coverage.</p>
+        </div>
+        <div>
+          <table class="spec-table">
+            <tbody>
+              <tr><th>Core</th><td>RV32IM (UltraEmbedded core/riscv)</td></tr>
+              <tr><th>Process / clock</th><td>GF12LPplus, 1 GHz target</td></tr>
+              <tr><th>Baseline paths</th><td>4,739 timing paths, 2,319 scan FFs</td></tr>
+              <tr><th>Coverage tested</th><td>Worst 5% (237) &middot; 10% (474) &middot; 100% paths</td></tr>
+              <tr><th>vs. next-best (10% coverage)</th><td>&minus;9.4% power &middot; &minus;3.1% area</td></tr>
+              <tr><th>Timing closure</th><td>1 GHz, 0 TNS, all configurations</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
