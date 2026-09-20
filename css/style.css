@@ -1208,7 +1208,7 @@ svg text {
 
 .lab-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   align-items: start;
 }
@@ -1226,6 +1226,14 @@ svg text {
   height: auto;
 }
 
+/* Grid tiles share one ratio so rows stay level whatever the source photo is */
+.lab-grid .lab-figure img {
+  aspect-ratio: 3 / 4;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
 .lab-figure figcaption {
   margin-top: 10px;
   font-family: var(--font-mono);
@@ -1238,6 +1246,7 @@ svg text {
 }
 
 @media (max-width: 680px) {
-  .lab-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+  .lab-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .lab-figure { padding: 8px; }
+  .lab-feature { max-width: none; }
 }
