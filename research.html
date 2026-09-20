@@ -5,6 +5,22 @@
 <title>Research — Khoi Nguyen</title>
 <meta name="description" content="Microfabrication and sensor research by Khoi Nguyen: cleanroom fabrication, MEMS, CMOS, and delay-fault detection research." />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="canonical" href="https://akln0401.github.io/portfolio/research.html" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta name="theme-color" content="#f4f2ed" />
+<meta name="author" content="Khoi Nguyen" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
+<meta property="og:title" content="Research — Khoi Nguyen" />
+<meta property="og:description" content="Microfabrication and sensor research by Khoi Nguyen: cleanroom fabrication, MEMS, CMOS, and delay-fault detection research." />
+<meta property="og:url" content="https://akln0401.github.io/portfolio/research.html" />
+<meta property="og:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Research — Khoi Nguyen" />
+<meta name="twitter:description" content="Microfabrication and sensor research by Khoi Nguyen: cleanroom fabrication, MEMS, CMOS, and delay-fault detection research." />
+<meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -124,9 +140,9 @@
           <text x="152" y="95" font-size="9" fill="#6c6b67">MASTER-</text>
           <text x="152" y="108" font-size="9" fill="#6c6b67">SLAVE FF</text>
           <line x1="230" y1="100" x2="260" y2="100" stroke="#17191c" />
-          <rect x="260" y="75" width="60" height="50" fill="none" stroke="#2c5aa0" stroke-dasharray="3 2" />
-          <text x="266" y="96" font-size="8" fill="#2c5aa0">VARIABLE</text>
-          <text x="266" y="108" font-size="8" fill="#2c5aa0">DELAY</text>
+          <rect x="260" y="75" width="60" height="50" fill="none" stroke="#c23b3b" stroke-dasharray="3 2" />
+          <text x="266" y="96" font-size="8" fill="#c23b3b">VARIABLE</text>
+          <text x="266" y="108" font-size="8" fill="#c23b3b">DELAY</text>
           <line x1="320" y1="100" x2="360" y2="100" stroke="#17191c" />
           <text x="330" y="90" font-size="10" fill="#17191c">Q</text>
           <line x1="290" y1="125" x2="290" y2="155" stroke="#6c6b67" />
@@ -134,55 +150,124 @@
         </svg>
       </div>
 
-      <p style="margin-top:24px; max-width:62ch; color:var(--muted); font-size:14.5px;">The variable delay element above is itself built from chained standard cells — inverters and buffers whose transistor-level layout sets the actual delay-per-stage. The layout below shows a single inverter (INV_X1) at the transistor level: PMOS and NMOS diffusion regions gated by a shared poly line, tied to the VDD and VSS metal-1 rails.</p>
+      <p style="margin-top:24px; max-width:62ch; color:var(--muted); font-size:14.5px;">The variable delay element above is itself built from chained standard cells — inverters and gates whose transistor-level layout sets the actual delay-per-stage. The layouts below show three cells from the same library at the mask-layer level: N-well and diffusion, poly gates, and metal-1/contacts, color-coded by layer the way a layout tool renders them.</p>
 
-      <div class="diagram-frame" style="max-width:640px; margin-top:20px;">
-        <svg viewBox="0 0 400 225" role="img" aria-labelledby="invTitle invDesc">
-          <title id="invTitle">CMOS inverter (NOT gate) standard-cell layout</title>
-          <desc id="invDesc">Transistor-level layout of a CMOS inverter standard cell: an N-well containing the PMOS diffusion at top, NMOS diffusion in the substrate below, a shared vertical poly gate crossing both, source and drain contacts, VDD and VSS metal-1 rails at the top and bottom edges, and a metal-1 output stub tying the drains together and routing to the cell edge.</desc>
+      <div class="diagram-frame" style="max-width:720px; margin-top:20px;">
+        <svg viewBox="0 0 460 300" role="img" aria-labelledby="cellsTitle cellsDesc">
+          <title id="cellsTitle">Standard-cell mask layouts: INV_X1, NAND2_X1, NOR2_X1</title>
+          <desc id="cellsDesc">Layer-colored layout views of three standard cells sharing one track height and rail structure: an inverter with one poly gate, a 2-input NAND with two series NMOS transistors, and a 2-input NOR with two series PMOS transistors, each showing N-well, diffusion, poly, contacts, and metal-1 rails.</desc>
           <defs>
-            <pattern id="invHatchAccent" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="0" y2="5" stroke="#2c5aa0" stroke-width="1" />
+            <pattern id="cellGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#c9c6bd" stroke-width="0.4" opacity="0.5" />
             </pattern>
-            <pattern id="invHatchLine" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="0" y2="5" stroke="#6c6b67" stroke-width="1" />
+            <pattern id="wellHatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#5b7ca8" stroke-width="1.1" />
+            </pattern>
+            <pattern id="diffHatch" width="6" height="6" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#4c8f5c" stroke-width="1.1" />
+            </pattern>
+            <pattern id="polyHatch" width="6" height="6" patternTransform="rotate(90)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#c8863b" stroke-width="1.6" />
             </pattern>
           </defs>
 
-          <text x="20" y="10" font-family="IBM Plex Mono, monospace" font-size="8" fill="#6c6b67">STD CELL: INV_X1</text>
+          <rect x="0" y="0" width="460" height="270" fill="url(#cellGrid)" />
 
-          <rect x="20" y="15" width="360" height="190" fill="none" stroke="#c9c6bd" stroke-dasharray="4 3" />
-          <rect x="20" y="15" width="360" height="85" fill="none" stroke="#6c6b67" stroke-dasharray="2 2" />
-          <text x="330" y="27" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#6c6b67">N-WELL</text>
+          <!-- ===== Cell template repeated at x0 = 20, 175, 330 ===== -->
 
-          <rect x="20" y="15" width="360" height="10" fill="#17191c" />
-          <text x="26" y="23" font-family="IBM Plex Mono, monospace" font-size="7" fill="#f4f2ed">VDD (M1)</text>
+          <!-- INV_X1 -->
+          <g>
+            <rect x="20" y="26" width="110" height="200" fill="none" stroke="#c9c6bd" stroke-dasharray="3 2" />
+            <rect x="20" y="26" width="110" height="92" fill="url(#wellHatch)" fill-opacity="0.28" stroke="#5b7ca8" stroke-dasharray="2 2" />
+            <text x="24" y="35" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#5b7ca8">N-WELL</text>
 
-          <rect x="20" y="195" width="360" height="10" fill="#17191c" />
-          <text x="26" y="203" font-family="IBM Plex Mono, monospace" font-size="7" fill="#f4f2ed">VSS (M1)</text>
+            <rect x="20" y="26" width="110" height="9" fill="#17191c" /><text x="26" y="33" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#f4f2ed">VDD</text>
+            <rect x="20" y="217" width="110" height="9" fill="#17191c" /><text x="26" y="224" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#f4f2ed">VSS</text>
 
-          <rect x="60" y="45" width="280" height="22" fill="url(#invHatchAccent)" stroke="#17191c" />
-          <text x="292" y="41" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#17191c">PMOS</text>
+            <rect x="35" y="55" width="80" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="35" y="170" width="80" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
 
-          <rect x="60" y="140" width="280" height="22" fill="url(#invHatchLine)" stroke="#17191c" />
-          <text x="292" y="178" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#17191c">NMOS</text>
+            <rect x="70" y="40" width="10" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <text x="58" y="36" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#8a5a26">A</text>
 
-          <rect x="193" y="25" width="14" height="160" fill="#2c5aa0" />
-          <line x1="207" y1="30" x2="218" y2="24" stroke="#2c5aa0" stroke-width="1" />
-          <text x="220" y="22" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#2c5aa0">IN (POLY)</text>
+            <rect x="57" y="61" width="5" height="5" fill="#b5539c" /><rect x="57" y="176" width="5" height="5" fill="#b5539c" />
+            <rect x="93" y="61" width="5" height="5" fill="#b5539c" /><rect x="93" y="176" width="5" height="5" fill="#b5539c" />
+            <line x1="95" y1="63" x2="95" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="95" y1="178" x2="95" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="60" y1="63" x2="60" y2="178" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="60" y1="120" x2="122" y2="120" stroke="#3b5fa0" stroke-width="2.2" />
+            <text x="124" y="118" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#3b5fa0">Z</text>
 
-          <rect x="100" y="53" width="6" height="6" fill="#17191c" />
-          <rect x="270" y="53" width="6" height="6" fill="#17191c" />
-          <rect x="100" y="148" width="6" height="6" fill="#17191c" />
-          <rect x="270" y="148" width="6" height="6" fill="#17191c" />
+            <text x="75" y="244" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#17191c">INV_X1</text>
+          </g>
 
-          <line x1="103" y1="53" x2="103" y2="25" stroke="#17191c" stroke-width="3" />
-          <line x1="103" y1="154" x2="103" y2="195" stroke="#17191c" stroke-width="3" />
-          <line x1="273" y1="56" x2="273" y2="151" stroke="#17191c" stroke-width="3" />
-          <line x1="273" y1="103" x2="392" y2="103" stroke="#17191c" stroke-width="3" />
-          <text x="345" y="97" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#17191c">OUT (M1)</text>
+          <!-- NAND2_X1: two series NMOS (stacked), two parallel PMOS -->
+          <g>
+            <rect x="175" y="26" width="110" height="200" fill="none" stroke="#c9c6bd" stroke-dasharray="3 2" />
+            <rect x="175" y="26" width="110" height="92" fill="url(#wellHatch)" fill-opacity="0.28" stroke="#5b7ca8" stroke-dasharray="2 2" />
+            <text x="179" y="35" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#5b7ca8">N-WELL</text>
 
-          <text x="20" y="218" font-family="IBM Plex Mono, monospace" font-size="7" fill="#6c6b67">1× TRACK HEIGHT</text>
+            <rect x="175" y="26" width="110" height="9" fill="#17191c" /><text x="181" y="33" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#f4f2ed">VDD</text>
+            <rect x="175" y="217" width="110" height="9" fill="#17191c" /><text x="181" y="224" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#f4f2ed">VSS</text>
+
+            <rect x="190" y="55" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="235" y="55" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="190" y="150" width="80" height="40" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+
+            <rect x="212" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <rect x="240" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <text x="209" y="36" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#8a5a26">A</text>
+            <text x="237" y="36" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#8a5a26">B</text>
+
+            <rect x="197" y="61" width="5" height="5" fill="#b5539c" /><rect x="258" y="61" width="5" height="5" fill="#b5539c" />
+            <rect x="197" y="166" width="5" height="5" fill="#b5539c" /><rect x="258" y="166" width="5" height="5" fill="#b5539c" />
+            <line x1="199" y1="63" x2="199" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="260" y1="63" x2="260" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="199" y1="168" x2="199" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="230" y1="75" x2="230" y2="150" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="199" y1="115" x2="277" y2="115" stroke="#3b5fa0" stroke-width="2.2" />
+            <text x="279" y="118" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#3b5fa0">Z</text>
+
+            <text x="230" y="244" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#17191c">NAND2_X1</text>
+          </g>
+
+          <!-- NOR2_X1: two series PMOS (stacked), two parallel NMOS -->
+          <g>
+            <rect x="330" y="26" width="110" height="200" fill="none" stroke="#c9c6bd" stroke-dasharray="3 2" />
+            <rect x="330" y="26" width="110" height="92" fill="url(#wellHatch)" fill-opacity="0.28" stroke="#5b7ca8" stroke-dasharray="2 2" />
+            <text x="334" y="35" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#5b7ca8">N-WELL</text>
+
+            <rect x="330" y="26" width="110" height="9" fill="#17191c" /><text x="336" y="33" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#f4f2ed">VDD</text>
+            <rect x="330" y="217" width="110" height="9" fill="#17191c" /><text x="336" y="224" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#f4f2ed">VSS</text>
+
+            <rect x="345" y="45" width="80" height="40" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="345" y="170" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="390" y="170" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+
+            <rect x="367" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <rect x="395" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <text x="364" y="36" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#8a5a26">A</text>
+            <text x="392" y="36" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#8a5a26">B</text>
+
+            <rect x="352" y="61" width="5" height="5" fill="#b5539c" /><rect x="352" y="176" width="5" height="5" fill="#b5539c" />
+            <rect x="413" y="61" width="5" height="5" fill="#b5539c" /><rect x="413" y="176" width="5" height="5" fill="#b5539c" />
+            <line x1="354" y1="63" x2="354" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="354" y1="178" x2="354" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="415" y1="178" x2="415" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="385" y1="75" x2="385" y2="150" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="354" y1="115" x2="432" y2="115" stroke="#3b5fa0" stroke-width="2.2" />
+            <text x="434" y="118" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#3b5fa0">Z</text>
+
+            <text x="385" y="244" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#17191c">NOR2_X1</text>
+          </g>
+
+          <g font-family="IBM Plex Mono, monospace" font-size="7" fill="#6c6b67">
+            <rect x="20" y="262" width="8" height="8" fill="url(#wellHatch)" fill-opacity="0.4" stroke="#5b7ca8" /><text x="32" y="269">N-WELL</text>
+            <rect x="95" y="262" width="8" height="8" fill="url(#diffHatch)" stroke="#4c8f5c" /><text x="107" y="269">DIFFUSION</text>
+            <rect x="180" y="262" width="8" height="8" fill="url(#polyHatch)" stroke="#8a5a26" /><text x="192" y="269">POLY</text>
+            <rect x="235" y="262" width="8" height="4" fill="#3b5fa0" /><text x="247" y="269">METAL 1</text>
+            <rect x="310" y="262" width="6" height="6" fill="#b5539c" /><text x="320" y="269">CONTACT</text>
+          </g>
         </svg>
       </div>
     </div>

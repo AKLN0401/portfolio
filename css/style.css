@@ -9,7 +9,7 @@
   --paper-raised: #eeece5;
   --muted: #6c6b67;
   --line: #c9c6bd;
-  --accent: #2c5aa0;
+  --accent: #c23b3b;
   --accent-ink: #ffffff;
 
   --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
@@ -433,6 +433,60 @@ svg text {
   letter-spacing: 0.05em;
   display: block;
   margin-bottom: 8px;
+}
+
+/* ------------------------------------------------------------
+   Certifications
+   ------------------------------------------------------------ */
+
+.cert-block {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.cert-list {
+  margin-top: 20px;
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.cert-list li {
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding: 18px 20px;
+}
+
+.cert-name {
+  font-weight: 500;
+  font-size: 15.5px;
+}
+
+.cert-issuer {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.cert-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+  .cert-list li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
 }
 
 /* ------------------------------------------------------------
