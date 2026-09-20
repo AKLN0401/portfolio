@@ -1191,3 +1191,53 @@ svg text {
     gap: 36px;
   }
 }
+
+/* ------------------------------------------------------------
+   Cleanroom photo grid
+   ------------------------------------------------------------ */
+
+.lab-intro {
+  margin-bottom: 44px;
+  align-items: start;
+}
+
+.lab-feature {
+  max-width: 420px;
+  margin: 0;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.lab-figure {
+  margin: 0;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  padding: 12px;
+}
+
+.lab-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lab-figure figcaption {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+@media (max-width: 680px) {
+  .lab-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+  .lab-figure { padding: 8px; }
+}
