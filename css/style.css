@@ -436,6 +436,118 @@ svg text {
 }
 
 /* ------------------------------------------------------------
+   Stats, charts & data tables
+   ------------------------------------------------------------ */
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.stat-tile {
+  background: var(--paper);
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.stat-lab {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.chart-frame {
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  padding: 22px;
+  margin-top: 40px;
+}
+
+.chart-frame svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  font-family: var(--font-mono);
+}
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.data-table caption {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding-bottom: 12px;
+}
+
+.data-table th,
+.data-table td {
+  text-align: right;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.data-table th:first-child,
+.data-table td:first-child {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.data-table thead th {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--ink);
+}
+
+.data-table tbody td {
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table tfoot td {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  border-bottom: none;
+  border-top: 1px solid var(--ink);
+}
+
+@media (max-width: 680px) {
+  .stat-row { grid-template-columns: 1fr; }
+  .data-table { font-size: 12.5px; }
+  .data-table th, .data-table td { padding: 9px 8px; }
+}
+
+/* ------------------------------------------------------------
    Certifications
    ------------------------------------------------------------ */
 
