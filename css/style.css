@@ -1308,9 +1308,13 @@ svg text {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Grid/flex children default to min-width:auto, which lets a wide child
+   force its track wider than the viewport. */
+.research-teaser > * { min-width: 0; }
+
 @media (max-width: 680px) {
-  .fig-scroll svg { min-width: 580px; }
-  .dq-figure figcaption::after {
+  .dq-figure--pan .fig-scroll svg { min-width: 580px; }
+  .dq-figure--pan figcaption::after {
     content: "scroll to read \2192";
     color: var(--line);
   }

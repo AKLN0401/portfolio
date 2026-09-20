@@ -208,7 +208,7 @@
           </table>
         </div>
       </div>
-      <figure class="diagram-frame dq-figure" style="max-width:760px;">
+      <figure class="diagram-frame dq-figure dq-figure--pan" style="max-width:760px;">
         <div class="fig-scroll"><svg viewBox="0 0 720 396" role="img" aria-label="How the variable D-Q delay flip-flop detects a delay fault. Panel A: the switchable delay element sits inside the launching flip-flop, ahead of the combinational path, while the capture flip-flop is left unmodified. Panel B: on the first run at nominal delay the data arrives with slack; on the second run the added delay pushes arrival later, and a path carrying a delay fault crosses into the setup window so its captured value differs, while a healthy path still makes it.">
           <defs>
             <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
@@ -302,7 +302,7 @@
 
       <p class="fig-note">Both runs use the same test vectors and the same capture flip-flop; only <code>DLY_SEL</code> changes between them. A path with margin to spare produces the same captured response twice, so the difference between the two runs isolates the paths that have lost their slack — and the existing scan chain already carries both responses off-chip.</p>
 
-      <figure class="diagram-frame dq-figure" style="max-width:760px; margin-top:44px;">
+      <figure class="diagram-frame dq-figure dq-figure--pan" style="max-width:760px; margin-top:44px;">
           <div class="fig-scroll"><svg viewBox="0 0 720 226" role="img" aria-label="Comparison of what each delay-fault detection scheme adds at an instrumented site. Razor adds a shadow latch on a delayed clock plus an XOR comparator at every capture flip-flop. Pre-sampling adds a guardband delay element, an extra flip-flop and an XOR comparator at every capture flip-flop. This work adds one switchable delay element inside the launch flip-flop and nothing at the capture end.">
             <defs>
               <marker id="ahI" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#17191c" /></marker>
