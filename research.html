@@ -133,6 +133,58 @@
           <text x="245" y="170" font-size="8" fill="#6c6b67">DELAY-SELECT CONTROL</text>
         </svg>
       </div>
+
+      <p style="margin-top:24px; max-width:62ch; color:var(--muted); font-size:14.5px;">The variable delay element above is itself built from chained standard cells — inverters and buffers whose transistor-level layout sets the actual delay-per-stage. The layout below shows a single inverter (INV_X1) at the transistor level: PMOS and NMOS diffusion regions gated by a shared poly line, tied to the VDD and VSS metal-1 rails.</p>
+
+      <div class="diagram-frame" style="max-width:640px; margin-top:20px;">
+        <svg viewBox="0 0 400 225" role="img" aria-labelledby="invTitle invDesc">
+          <title id="invTitle">CMOS inverter (NOT gate) standard-cell layout</title>
+          <desc id="invDesc">Transistor-level layout of a CMOS inverter standard cell: an N-well containing the PMOS diffusion at top, NMOS diffusion in the substrate below, a shared vertical poly gate crossing both, source and drain contacts, VDD and VSS metal-1 rails at the top and bottom edges, and a metal-1 output stub tying the drains together and routing to the cell edge.</desc>
+          <defs>
+            <pattern id="invHatchAccent" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="5" stroke="#b84a32" stroke-width="1" />
+            </pattern>
+            <pattern id="invHatchLine" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="5" stroke="#6c6b67" stroke-width="1" />
+            </pattern>
+          </defs>
+
+          <text x="20" y="10" font-family="IBM Plex Mono, monospace" font-size="8" fill="#6c6b67">STD CELL: INV_X1</text>
+
+          <rect x="20" y="15" width="360" height="190" fill="none" stroke="#c9c6bd" stroke-dasharray="4 3" />
+          <rect x="20" y="15" width="360" height="85" fill="none" stroke="#6c6b67" stroke-dasharray="2 2" />
+          <text x="330" y="27" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#6c6b67">N-WELL</text>
+
+          <rect x="20" y="15" width="360" height="10" fill="#17191c" />
+          <text x="26" y="23" font-family="IBM Plex Mono, monospace" font-size="7" fill="#f4f2ed">VDD (M1)</text>
+
+          <rect x="20" y="195" width="360" height="10" fill="#17191c" />
+          <text x="26" y="203" font-family="IBM Plex Mono, monospace" font-size="7" fill="#f4f2ed">VSS (M1)</text>
+
+          <rect x="60" y="45" width="280" height="22" fill="url(#invHatchAccent)" stroke="#17191c" />
+          <text x="292" y="41" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#17191c">PMOS</text>
+
+          <rect x="60" y="140" width="280" height="22" fill="url(#invHatchLine)" stroke="#17191c" />
+          <text x="292" y="178" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#17191c">NMOS</text>
+
+          <rect x="193" y="25" width="14" height="160" fill="#b84a32" />
+          <line x1="207" y1="30" x2="218" y2="24" stroke="#b84a32" stroke-width="1" />
+          <text x="220" y="22" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#b84a32">IN (POLY)</text>
+
+          <rect x="100" y="53" width="6" height="6" fill="#17191c" />
+          <rect x="270" y="53" width="6" height="6" fill="#17191c" />
+          <rect x="100" y="148" width="6" height="6" fill="#17191c" />
+          <rect x="270" y="148" width="6" height="6" fill="#17191c" />
+
+          <line x1="103" y1="53" x2="103" y2="25" stroke="#17191c" stroke-width="3" />
+          <line x1="103" y1="154" x2="103" y2="195" stroke="#17191c" stroke-width="3" />
+          <line x1="273" y1="56" x2="273" y2="151" stroke="#17191c" stroke-width="3" />
+          <line x1="273" y1="103" x2="392" y2="103" stroke="#17191c" stroke-width="3" />
+          <text x="345" y="97" font-family="IBM Plex Mono, monospace" font-size="7.5" fill="#17191c">OUT (M1)</text>
+
+          <text x="20" y="218" font-family="IBM Plex Mono, monospace" font-size="7" fill="#6c6b67">1× TRACK HEIGHT</text>
+        </svg>
+      </div>
     </div>
   </section>
 </main>
