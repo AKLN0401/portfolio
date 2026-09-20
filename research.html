@@ -136,7 +136,7 @@
 
       <div class="two-col" style="margin-bottom:48px;">
         <div class="prose">
-          <p>This is a separate thread from the fabrication work above, carried out with the CMOS Design and Reliability Group at the University of Waterloo under Prof. Manoj Sachdev. It is a research paper on a variable D-Q delay flip-flop for transition-fault testing, implemented on an RV32IM RISC-V core in GlobalFoundries' 12LP+ (GF12LPplus) 12 nm process.</p>
+          <p>This is a separate thread from the fabrication work above, carried out with the CMOS Design and Reliability Group at the University of Waterloo under Prof. Manoj Sachdev. It is a research paper on a variable D-Q delay flip-flop for transition-fault testing, implemented on an RV32IM RISC-V core in a 12 nm FinFET process.</p>
           <p>The flip-flop's data-to-output delay is made deliberately adjustable. Running the same test vectors first at nominal delay and then with the additional delay enabled shrinks the effective timing margin on a path, so a transition fault shows up as a difference between the two captured responses — catching delay faults that standard scan-based DFT can miss, and reusing the existing transmitting flip-flop instead of adding shadow registers and comparison logic.</p>
         </div>
 
@@ -145,7 +145,7 @@
             <tbody>
               <tr><th>Group</th><td>CMOS Design and Reliability Group, University of Waterloo</td></tr>
               <tr><th>Supervisor</th><td>Prof. Manoj Sachdev</td></tr>
-              <tr><th>Process node</th><td>GF12LPplus, 12 nm FinFET</td></tr>
+              <tr><th>Process node</th><td>12 nm FinFET</td></tr>
               <tr><th>Target</th><td>RV32IM RISC-V core</td></tr>
               <tr><th>Technique</th><td>Variable D-Q delay flip-flop, transition-fault testing</td></tr>
             </tbody>
@@ -304,19 +304,19 @@
       </div>
       <div class="two-col">
         <div class="prose">
-          <p>The variable D-Q delay flip-flop was implemented in an open-source 32-bit RV32IM RISC-V core (UltraEmbedded's core/riscv), synthesized standalone in GF12LPplus at a 1 GHz target frequency, followed by scan insertion, ATPG, and static timing analysis. The baseline netlist contains 2,319 scan flip-flops and 4,739 distinct timing paths.</p>
-          <p>Rather than instrumenting every path, the delay flip-flop was applied progressively to the worst 5%, 10%, and 100% of paths by timing slack (237, 474, and all 4,739 paths respectively), and compared against Shadow FF, Razor, and Data Delay flip-flop implementations under identical synthesis, timing, and operating conditions. Power was evaluated in Cadence Joules against a functional program exercising the processor; area came from Genus's mapped standard-cell reporting.</p>
-          <p>At the 10%-worst-paths configuration, both the instrumented and baseline designs closed timing at 1 GHz with zero total negative slack. The proposed flip-flop kept area overhead to 8.30% and power overhead to 6.02%, against 11.74%/24.38% (Shadow FF) and 16.61%/18.53% (Data Delay) &mdash; a reduction of at least 9.4% in power and 3.1% in area versus the next-best technique at equivalent fault coverage.</p>
+          <p>The variable D-Q delay flip-flop was implemented in an open-source 32-bit RV32IM RISC-V core, synthesized standalone in a 12 nm FinFET process at a 1 GHz target frequency, followed by scan insertion, ATPG, and static timing analysis.</p>
+          <p>Rather than instrumenting every path, the delay flip-flop was applied progressively to the most timing-critical fraction of paths by slack, at several coverage levels up to full coverage, and compared against established delay-fault detection flip-flop architectures under identical synthesis, timing, and operating conditions. Power was evaluated in Cadence Joules against a functional program exercising the processor; area came from Genus's mapped standard-cell reporting.</p>
+          <p>Every instrumented configuration closed timing at the 1 GHz target with zero total negative slack. Because the technique reuses the existing transmitting flip-flop rather than adding a shadow register and comparison logic, it carries lower area and power overhead than the alternatives evaluated, and the margin widens as coverage increases.</p>
+          <p class="note">Quantified overhead figures are held back until the paper is published.</p>
         </div>
         <div>
           <table class="spec-table">
             <tbody>
-              <tr><th>Core</th><td>RV32IM (UltraEmbedded core/riscv)</td></tr>
-              <tr><th>Process / clock</th><td>GF12LPplus, 1 GHz target</td></tr>
-              <tr><th>Baseline paths</th><td>4,739 timing paths, 2,319 scan FFs</td></tr>
-              <tr><th>Coverage tested</th><td>Worst 5% (237) &middot; 10% (474) &middot; 100% paths</td></tr>
-              <tr><th>vs. next-best (10% coverage)</th><td>&minus;9.4% power &middot; &minus;3.1% area</td></tr>
+              <tr><th>Core</th><td>Open-source RV32IM RISC-V</td></tr>
+              <tr><th>Process / clock</th><td>12 nm FinFET, 1 GHz target</td></tr>
+              <tr><th>Coverage tested</th><td>Most timing-critical paths, several levels up to 100%</td></tr>
               <tr><th>Timing closure</th><td>1 GHz, 0 TNS, all configurations</td></tr>
+              <tr><th>Status</th><td>Results pending publication</td></tr>
             </tbody>
           </table>
         </div>

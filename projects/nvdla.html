@@ -135,17 +135,17 @@
 
       <div class="two-col" style="margin-top:48px;">
         <div class="prose">
-          <p>Synthesized in Genus 23.14 against the GF12LP+ <code>sc9mcpp84</code> low-V<sub>t</sub> library at the slow-slow corner (0.81 V, 125&nbsp;&deg;C), with physical-library area estimation and global interconnect. The mapped design comes out at 6,892,634 instances and 4.96&nbsp;mm&sup2; of total area, drawing 7.79&nbsp;W.</p>
+          <p>Synthesized in Genus 23.14 against a 12 nm FinFET low-V<sub>t</sub> standard-cell library at the slow-slow process corner with worst-case RC, using physical-library area estimation and global interconnect. The mapped design comes out at 6,892,634 instances and 4.96&nbsp;mm&sup2; of total area, drawing 7.79&nbsp;W.</p>
           <p>The area is not distributed the way the instance counts suggest. <code>u_partition_c</code> holds 13.2% of the instances but 28.3% of the area &mdash; the largest of the six &mdash; because it contains CBUF, the convolution buffer. CBUF is 94,024 instances, 1.4% of the design, yet occupies 0.93&nbsp;mm&sup2;, nearly a fifth of the whole chip, since it is built almost entirely from SRAM macros rather than standard cells.</p>
-          <p>That shows up again in the cell-area breakdown: 128 SRAM macro instances &mdash; 96&times;&nbsp;<code>sram2p_256x144</code> and 32&times;&nbsp;<code>sram2p_256x80</code> &mdash; account for 24.2% of all cell area. Power splits the other way: internal switching dominates at 4.52&nbsp;W (58%), net switching contributes 3.01&nbsp;W (39%), and leakage is 0.26&nbsp;W (3.4%).</p>
+          <p>That shows up again in the cell-area breakdown: 128 dual-port SRAM macro instances &mdash; 96 of one configuration and 32 of another &mdash; account for 24.2% of all cell area. Power splits the other way: internal switching dominates at 4.52&nbsp;W (58%), net switching contributes 3.01&nbsp;W (39%), and leakage is 0.26&nbsp;W (3.4%).</p>
         </div>
 
         <div>
           <table class="spec-table">
             <tbody>
               <tr><th>Tool</th><td>Genus 23.14-s090_1</td></tr>
-              <tr><th>Library</th><td>sc9mcpp84_12lpplus_base_lvt_c14</td></tr>
-              <tr><th>Corner</th><td>sspg_sigcmax_max, 0.81 V, 125 &deg;C</td></tr>
+              <tr><th>Library</th><td>12 nm FinFET standard-cell library, low-V<sub>t</sub></td></tr>
+              <tr><th>Corner</th><td>Slow-slow process, worst-case RC, 125 &deg;C</td></tr>
               <tr><th>Cell area</th><td>3.54 mm&sup2;</td></tr>
               <tr><th>Net area</th><td>1.42 mm&sup2;</td></tr>
               <tr><th>SRAM macros</th><td>128 instances, 24.2% of cell area</td></tr>
