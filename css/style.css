@@ -2,7 +2,6 @@
    Khoi Nguyen — Engineering Portfolio
    Design tokens
    ============================================================ */
-
 :root {
   --ink: #17191c;
   --paper: #f4f2ed;
@@ -12,7 +11,7 @@
   --accent: #c23b3b;
   --accent-ink: #ffffff;
 
-  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
@@ -65,8 +64,9 @@ ul {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 500;
-  line-height: 1.15;
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
