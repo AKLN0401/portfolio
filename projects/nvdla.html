@@ -64,7 +64,7 @@
   <section class="section" style="border-top:none; padding-top:0;">
     <div class="wrap two-col">
       <div class="prose">
-        <p>NVDLA (NVIDIA Deep Learning Accelerator) is an open-source hardware accelerator architecture for deep learning inference. This project took the open-source RTL and carried it through a full physical design flow in a 12-nm FinFET process, rather than stopping at synthesis or simulation.</p>
+        <p>NVDLA (NVIDIA Deep Learning Accelerator) is an open-source hardware accelerator architecture for deep learning inference. I took this on independently &mdash; outside of coursework and outside supervised research &mdash; and carried the open-source RTL through a full physical design flow in a 12-nm FinFET process, rather than stopping at synthesis or simulation.</p>
         <p>The work spanned synthesis, timing analysis, and power analysis at the netlist level, then moved into physical implementation: floorplanning, placement, routing, and physical verification, treating each step's timing and congestion feedback as an input to the next.</p>
         <p>Because NVDLA is a substantially larger and more structurally complex design than a typical class-project block, a significant part of the work was in managing the flow itself — partitioning the problem, debugging RTL-to-netlist mismatches, and iterating on timing closure across a design with many more instances and nets than a small benchmark circuit.</p>
       </div>
@@ -72,6 +72,7 @@
       <div>
         <table class="spec-table">
           <tbody>
+            <tr><th>Context</th><td>Self-directed independent project</td></tr>
             <tr><th>Design</th><td>NVIDIA Deep Learning Accelerator (NVDLA), open-source</td></tr>
             <tr><th>Process node</th><td>12 nm FinFET</td></tr>
             <tr><th>Flow stages</th><td>Synthesis &middot; Timing analysis &middot; Power analysis &middot; Floorplanning &middot; Placement &middot; Routing &middot; Physical verification</td></tr>
