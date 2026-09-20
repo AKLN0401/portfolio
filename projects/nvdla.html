@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>NVIDIA NVDLA RTL-to-GDSII — Khoi Nguyen</title>
+<meta name="description" content="Implementation and evaluation of the open-source NVIDIA deep-learning accelerator in a 12-nm FinFET flow." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>EE · University of Manitoba</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../research.html">Research</a></li>
+        <li><a href="../index.html#projects" aria-current="page">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
+      <p class="label">NPU &middot; Physical Design &middot; ASIC</p>
+      <h1>NVIDIA NVDLA RTL-to-GDSII</h1>
+      <p class="dek">Implemented and evaluated an open-source NVIDIA deep-learning accelerator through synthesis, timing analysis, power analysis, floorplanning, placement, routing, and physical verification in a 12-nm FinFET flow.</p>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:none; padding-top:0;">
+    <div class="wrap two-col">
+      <div class="prose">
+        <p>NVDLA (NVIDIA Deep Learning Accelerator) is an open-source hardware accelerator architecture for deep learning inference. This project took the open-source RTL and carried it through a full physical design flow in a 12-nm FinFET process, rather than stopping at synthesis or simulation.</p>
+        <p>The work spanned synthesis, timing analysis, and power analysis at the netlist level, then moved into physical implementation: floorplanning, placement, routing, and physical verification, treating each step's timing and congestion feedback as an input to the next.</p>
+        <p>Because NVDLA is a substantially larger and more structurally complex design than a typical class-project block, a significant part of the work was in managing the flow itself — partitioning the problem, debugging RTL-to-netlist mismatches, and iterating on timing closure across a design with many more instances and nets than a small benchmark circuit.</p>
+      </div>
+
+      <div>
+        <table class="spec-table">
+          <tbody>
+            <tr><th>Design</th><td>NVIDIA Deep Learning Accelerator (NVDLA), open-source</td></tr>
+            <tr><th>Process node</th><td>12 nm FinFET</td></tr>
+            <tr><th>Flow stages</th><td>Synthesis &middot; Timing analysis &middot; Power analysis &middot; Floorplanning &middot; Placement &middot; Routing &middot; Physical verification</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Flow</h2>
+        <span class="section-index">01 / STAGES</span>
+      </div>
+      <ol class="process-list">
+        <li><div><h4>Synthesis</h4><p>Mapping the open-source NVDLA RTL to a 12-nm FinFET standard cell library.</p></div></li>
+        <li><div><h4>Timing &amp; power analysis</h4><p>Characterizing netlist-level timing paths and power at the block level.</p></div></li>
+        <li><div><h4>Floorplanning</h4><p>Partitioning and placing macro and logic regions across the die area.</p></div></li>
+        <li><div><h4>Placement &amp; routing</h4><p>Detailed placement and routing of standard cells and interconnect.</p></div></li>
+        <li><div><h4>Physical verification</h4><p>Checking the implemented layout for design-rule and connectivity correctness.</p></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

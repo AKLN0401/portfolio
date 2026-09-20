@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>RISC-V Fault Detection — Khoi Nguyen</title>
+<meta name="description" content="Hardware fault-detection approaches evaluated on an RV32IM RISC-V processor, including DFT instrumentation, ATPG coverage, and timing closure." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>EE · University of Manitoba</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../research.html">Research</a></li>
+        <li><a href="../index.html#projects" aria-current="page">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
+      <p class="label">Digital Hardware &middot; DFT &middot; Reliability</p>
+      <h1>RISC-V Fault Detection</h1>
+      <p class="dek">Evaluated hardware fault-detection approaches on an RV32IM processor, including DFT instrumentation, ATPG coverage, timing closure, area overhead, and power impact.</p>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:none; padding-top:0;">
+    <div class="wrap two-col">
+      <div class="prose">
+        <p>This project focused on an RV32IM RISC-V processor as the vehicle for evaluating fault-detection instrumentation, rather than treating the processor as a fixed black box. Adding DFT structures to a working processor core means every change has to be weighed against its cost to the design.</p>
+        <p>The evaluation looked at ATPG (automatic test pattern generation) coverage achieved by the inserted structures, how much timing closure was affected once the DFT logic was in place, and the resulting area and power overhead relative to the un-instrumented core.</p>
+        <p>The goal throughout was to understand the trade-off space directly: how much fault coverage a given DFT approach buys, and what it costs in area, power, and timing margin on a real RISC-V core rather than an idealized model.</p>
+      </div>
+
+      <div>
+        <table class="spec-table">
+          <tbody>
+            <tr><th>Core</th><td>RV32IM RISC-V processor</td></tr>
+            <tr><th>Instrumentation</th><td>DFT structures for fault detection</td></tr>
+            <tr><th>Evaluated metrics</th><td>ATPG coverage, timing closure, area overhead, power impact</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Evaluation criteria</h2>
+        <span class="section-index">01 / TRADE-OFFS</span>
+      </div>
+      <ol class="process-list">
+        <li><div><h4>DFT instrumentation</h4><p>Inserting fault-detection structures into the RV32IM core.</p></div></li>
+        <li><div><h4>ATPG coverage</h4><p>Measuring the fraction of modeled faults the generated test patterns detect.</p></div></li>
+        <li><div><h4>Timing closure</h4><p>Checking whether the instrumented core still meets timing under the target constraints.</p></div></li>
+        <li><div><h4>Area overhead</h4><p>Comparing instrumented core area against the baseline core.</p></div></li>
+        <li><div><h4>Power impact</h4><p>Assessing the additional power drawn by the fault-detection logic.</p></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

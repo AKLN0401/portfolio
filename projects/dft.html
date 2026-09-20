@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Error-Detection DFT Architectures — Khoi Nguyen</title>
+<meta name="description" content="Fault-detection architectures for 12-nm FinFET benchmark circuits and RISC-V processors, from RTL through physical implementation." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>EE · University of Manitoba</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../research.html">Research</a></li>
+        <li><a href="../index.html#projects" aria-current="page">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
+      <p class="label">ASIC Design &middot; DFT &middot; 12 nm</p>
+      <h1>Error-Detection DFT Architectures</h1>
+      <p class="dek">Designed and evaluated multiple fault-detection architectures for 12-nm FinFET benchmark circuits and RISC-V processors, spanning RTL, synthesis, DFT insertion, simulation, equivalence checking, timing analysis, and physical implementation.</p>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:none; padding-top:0;">
+    <div class="wrap two-col">
+      <div class="prose">
+        <p>This project covered the full path a fault-detection architecture takes from a written specification to a physically implemented block: starting at RTL, moving through logic synthesis and DFT insertion, then verifying correctness in simulation and equivalence checking, and finally closing timing through physical implementation.</p>
+        <p>The target circuits were a mix of 12-nm FinFET benchmark designs and RISC-V processor blocks, which meant the fault-detection logic had to work correctly across circuits with different structures and timing characteristics rather than being tuned to a single design.</p>
+        <p>Working across this many stages of the flow — RTL, synthesis, DFT, simulation, equivalence checking, timing analysis, and physical implementation — meant treating each tool's output as an input constraint for the next stage, and re-checking assumptions whenever DFT insertion changed the netlist structure.</p>
+      </div>
+
+      <div>
+        <table class="spec-table">
+          <tbody>
+            <tr><th>Process node</th><td>12 nm FinFET</td></tr>
+            <tr><th>Targets</th><td>12-nm benchmark circuits, RISC-V processors</td></tr>
+            <tr><th>Flow stages</th><td>RTL &middot; Synthesis &middot; DFT insertion &middot; Simulation &middot; Equivalence checking &middot; Timing analysis &middot; Physical implementation</td></tr>
+            <tr><th>Tools</th><td>Genus, Modus, Joules, Xcelium, Conformal, Innovus</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Flow</h2>
+        <span class="section-index">01 / STAGES</span>
+      </div>
+      <ol class="process-list">
+        <li><div><h4>RTL</h4><p>Writing and reviewing the fault-detection logic at the register-transfer level.</p></div></li>
+        <li><div><h4>Synthesis (Genus)</h4><p>Mapping RTL to gates for each target technology library.</p></div></li>
+        <li><div><h4>DFT insertion (Modus)</h4><p>Inserting scan and test structures into the synthesized netlist.</p></div></li>
+        <li><div><h4>Power / logic analysis (Joules)</h4><p>Checking power and structural impact of the inserted DFT logic.</p></div></li>
+        <li><div><h4>Simulation (Xcelium)</h4><p>Functional verification of the design with DFT structures in place.</p></div></li>
+        <li><div><h4>Equivalence checking (Conformal)</h4><p>Confirming the DFT-inserted netlist is logically equivalent to the original RTL intent.</p></div></li>
+        <li><div><h4>Physical implementation (Innovus)</h4><p>Floorplanning, placement, routing, and timing closure for the final netlist.</p></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
