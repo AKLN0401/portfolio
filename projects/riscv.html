@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>RISC-V Fault Detection — Khoi Nguyen</title>
+<meta name="description" content="Hardware fault-detection approaches evaluated on an RV32IM RISC-V processor, including DFT instrumentation, ATPG coverage, and timing closure." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="canonical" href="https://akln0401.github.io/portfolio/projects/riscv.html" />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#f4f2ed" />
+<meta name="author" content="Khoi Nguyen" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
+<meta property="og:title" content="RISC-V Fault Detection — Khoi Nguyen" />
+<meta property="og:description" content="Hardware fault-detection approaches evaluated on an RV32IM RISC-V processor, including DFT instrumentation, ATPG coverage, and timing closure." />
+<meta property="og:url" content="https://akln0401.github.io/portfolio/projects/riscv.html" />
+<meta property="og:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="Khoi Nguyen — engineering portfolio: silicon, sensors, and hardware" />
+<meta property="og:locale" content="en_CA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RISC-V Fault Detection — Khoi Nguyen" />
+<meta name="twitter:description" content="Hardware fault-detection approaches evaluated on an RV32IM RISC-V processor, including DFT instrumentation, ATPG coverage, and timing closure." />
+<meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>EE · University of Manitoba</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../research.html">Research</a></li>
+        <li><a href="../index.html#projects" aria-current="page">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
+      <p class="label">Digital Hardware &middot; DFT &middot; Reliability</p>
+      <h1>RISC-V Fault Detection</h1>
+      <p class="dek">Evaluated hardware fault-detection approaches on an RV32IM processor, including DFT instrumentation, ATPG coverage, timing closure, area overhead, and power impact.</p>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:none; padding-top:0;">
+    <div class="wrap two-col">
+      <div class="prose">
+        <p>This project focused on an RV32IM RISC-V processor as the vehicle for evaluating fault-detection instrumentation, rather than treating the processor as a fixed black box. Adding DFT structures to a working processor core means every change has to be weighed against its cost to the design.</p>
+        <p>The evaluation looked at ATPG (automatic test pattern generation) coverage achieved by the inserted structures, how much timing closure was affected once the DFT logic was in place, and the resulting area and power overhead relative to the un-instrumented core.</p>
+        <p>The goal throughout was to understand the trade-off space directly: how much fault coverage a given DFT approach buys, and what it costs in area, power, and timing margin on a real RISC-V core rather than an idealized model.</p>
+      </div>
+
+      <div>
+        <table class="spec-table">
+          <tbody>
+            <tr><th>Affiliation</th><td>CMOS Design and Reliability Group, University of Waterloo &mdash; Prof. Manoj Sachdev</td></tr>
+            <tr><th>Core</th><td>RV32IM RISC-V processor</td></tr>
+            <tr><th>Instrumentation</th><td>DFT structures for fault detection</td></tr>
+            <tr><th>Evaluated metrics</th><td>ATPG coverage, timing closure, area overhead, power impact</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Evaluation criteria</h2>
+        <span class="section-index">01 / TRADE-OFFS</span>
+      </div>
+      <ol class="process-list">
+        <li><div><h4>DFT instrumentation</h4><p>Inserting fault-detection structures into the RV32IM core.</p></div></li>
+        <li><div><h4>ATPG coverage</h4><p>Measuring the fraction of modeled faults the generated test patterns detect.</p></div></li>
+        <li><div><h4>Timing closure</h4><p>Checking whether the instrumented core still meets timing under the target constraints.</p></div></li>
+        <li><div><h4>Area overhead</h4><p>Comparing instrumented core area against the baseline core.</p></div></li>
+        <li><div><h4>Power impact</h4><p>Assessing the additional power drawn by the fault-detection logic.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="disclosure">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Disclosure</h2>
+        <span class="section-index">02 / SCOPE</span>
+      </div>
+
+      <div class="disclosure">
+        <div class="disclosure-col">
+          <p class="label">Open to walk through</p>
+          <ul class="disclosure-list">
+            <li>How the fault-detection structures attach to an RV32IM core, and which parts of the pipeline constrain where they can go.</li>
+            <li>Fault models used, how ATPG coverage was generated and measured, and what the pattern set does and does not reach.</li>
+            <li>How overhead was measured against the un-instrumented baseline so the comparison stays honest.</li>
+            <li>The shape of the trade-off curve &mdash; where coverage starts costing timing margin rather than just area.</li>
+          </ul>
+        </div>
+
+        <div class="disclosure-col disclosure-held">
+          <p class="label">Not published here</p>
+          <ul class="disclosure-list">
+            <li>Quantified coverage, area and power figures &mdash; held until the associated paper is published.</li>
+            <li>Absolute area and power in the target process, which characterize the library rather than the design.</li>
+            <li>The foundry and PDK revision, and library and cell names.</li>
+            <li>Netlists, constraint files, generated pattern sets and tool scripts.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclosure-note">This work is carried out with the CMOS Design and Reliability Group at the University of Waterloo under licensed academic access to a 12&nbsp;nm FinFET PDK. The core itself is an open-source RV32IM implementation; what is held back is the measured result, not the method.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

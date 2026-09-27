@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Khoi Nguyen — Electrical Engineering, University of Manitoba</title>
+<meta name="description" content="Portfolio of Khoi Nguyen, an electrical engineering student working across ASIC design, MEMS fabrication, and hardware reliability research." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="canonical" href="https://akln0401.github.io/portfolio/" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#f4f2ed" />
+<meta name="author" content="Khoi Nguyen" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
+<meta property="og:title" content="Khoi Nguyen — Electrical Engineering, University of Manitoba" />
+<meta property="og:description" content="Portfolio of Khoi Nguyen, an electrical engineering student working across ASIC design, MEMS fabrication, and hardware reliability research." />
+<meta property="og:url" content="https://akln0401.github.io/portfolio/" />
+<meta property="og:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="Khoi Nguyen — engineering portfolio: silicon, sensors, and hardware" />
+<meta property="og:locale" content="en_CA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Khoi Nguyen — Electrical Engineering, University of Manitoba" />
+<meta name="twitter:description" content="Portfolio of Khoi Nguyen, an electrical engineering student working across ASIC design, MEMS fabrication, and hardware reliability research." />
+<meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>EE · University of Manitoba</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <p class="label hero-eyebrow">Electrical Engineering &middot; University of Manitoba</p>
+        <h1>Building at the intersection of silicon, sensors, and hardware.</h1>
+        <p class="hero-intro">I'm Khoi Nguyen, an electrical engineering student interested in semiconductor technology, ASIC design, MEMS, and electronic materials. My work spans cleanroom fabrication, digital hardware design, and hardware reliability research.</p>
+        <div class="hero-links">
+          <a class="btn btn-primary" href="index.html#projects">View projects</a>
+          <a class="btn" href="about.html">About me</a>
+        </div>
+      </div>
+
+      <figure class="hero-figure">
+        <svg viewBox="0 0 400 412" role="img" aria-labelledby="dieTitle dieDesc">
+          <title id="dieTitle">Annotated NVDLA die floorplan</title>
+          <desc id="dieDesc">Annotated die-plot style floorplan of the NVDLA accelerator: an evenly spaced I/O pad ring with chamfered corner cells, external interface labels (DBB AXI, CSB, IRQ), a power ring, six named placement partitions each labelled with its utilization target, two banks of SRAM macros, and a legend identifying partitions, SRAM macros, over-utilized regions, and the power ring.</desc>
+          <defs>
+            <pattern id="hatchAccent" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="5" stroke="#c23b3b" stroke-width="1" />
+            </pattern>
+          </defs>
+
+          <!-- external interface labels, in the manner of a die-plot annotation -->
+          <g font-family="IBM Plex Mono, monospace" font-size="7" fill="#6c6b67" letter-spacing="0.06em">
+            <text x="200" y="11" text-anchor="middle">DBB AXI — EXTERNAL MEMORY</text>
+            <text transform="rotate(-90 10 200)" x="10" y="200" text-anchor="middle">CSB</text>
+            <text transform="rotate(90 392 200)" x="392" y="200" text-anchor="middle">IRQ</text>
+          </g>
+
+          <!-- I/O pad ring: 7 pads per side, 32 long on a 50 pitch, giving equal 4-unit margins inside the die edge -->
+          <g fill="none" stroke="#17191c" stroke-width="0.9">
+            <rect x="18" y="34" width="8" height="32" /><rect x="18" y="84" width="8" height="32" />
+            <rect x="18" y="134" width="8" height="32" /><rect x="18" y="184" width="8" height="32" />
+            <rect x="18" y="234" width="8" height="32" /><rect x="18" y="284" width="8" height="32" />
+            <rect x="18" y="334" width="8" height="32" />
+
+            <rect x="374" y="34" width="8" height="32" /><rect x="374" y="84" width="8" height="32" />
+            <rect x="374" y="134" width="8" height="32" /><rect x="374" y="184" width="8" height="32" />
+            <rect x="374" y="234" width="8" height="32" /><rect x="374" y="284" width="8" height="32" />
+            <rect x="374" y="334" width="8" height="32" />
+
+            <rect x="34" y="18" width="32" height="8" /><rect x="84" y="18" width="32" height="8" />
+            <rect x="134" y="18" width="32" height="8" /><rect x="184" y="18" width="32" height="8" />
+            <rect x="234" y="18" width="32" height="8" /><rect x="284" y="18" width="32" height="8" />
+            <rect x="334" y="18" width="32" height="8" />
+
+            <rect x="34" y="374" width="32" height="8" /><rect x="84" y="374" width="32" height="8" />
+            <rect x="134" y="374" width="32" height="8" /><rect x="184" y="374" width="32" height="8" />
+            <rect x="234" y="374" width="32" height="8" /><rect x="284" y="374" width="32" height="8" />
+            <rect x="334" y="374" width="32" height="8" />
+          </g>
+
+          <!-- corner cells, chamfered at the outer corner, clear of the pad rows -->
+          <g fill="none" stroke="#17191c" stroke-width="0.9">
+            <polygon points="22,18 30,18 30,30 18,30 18,22" />
+            <polygon points="370,18 378,18 382,22 382,30 370,30" />
+            <polygon points="18,370 30,370 30,382 22,382 18,378" />
+            <polygon points="370,370 382,370 382,378 378,382 370,382" />
+          </g>
+
+          <!-- die boundary -->
+          <rect x="30" y="30" width="340" height="340" fill="none" stroke="#17191c" stroke-width="1.3" />
+
+          <!-- power ring -->
+          <rect x="44" y="44" width="312" height="312" fill="none" stroke="#c23b3b" stroke-width="1.1" stroke-dasharray="6 3" />
+          <text x="48" y="41" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#c23b3b">VDD/VSS RING</text>
+
+          <!-- placement partitions -->
+          <g fill="none" stroke="#17191c" stroke-width="0.9">
+            <rect x="56" y="56" width="180" height="80" />
+            <rect x="242" y="56" width="102" height="80" />
+            <rect x="56" y="144" width="88" height="100" />
+            <rect x="244" y="144" width="100" height="100" />
+            <rect x="56" y="252" width="140" height="44" />
+            <rect x="202" y="252" width="142" height="44" />
+            <rect x="56" y="304" width="288" height="40" />
+          </g>
+          <rect x="150" y="144" width="88" height="100" fill="url(#hatchAccent)" stroke="#17191c" stroke-width="0.9" />
+
+          <!-- routing texture over the largest logic partition -->
+          <g stroke="#c9c6bd" stroke-width="0.4" opacity="0.7">
+            <line x1="70" y1="60" x2="70" y2="132" /><line x1="90" y1="60" x2="90" y2="132" />
+            <line x1="110" y1="60" x2="110" y2="132" /><line x1="130" y1="60" x2="130" y2="132" />
+            <line x1="150" y1="60" x2="150" y2="132" /><line x1="170" y1="60" x2="170" y2="132" />
+            <line x1="190" y1="60" x2="190" y2="132" /><line x1="210" y1="60" x2="210" y2="132" />
+            <line x1="228" y1="60" x2="228" y2="132" />
+            <line x1="60" y1="86" x2="232" y2="86" /><line x1="60" y1="104" x2="232" y2="104" />
+            <line x1="60" y1="122" x2="232" y2="122" />
+          </g>
+
+          <!-- SRAM macro banks -->
+          <g fill="#3b5fa0" fill-opacity="0.16" stroke="#3b5fa0" stroke-width="0.7">
+            <rect x="243" y="66" width="22" height="20" /><rect x="269" y="66" width="22" height="20" />
+            <rect x="295" y="66" width="22" height="20" /><rect x="321" y="66" width="22" height="20" />
+            <rect x="243" y="90" width="22" height="20" /><rect x="269" y="90" width="22" height="20" />
+            <rect x="295" y="90" width="22" height="20" /><rect x="321" y="90" width="22" height="20" />
+            <rect x="243" y="114" width="22" height="20" /><rect x="269" y="114" width="22" height="20" />
+            <rect x="295" y="114" width="22" height="20" /><rect x="321" y="114" width="22" height="20" />
+
+            <rect x="202" y="262" width="26" height="28" /><rect x="231" y="262" width="26" height="28" />
+            <rect x="260" y="262" width="26" height="28" /><rect x="289" y="262" width="26" height="28" />
+            <rect x="318" y="262" width="26" height="28" />
+          </g>
+
+          <!-- block labels, placed on the blocks themselves -->
+          <g font-family="IBM Plex Mono, monospace" fill="#6c6b67">
+            <text x="62" y="68" font-size="7" fill="#17191c">u_partition_o</text>
+            <text x="62" y="78" font-size="6.8">TU=41.2%</text>
+
+            <text x="246" y="63" font-size="6.5" fill="#3b5fa0">CBUF SRAM MACROS</text>
+
+            <text x="60" y="156" font-size="7" fill="#17191c">u_partition_ma</text>
+            <text x="60" y="166" font-size="6.8">TU=63.8%</text>
+
+            <rect x="152" y="148" width="62" height="22" fill="#eeece5" />
+            <text x="154" y="156" font-size="7" fill="#c23b3b">u_partition_c</text>
+            <text x="154" y="166" font-size="6.8" fill="#c23b3b">TU=194.3%</text>
+
+            <text x="248" y="156" font-size="7" fill="#17191c">u_partition_mb</text>
+            <text x="248" y="166" font-size="6.8">TU=58.4%</text>
+
+            <text x="60" y="264" font-size="7" fill="#17191c">u_partition_a</text>
+            <text x="60" y="274" font-size="6.8">TU=47.9%</text>
+
+            <text x="206" y="259" font-size="6.5" fill="#3b5fa0">SRAM</text>
+
+            <text x="60" y="316" font-size="7" fill="#17191c">u_partition_p</text>
+            <text x="60" y="326" font-size="6.8">TU=52.1%</text>
+          </g>
+
+          <!-- legend -->
+          <g font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#6c6b67">
+            <rect x="30" y="394" width="8" height="8" fill="none" stroke="#17191c" stroke-width="0.9" />
+            <text x="42" y="401">PARTITION</text>
+            <rect x="94" y="394" width="8" height="8" fill="#3b5fa0" fill-opacity="0.16" stroke="#3b5fa0" stroke-width="0.7" />
+            <text x="106" y="401">SRAM MACRO</text>
+            <rect x="176" y="394" width="8" height="8" fill="url(#hatchAccent)" stroke="#17191c" stroke-width="0.7" />
+            <text x="188" y="401">TU &gt; 100%</text>
+            <line x1="248" y1="398" x2="260" y2="398" stroke="#c23b3b" stroke-width="1.1" stroke-dasharray="4 2" />
+            <text x="264" y="401">POWER RING</text>
+          </g>
+        </svg>
+        <figcaption>
+          <span>FIG. 01 — NVDLA DIE FLOORPLAN</span>
+          <span>SCALE N.T.S.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <ul>
+        <li>ASIC DESIGN</li>
+        <li>MEMS &amp; MICROSENSORS</li>
+        <li>SEMICONDUCTOR FABRICATION</li>
+        <li>HARDWARE RELIABILITY</li>
+        <li>ELECTRONIC MATERIALS</li>
+        <li>DFT / RISC-V</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Experience</h2>
+        <span class="section-index">01 / LAB &amp; INDUSTRY</span>
+      </div>
+
+      <div class="exp-list">
+        <article class="exp-item">
+          <div class="exp-when">Current &middot; Part-time, remote</div>
+          <div>
+            <h3 class="exp-role">ASIC Design</h3>
+            <p class="exp-org">CMOS Design and Reliability Group, University of Waterloo &mdash; Prof. Manoj Sachdev</p>
+            <p class="exp-focus">
+              <strong>Focus</strong>
+              12-nm FinFET ASIC design and reliability research: synthesis, static timing analysis, MMMC, DFT, and physical design.
+            </p>
+          </div>
+        </article>
+
+        <article class="exp-item">
+          <div class="exp-when">Current</div>
+          <div>
+            <h3 class="exp-role">Student Researcher</h3>
+            <p class="exp-org">Nano-Systems Fabrication Laboratory, University of Manitoba</p>
+            <p class="exp-focus">
+              <strong>Focus</strong>
+              Flexible and MEMS sensor fabrication: photolithography, ion implantation, RIE/ICP, PVD/CVD, wafer processing, SEM, profilometry, and ellipsometry.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="cert-block">
+        <p class="label">Certifications</p>
+        <ul class="cert-list">
+          <li>
+            <span class="cert-name">Cadence Certified: Advanced Synthesis with Genus</span>
+            <span class="cert-issuer">Cadence Design Systems</span>
+            <span class="cert-date">May 2026</span>
+          </li>
+          <li>
+            <span class="cert-name">Cadence Certified: Low-Power Flow with Innovus Implementation System</span>
+            <span class="cert-issuer">Cadence Design Systems</span>
+            <span class="cert-date">May 2026</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <span class="section-index">02 / SELECTED WORK</span>
+      </div>
+
+      <div class="project-list">
+        <a class="project-row" href="projects/dft.html">
+          <span class="project-num">01</span>
+          <div class="project-body">
+            <h3>Error-Detection DFT Architectures</h3>
+            <p>Designed and evaluated multiple fault-detection architectures for 12-nm FinFET benchmark circuits and RISC-V processors, spanning RTL, synthesis, DFT insertion, simulation, equivalence checking, timing analysis, and physical implementation.</p>
+            <p class="project-tools">Genus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Innovus</p>
+          </div>
+          <span class="project-cat">ASIC Design &middot; DFT &middot; 12 nm</span>
+          <span class="project-go">View &rarr;</span>
+        </a>
+
+        <a class="project-row" href="projects/nvdla.html">
+          <span class="project-num">02</span>
+          <div class="project-body">
+            <h3>NVIDIA NVDLA RTL-to-GDSII</h3>
+            <p>Implemented and evaluated an open-source NVIDIA deep-learning accelerator through synthesis, timing analysis, power analysis, floorplanning, placement, routing, and physical verification in a 12-nm FinFET flow.</p>
+          </div>
+          <span class="project-cat">NPU &middot; Physical Design &middot; ASIC</span>
+          <span class="project-go">View &rarr;</span>
+        </a>
+
+        <a class="project-row" href="projects/riscv.html">
+          <span class="project-num">03</span>
+          <div class="project-body">
+            <h3>RISC-V Fault Detection</h3>
+            <p>Evaluated hardware fault-detection approaches on an RV32IM processor, including DFT instrumentation, ATPG coverage, timing closure, area overhead, and power impact.</p>
+          </div>
+          <span class="project-cat">Digital Hardware &middot; DFT &middot; Reliability</span>
+          <span class="project-go">View &rarr;</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH TEASER -->
+  <section class="section" id="research">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Research</h2>
+        <span class="section-index">03 / CLEANROOM WORK</span>
+      </div>
+
+      <div class="research-teaser">
+        <div>
+          <p>Two separate threads. At Waterloo, a variable D-Q delay flip-flop for transition-fault testing on an RV32IM RISC-V core in a 12 nm FinFET process. At Manitoba, flexible and MEMS sensor fabrication in the Nano-Systems Fabrication Laboratory.</p>
+          <a class="btn" href="research.html">Read the research page</a>
+        </div>
+        <figure class="diagram-frame dq-figure">
+          <div class="fig-scroll">
+          <svg viewBox="0 0 320 196" role="img" aria-label="Transition-fault detection by running the same vectors twice. On the first run at nominal delay, data arrives at the capture flip-flop with slack to spare. On the second run an added launch delay pushes arrival later: a healthy path still lands before the setup window, while a path carrying a delay fault crosses into it and captures a different value.">
+            <defs>
+              <marker id="tAcc" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#c23b3b" />
+              </marker>
+            </defs>
+
+            <!-- setup window -->
+            <rect x="236" y="18" width="26" height="128" fill="#c23b3b" fill-opacity="0.08" />
+            <line x1="236" y1="18" x2="236" y2="146" stroke="#c23b3b" stroke-width="0.9" stroke-dasharray="3 3" />
+            <text x="249" y="14" font-size="7" fill="#c23b3b" text-anchor="middle">SETUP</text>
+
+            <!-- clock, launch edge to capture edge -->
+            <polyline points="40,42 64,42 64,26 152,26 152,42 262,42 262,26 292,26"
+                      fill="none" stroke="#17191c" stroke-width="1.2" />
+            <text x="4" y="39" font-size="8" fill="#6c6b67">CLK</text>
+            <line x1="64" y1="42" x2="64" y2="152" stroke="#c9c6bd" stroke-width="0.8" stroke-dasharray="2 3" />
+            <line x1="262" y1="42" x2="262" y2="152" stroke="#c9c6bd" stroke-width="0.8" stroke-dasharray="2 3" />
+            <text x="64" y="164" font-size="7.5" fill="#6c6b67" text-anchor="middle">launch</text>
+            <text x="262" y="164" font-size="7.5" fill="#6c6b67" text-anchor="middle">capture</text>
+
+            <!-- run 1, nominal -->
+            <text x="4" y="72" font-size="7.5" fill="#6c6b67">RUN 1</text>
+            <text x="4" y="81" font-size="7.5" fill="#6c6b67">nominal</text>
+            <rect x="64" y="68" width="122" height="9" fill="#17191c" fill-opacity="0.18" stroke="#17191c" stroke-width="0.7" />
+            <text x="270" y="76" font-size="7.5" fill="#6c6b67">PASS</text>
+
+            <!-- run 2, healthy path -->
+            <text x="4" y="106" font-size="7.5" fill="#6c6b67">RUN 2</text>
+            <text x="4" y="115" font-size="7.5" fill="#6c6b67">healthy</text>
+            <rect x="64" y="102" width="160" height="9" fill="#17191c" fill-opacity="0.18" stroke="#17191c" stroke-width="0.7" />
+            <text x="270" y="110" font-size="7.5" fill="#6c6b67">PASS</text>
+            <line x1="186" y1="95" x2="224" y2="95" stroke="#c23b3b" stroke-width="0.9" />
+            <line x1="186" y1="91" x2="186" y2="99" stroke="#c23b3b" stroke-width="0.9" />
+            <line x1="224" y1="91" x2="224" y2="99" stroke="#c23b3b" stroke-width="0.9" />
+            <text x="205" y="88" font-size="7.5" fill="#c23b3b" text-anchor="middle">&#916;t</text>
+
+            <!-- run 2, delay fault -->
+            <text x="4" y="140" font-size="7.5" fill="#6c6b67">RUN 2</text>
+            <text x="4" y="149" font-size="7.5" fill="#c23b3b">faulty</text>
+            <rect x="64" y="136" width="190" height="9" fill="#c23b3b" fill-opacity="0.22" stroke="#c23b3b" stroke-width="0.8" />
+            <text x="270" y="144" font-size="7.5" fill="#c23b3b">DIFFERS</text>
+
+            <!-- what changes between runs -->
+            <line x1="64" y1="186" x2="76" y2="186" stroke="#c23b3b" stroke-width="1" marker-end="url(#tAcc)" />
+            <text x="82" y="189" font-size="7.5" fill="#6c6b67">only DLY_SEL changes between the two runs</text>
+          </svg>
+          </div>
+          <figcaption>
+            <span>TRANSITION-FAULT DETECTION</span>
+            <span>SAME VECTORS, TWICE</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <p class="label">Get in touch</p>
+          <p class="contact-lead" style="margin-top:16px;">Open to research, internship, and lab collaboration conversations.</p>
+        </div>
+        <ul class="contact-list">
+          <li><a href="mailto:anhkhoi_2005@icloud.com"><span>Email</span><span class="contact-arrow">&rarr;</span></a></li>
+          <li><a href="https://github.com/AKLN0401" target="_blank" rel="noopener">GitHub<span class="contact-arrow">&rarr;</span></a></li>
+          <li><a href="https://www.linkedin.com/in/anhkhoilenguyen/" target="_blank" rel="noopener">LinkedIn<span class="contact-arrow">&rarr;</span></a></li>
+          <li><a href="assets/khoi-nguyen-cv.pdf">CV (PDF)<span class="contact-arrow">&rarr;</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span>Winnipeg, Manitoba</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
