@@ -28,7 +28,7 @@
 <meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -64,19 +64,19 @@
   <section class="hero">
     <div class="wrap">
       <div class="hero-text">
-        <p class="label hero-eyebrow">Digital IC / ASIC Design &middot; Electrical Engineering, University of Manitoba</p>
-        <h1>Building at the intersection of silicon, sensors, and hardware.</h1>
-        <p class="hero-intro">I'm Khoi Nguyen, an electrical engineering student focused on digital IC and ASIC design. I have taken designs from RTL to GDSII in a 12&nbsp;nm FinFET process &mdash; synthesis, DFT, floorplanning, place-and-route and timing closure &mdash; including a tapeout with the CMOS Design and Reliability Group at the University of Waterloo. Before that I spent a year in a Class&nbsp;10 cleanroom fabricating CMOS and MEMS devices.</p>
+        <p class="label hero-eyebrow">Digital IC / ASIC physical design</p>
+        <h1>Khoi Nguyen</h1>
+        <p class="hero-intro">Electrical engineering student at the University of Manitoba, focused on digital IC and ASIC physical design. I have taken designs from RTL to GDSII in a 12&nbsp;nm FinFET process &mdash; synthesis, DFT, floorplanning, place-and-route and timing closure &mdash; including a tapeout with the CMOS Design and Reliability Group at the University of Waterloo. Before that I spent a year in a Class&nbsp;10 cleanroom fabricating CMOS and MEMS devices.</p>
 
         <dl class="hero-facts">
           <div><dt>Focus</dt><dd>Digital IC / ASIC &middot; RTL-to-GDSII &middot; DFT</dd></div>
-          <div><dt>Process</dt><dd>12&nbsp;nm FinFET</dd></div>
+          <div><dt>Process</dt><dd>12&nbsp;nm FinFET &middot; ASAP7 7&nbsp;nm (predictive)</dd></div>
           <div><dt>Flow</dt><dd>Genus &middot; Innovus &middot; Tempus &middot; Voltus &middot; Pegasus &middot; Modus</dd></div>
           <div><dt>Fab</dt><dd>200&nbsp;nm DUV lithography &middot; ion implant &middot; ICP-RIE &middot; PVD/CVD</dd></div>
         </dl>
 
         <div class="hero-links">
-          <a class="btn btn-primary" href="index.html#projects">ASIC projects</a>
+          <a class="btn btn-primary" href="index.html#projects">Projects</a>
           <a class="btn" href="assets/khoi-nguyen-cv.pdf">Résumé (PDF)</a>
         </div>
       </div>
@@ -92,27 +92,13 @@
     </div>
   </section>
 
-  <div class="strip">
-    <div class="wrap">
-      <ul>
-        <li>DIGITAL IC / ASIC</li>
-        <li>RTL-TO-GDSII</li>
-        <li>12 NM FINFET</li>
-        <li>SYNTHESIS &amp; STA</li>
-        <li>DFT / ATPG</li>
-        <li>PHYSICAL DESIGN</li>
-        <li>CLEANROOM FABRICATION</li>
-        <li>MEMS &amp; SENSORS</li>
-      </ul>
-    </div>
-  </div>
 
   <!-- EXPERIENCE -->
   <section class="section" id="experience">
     <div class="wrap">
       <div class="section-head">
         <h2>Experience</h2>
-        <span class="section-index">01 / ASIC &amp; FABRICATION</span>
+        <span class="section-index">ASIC &amp; fabrication</span>
       </div>
 
       <div class="exp-list">
@@ -122,8 +108,7 @@
             <h3 class="exp-role">ASIC Design Co-op / Visiting Research Fellow</h3>
             <p class="exp-org">CMOS Design and Reliability Group, University of Waterloo &mdash; Prof. Manoj Sachdev</p>
             <ul class="exp-points">
-              <li>Backend physical design for a multi-block RISC-V SoC in a 12&nbsp;nm FinFET process: synthesis, floorplanning and timing closure in Genus and Innovus.</li>
-              <li>RTL-to-GDSII implementation through tapeout across the Cadence digital flow: Genus, Innovus, Tempus, Voltus, Pegasus and Modus.</li>
+              <li>Backend physical design for a multi-block RISC-V SoC in a 12&nbsp;nm FinFET process, RTL to GDSII through tapeout: synthesis, floorplanning, place-and-route and timing closure in Genus and Innovus, with signoff in Tempus, Voltus and Pegasus.</li>
               <li>DFT in Modus: scan insertion, ATPG pattern generation and fault-simulation debug.</li>
               <li>Standard-cell layout for flip-flops and SRAM bitcells in Virtuoso, DRC/LVS clean.</li>
               <li>Research on a variable D-Q delay flip-flop for transition-fault testing on an RV32IM core; paper pending publication.</li>
@@ -153,30 +138,15 @@
   <section class="section" id="projects">
     <div class="wrap">
       <div class="section-head">
-        <h2>Digital IC / ASIC projects</h2>
-        <span class="section-index">02 / SELECTED WORK</span>
+        <h2>Projects</h2>
+        <span class="section-index">Selected work</span>
       </div>
 
+      <p class="label proj-group is-active" style="margin:0 0 12px;">In progress</p>
       <div class="proj-list">
-        <a class="proj" href="projects/nvdla.html">
-          <div class="proj-head">
-            <span class="proj-num">01</span>
-            <h3>NVIDIA NVDLA, RTL-to-GDSII</h3>
-            <span class="proj-cat">Physical design &middot; Self-directed</span>
-          </div>
-          <p class="proj-sum">Carried NVIDIA's open-source deep-learning accelerator from RTL through a full physical-design flow: hierarchical synthesis across six partitions, SRAM hard-macro integration, floorplanning, place-and-route and physical verification.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 128 dual-port SRAM macros</dd></div>
-            <div><dt>Tools</dt><dd>Genus &middot; Modus &middot; Innovus</dd></div>
-            <div><dt>Scale</dt><dd>6.89&nbsp;M instances after synthesis, 8.76&nbsp;M after routing</dd></div>
-            <div><dt>Results</dt><dd>0 DRC violations &middot; 0 connectivity errors &middot; reg-to-reg setup met on 3.53&nbsp;M paths</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
-        </a>
-
         <a class="proj" href="projects/nvdla-asap7.html">
           <div class="proj-head">
-            <span class="proj-num">02</span>
+            <span class="proj-num">01</span>
             <h3>NVDLA at 1&nbsp;GHz on ASAP7 7&nbsp;nm</h3>
             <span class="proj-cat">Synthesis &middot; Timing closure &middot; In progress</span>
           </div>
@@ -190,9 +160,45 @@
           <span class="proj-go">Case study &rarr;</span>
         </a>
 
-        <a class="proj" href="projects/riscv.html">
+        <a class="proj" href="projects/glove.html">
+          <div class="proj-head">
+            <span class="proj-num">02</span>
+            <h3>Tap-to-Click Glove, Printed Sensors</h3>
+            <span class="proj-cat">Printed electronics &middot; ECE 4600 capstone</span>
+          </div>
+          <p class="proj-sum">A glove that works as a mouse: thumb taps on silver fingertip pads click, carbon strain sensors over the knuckles read a fist, and an IMU on the wrist moves the cursor. Sensors printed on stretchable TPU with a Voltera NOVA; interactive 3D models on the page.</p>
+          <dl class="proj-spec">
+            <div><dt>Materials</dt><dd>Silver and carbon inks &middot; stretchable TPU film</dd></div>
+            <div><dt>Tools</dt><dd>Voltera NOVA &middot; ESP32-S3 &middot; Blender</dd></div>
+            <div><dt>My role</dt><dd>Sensor fabrication and hardware design (team of 6)</dd></div>
+            <div><dt>Targets</dt><dd>&ge; 97% taps detected &middot; &le; 50&nbsp;ms tap-to-click</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
+        </a>
+
+      </div>
+
+      <p class="label proj-group is-done" style="margin:48px 0 12px;">Completed</p>
+      <div class="proj-list">
+        <a class="proj" href="projects/nvdla.html">
           <div class="proj-head">
             <span class="proj-num">03</span>
+            <h3>NVIDIA NVDLA, RTL-to-GDSII</h3>
+            <span class="proj-cat">Physical design &middot; Self-directed</span>
+          </div>
+          <p class="proj-sum">Carried NVIDIA's open-source deep-learning accelerator from RTL through a full physical-design flow: hierarchical synthesis across six partitions, SRAM hard-macro integration, floorplanning, place-and-route and physical verification.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 128 dual-port SRAM macros</dd></div>
+            <div><dt>Tools</dt><dd>Genus &middot; Modus &middot; Innovus</dd></div>
+            <div><dt>Scale</dt><dd>6.89&nbsp;M instances after synthesis, 8.76&nbsp;M after routing</dd></div>
+            <div><dt>Results</dt><dd>0 DRC violations &middot; 0 connectivity errors &middot; reg-to-reg setup met on 3.53&nbsp;M paths</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
+        </a>
+
+        <a class="proj" href="projects/riscv.html">
+          <div class="proj-head">
+            <span class="proj-num">04</span>
             <h3>RISC-V Fault Detection</h3>
             <span class="proj-cat">DFT &middot; Reliability &middot; Research</span>
           </div>
@@ -208,7 +214,7 @@
 
         <a class="proj" href="projects/dft.html">
           <div class="proj-head">
-            <span class="proj-num">04</span>
+            <span class="proj-num">05</span>
             <h3>Error-Detection DFT Architectures</h3>
             <span class="proj-cat">DFT &middot; Verification &middot; Research</span>
           </div>
@@ -230,12 +236,12 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Semiconductor fabrication</h2>
-        <span class="section-index">03 / PROCESS &rarr; DEVICE</span>
+        <span class="section-index">Process &rarr; device</span>
       </div>
 
       <div class="fab-grid">
         <div>
-          <p class="fab-lead">The ASIC work above sits on a process. At the Nano-Systems Fabrication Laboratory I ran that process by hand &mdash; patterning, doping, etching and depositing films on real wafers, then measuring what came out &mdash; for CMOS transistors and for flexible and MEMS sensors.</p>
+          <p class="fab-lead">A year in the Nano-Systems Fabrication Laboratory, running CMOS and MEMS process steps on 6-inch wafers and measuring the results: CMOS transistors, and flexible and MEMS sensors with interdigitated electrode arrays.</p>
           <table class="spec-table">
             <tbody>
               <tr><th>Facility</th><td>Class 10 cleanroom, University of Manitoba</td></tr>
@@ -267,7 +273,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Research</h2>
-        <span class="section-index">04 / DELAY-FAULT TEST</span>
+        <span class="section-index">Delay-fault test</span>
       </div>
 
       <div class="research-teaser">
@@ -347,7 +353,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Skills</h2>
-        <span class="section-index">05 / TOOLS &amp; METHODS</span>
+        <span class="section-index">Tools &amp; methods</span>
       </div>
 
       <div class="skill-grid">
@@ -384,7 +390,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Education</h2>
-        <span class="section-index">06 / RECORD</span>
+        <span class="section-index">Record</span>
       </div>
 
       <div class="two-col">

@@ -3,12 +3,12 @@
    Design tokens
    ============================================================ */
 :root {
-  --ink: #17191c;
-  --paper: #f4f2ed;
-  --paper-raised: #eeece5;
-  --muted: #6c6b67;
-  --line: #c9c6bd;
-  --accent: #c23b3b;
+  --ink: #161616;
+  --paper: #ffffff;
+  --paper-raised: #f4f4f4;
+  --muted: #525252;
+  --line: #e0e0e0;
+  --accent: #0f62fe;
   --accent-ink: #ffffff;
 
   --font-display: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
@@ -1196,24 +1196,7 @@ svg text {
    Motion
    ------------------------------------------------------------ */
 
-@keyframes hero-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-text > * {
-  animation: hero-in 560ms var(--ease) both;
-}
-
-.hero-text > *:nth-child(2) { animation-delay: 60ms; }
-.hero-text > *:nth-child(3) { animation-delay: 120ms; }
-.hero-text > *:nth-child(4) { animation-delay: 180ms; }
+/* (hero entrance animation removed: content shows immediately) */
 
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -1480,4 +1463,113 @@ svg text {
     content: "scroll to read \2192";
     color: var(--line);
   }
+}
+
+/* Project status groups (index) */
+.proj-group { display: flex; align-items: center; gap: 8px; }
+.proj-group::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.proj-group.is-active { color: #2e7d32; }
+.proj-group.is-done { color: var(--muted); }
+
+
+/* ============================================================
+   Carbon-style theme (white surfaces, light Plex display type,
+   black masthead, flat square tiles, single blue accent)
+   ============================================================ */
+h1, h2 { font-weight: 300; letter-spacing: -0.01em; }
+h1 { line-height: 1.12; }
+h2 { line-height: 1.2; }
+h3, h4 { font-weight: 500; letter-spacing: 0; }
+
+.site-header { background: #161616; border-bottom: 0; }
+.site-header .wrap { height: 56px; }
+.logo strong { color: #f4f4f4; font-weight: 500; }
+.logo span { color: #a8a8a8; }
+.nav-list a { color: #c6c6c6; font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 14px; border-bottom: 2px solid transparent; padding: 0 2px; height: 56px; display: inline-flex; align-items: center; }
+.nav-list a:hover { color: #f4f4f4; border-bottom-color: transparent; }
+.nav-list a[aria-current="page"] { color: #f4f4f4; border-bottom-color: var(--accent); }
+.nav-list a.nav-cv { border: 0; background: var(--accent); color: #fff; padding: 0 16px; }
+.nav-list a.nav-cv:hover { background: #0353e9; color: #fff; }
+.nav-toggle { border-color: #525252; color: #f4f4f4; }
+.nav-toggle-bars span { background: #f4f4f4; }
+@media (max-width: 920px) {
+  .nav-list { background: #161616; }
+  .nav-list a { padding: 0; height: 48px; }
+}
+
+.section { border-top-color: var(--line); }
+.section-index { color: var(--muted); font-family: var(--font-body); letter-spacing: 0; text-transform: none; }
+
+.proj-list { background: transparent; border: 0; gap: 2px; }
+.proj { background: var(--paper-raised); }
+.proj:hover { background: #e8e8e8; }
+.proj-go { color: var(--accent); }
+.spec-table th { color: var(--muted); }
+a { color: var(--accent); }
+.btn { border-radius: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+
+/* ============================================================
+   Warm editorial theme (layered on the flat-tile structure):
+   ivory paper, serif display headlines, light masthead,
+   near-black text, clay accent used sparingly
+   ============================================================ */
+:root {
+  --ink: #141413;
+  --paper: #faf9f5;
+  --paper-raised: #f0eee6;
+  --muted: #5e5d59;
+  --line: #e3e0d6;
+  --accent: #141413;
+  --clay: #c96442;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-body: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-body);
+}
+code, kbd, pre, samp { font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; font-size: 0.92em; }
+.label, .section-index, .proj-num, .proj-spec dt { font-variant-numeric: tabular-nums; }
+body { font-family: var(--font-body); background: var(--paper); color: var(--ink); }
+h1, h2 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; }
+h1 { line-height: 1.08; }
+h3, h4 { font-family: var(--font-body); font-weight: 600; letter-spacing: -0.005em; }
+
+.site-header { background: rgba(250, 249, 245, 0.96); border-bottom: 1px solid var(--line); }
+.logo strong { color: var(--ink); font-family: var(--font-body); font-weight: 600; }
+.logo span { color: var(--muted); }
+.nav-list a { color: var(--muted); font-family: var(--font-body); }
+.nav-list a:hover { color: var(--ink); }
+.nav-list a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--clay); }
+.nav-list a.nav-cv { background: var(--ink); color: var(--paper); height: 36px; padding: 0 16px; border-radius: 8px; }
+.nav-list a.nav-cv:hover { background: #3d3d3a; color: var(--paper); }
+.nav-toggle { border-color: var(--line); color: var(--ink); }
+.nav-toggle-bars span { background: var(--ink); }
+@media (max-width: 920px) { .nav-list { background: var(--paper); } }
+
+a { color: var(--ink); text-decoration-color: var(--clay); text-underline-offset: 3px; }
+.proj { background: var(--paper-raised); border-radius: 12px; }
+.proj:hover { background: #e8e5da; }
+.proj-list { gap: 12px; }
+.proj-go { color: var(--clay); }
+.btn { border-radius: 8px; }
+.section-index { font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+:focus-visible { outline: 2px solid var(--clay); outline-offset: 2px; }
+
+/* Final review: readability and restraint */
+.hero h1 { font-size: clamp(40px, 5vw, 60px); }
+.hero-intro { font-size: 18px; line-height: 1.6; max-width: 60ch; }
+.exp-points li { font-size: 15.5px; line-height: 1.6; }
+.exp-tools { font-size: 12.5px; }
+.proj-sum { font-size: 16px; line-height: 1.6; }
+.proj-spec dd { font-size: 14.5px; }
+.proj-spec dt, .label { font-size: 12px; }
+.proj { border-radius: 4px; }
+.btn, .nav-list a.nav-cv { border-radius: 4px; }
+strong { font-weight: 600; }
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .hero h1 { font-size: 40px; }
+  .hero-intro { font-size: 17px; }
+  .proj-spec { grid-template-columns: 1fr 1fr; margin-left: 0; }
+  .proj-go { margin-left: 0; }
 }
