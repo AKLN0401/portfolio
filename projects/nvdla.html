@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/style.css?v=20261003" />
+<link rel="stylesheet" href="../css/style.css?v=20261004" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -69,6 +69,16 @@
   </section>
 
   <section class="section" style="border-top:none; padding-top:0;">
+    <div class="wrap">
+      <figure class="diagram-frame pd-figure" style="max-width:600px; margin:0 0 40px;">
+        <img src="../assets/nvdla-chip-hero.jpg" width="600" height="660" decoding="async"
+             alt="Chip-level layout of the NVDLA implementation in Innovus: the u_nvdla core filling the die, a macro row along the top edge, and the I/O pad ring with power pads around the boundary." />
+        <figcaption>
+          <span>FIG. 00 — NVDLA CHIP-LEVEL LAYOUT</span>
+          <span>INNOVUS &middot; 12 NM FINFET</span>
+        </figcaption>
+      </figure>
+    </div>
     <div class="wrap two-col">
       <div class="prose">
         <p>NVDLA (NVIDIA Deep Learning Accelerator) is an open-source hardware accelerator architecture for deep learning inference. I took this on as a self-directed project &mdash; outside of coursework, and scoped by me rather than assigned &mdash; using tool and PDK access provided through the CMOS Design and Reliability Group, and carried the open-source RTL through a full physical design flow in a 12-nm FinFET process rather than stopping at synthesis or simulation.</p>

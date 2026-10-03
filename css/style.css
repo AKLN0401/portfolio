@@ -1573,3 +1573,16 @@ strong { font-weight: 600; }
   .proj-spec { grid-template-columns: 1fr 1fr; margin-left: 0; }
   .proj-go { margin-left: 0; }
 }
+
+.hero-portrait {
+  max-width: 400px;
+  justify-self: end;
+}
+.hero-portrait img {
+  background: none;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+@media (max-width: 1024px) {
+  .hero-portrait { justify-self: start; max-width: 360px; }
+}
