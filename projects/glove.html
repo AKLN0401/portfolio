@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Tap-to-Click Glove with Printed Sensors — Khoi Nguyen</title>
+<meta name="description" content="ECE 4600 capstone: a glove that works as a mouse, using silver and carbon sensors printed on stretchable TPU with a Voltera NOVA." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="canonical" href="https://akln0401.github.io/portfolio/projects/glove.html" />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#f4f2ed" />
+<meta name="author" content="Khoi Nguyen" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
+<meta property="og:title" content="Tap-to-Click Glove with Printed Sensors — Khoi Nguyen" />
+<meta property="og:description" content="ECE 4600 capstone: a glove that works as a mouse, using silver and carbon sensors printed on stretchable TPU with a Voltera NOVA." />
+<meta property="og:url" content="https://akln0401.github.io/portfolio/projects/glove.html" />
+<meta property="og:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="Khoi Nguyen — engineering portfolio: silicon, sensors, and hardware" />
+<meta property="og:locale" content="en_CA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Tap-to-Click Glove with Printed Sensors — Khoi Nguyen" />
+<meta name="twitter:description" content="ECE 4600 capstone: a glove that works as a mouse, using silver and carbon sensors printed on stretchable TPU with a Voltera NOVA." />
+<meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og-cover.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<style>
+.gl h1, .gl h2, .gl h4 { font-family: "Space Grotesk", "IBM Plex Sans", Arial, sans-serif; }
+.gl h1 { margin: 6px 0 20px; font-size: clamp(2.1rem, 1.4rem + 3vw, 3.4rem); line-height: 1.04; letter-spacing: -0.025em; font-weight: 600; }
+.gl h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); line-height: 1.15; letter-spacing: -0.015em; font-weight: 600; }
+.gl h4 { font-size: 1.05rem; margin: 0 0 4px; font-weight: 600; }
+.gl .prose p, .gl .pd-lede { line-height: 1.65; }
+.gl .section-index { color: var(--ink); }
+.viewer { border: 1px solid var(--line); background: #e9e6df; }
+.viewer model-viewer { width: 100%; height: clamp(340px, 60vw, 560px); display: block; --poster-color: transparent; }
+.viewer-bar { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--line); }
+.viewer-bar button { flex: 1 1 auto; min-height: 44px; padding: 10px 14px; font: 500 13px/1.2 var(--font-mono); background: var(--paper); color: var(--ink); border: 0; border-right: 1px solid var(--line); cursor: pointer; }
+.viewer-bar button:last-child { border-right: 0; }
+.viewer-bar button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.viewer-bar button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.viewer-hint { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin: 8px 0 0; }
+.gl-facts { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.6; max-width: 56ch; }
+.gl-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.gl-table th, .gl-table td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.gl-table th { font: 500 11px/1.4 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.gl-steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+.gl-steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 10px; font-size: 15px; line-height: 1.5; }
+.gl-steps li::before { content: counter(s); display: block; font: 600 13px var(--font-mono); margin-bottom: 4px; }
+.gl-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.gl-gallery figure { margin: 0; }
+.gl-gallery img { width: 100%; height: 260px; object-fit: contain; background: #e9e6df; display: block; }
+.gl-gallery figcaption, .gl-cap { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
+.gl video { width: 100%; height: auto; display: block; background: #e9e6df; }
+.gl-time { list-style: none; padding: 0; margin: 0; }
+.gl-time li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.gl-time b { font-family: var(--font-mono); font-weight: 600; }
+.gl-stack { list-style: none; padding: 0; margin: 0; font-size: 15px; }
+.gl-stack li { padding: 8px 12px; border: 1px solid var(--line); border-bottom: 0; background: var(--paper); }
+.gl-stack li:last-child { border-bottom: 1px solid var(--line); }
+.gl-stack li.c { background: #2b2b2b; color: #fff; } .gl-stack li.ag { background: #d9d9d9; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>Digital IC / ASIC · EE, U of Manitoba</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#fabrication">Fabrication</a></li>
+        <li><a href="../research.html">Research</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a class="nav-cv" href="../assets/khoi-nguyen-cv.pdf">Résumé</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="gl">
+  <section class="page-hero">
+    <div class="wrap two-col">
+      <div>
+        <a class="breadcrumb" href="../index.html#fabrication">&larr; Back</a>
+        <p class="label">ECE 4600 capstone &middot; Printed electronics &middot; Team G15 &middot; in progress</p>
+        <h1>A glove that works as a mouse</h1>
+        <p class="dek">Tap your thumb to your index finger to left-click, to your middle finger to right-click, and tilt your hand to move the cursor. The sensors are silver and carbon inks printed on stretchable TPU film with a Voltera NOVA.</p>
+        <p class="gl-facts">Six-person capstone at the University of Manitoba, supervised by Dr. Cyrus Shafai. The design is at the concept stage: the 3D models on this page are what we&rsquo;re building toward, not finished hardware.</p>
+      </div>
+      <div>
+        <div class="viewer">
+          <model-viewer id="glove-viewer" src="../assets/glove/glove.glb" alt="3D model of the glove, back of hand, with printed sensors over the knuckles and a wrist module" camera-controls touch-action="pan-y" auto-rotate auto-rotate-delay="1500" rotation-per-second="18deg" shadow-intensity="0.6" exposure="1" interaction-prompt="auto" loading="eager"></model-viewer>
+          <div class="viewer-bar" role="group" aria-label="Choose 3D model">
+            <button type="button" aria-pressed="true" data-src="../assets/glove/glove.glb" data-alt="3D model of the glove, back of hand, with printed sensors over the knuckles and a wrist module">Glove</button>
+            <button type="button" aria-pressed="false" data-src="../assets/glove/exploded.glb" data-alt="Exploded 3D model of one printed strain sensor, layer by layer">Sensor layers</button>
+            <button type="button" aria-pressed="false" data-src="../assets/glove/fab.glb" data-alt="3D model of a silver trace being printed on film by the Voltera NOVA dispenser">Printing</button>
+          </div>
+        </div>
+        <p class="viewer-hint">Drag to rotate &middot; scroll or pinch to zoom &middot; Blender models, conceptual, not to scale</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:none; padding-top:0;">
+    <div class="wrap">
+      <div class="section-head"><h2>From a finger tap to a click</h2><span class="section-index">SIGNAL PATH</span></div>
+      <ol class="gl-steps">
+        <li>Thumb taps a finger, or a finger bends.</li>
+        <li>A silver pad closes, or a carbon sensor stretches.</li>
+        <li>The change in resistance is read as a voltage.</li>
+        <li>An ESP32-S3 on the wrist reads the signals.</li>
+        <li>It talks to the PC over USB, as a mouse.</li>
+        <li>The PC registers a click or a cursor move.</li>
+      </ol>
+      <p class="pd-lede" style="margin-top:20px;">Cursor movement comes from a motion sensor (IMU) on the wrist: tilt the hand and the pointer follows.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <div class="section-head"><h2>Gestures</h2><span class="section-index">INPUT MAP</span></div>
+        <table class="gl-table">
+          <thead><tr><th>Gesture</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Thumb + index tap</td><td>Left click</td></tr>
+            <tr><td>Thumb + middle tap</td><td>Right click</td></tr>
+            <tr><td>Tilt hand</td><td>Move cursor</td></tr>
+            <tr><td>Hold a fist for 1&nbsp;s</td><td>Cursor on / off</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="section-head"><h2>Success targets</h2><span class="section-index">PASS / FAIL</span></div>
+        <table class="gl-table">
+          <thead><tr><th>Metric</th><th>Target</th></tr></thead>
+          <tbody>
+            <tr><td>Taps detected</td><td>&ge; 97%</td></tr>
+            <tr><td>False clicks</td><td>&le; 1 per 10 minutes</td></tr>
+            <tr><td>Tap-to-click delay</td><td>&le; 50&nbsp;ms</td></tr>
+            <tr><td>Users tested</td><td>&ge; 3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="wrap gl-gallery" style="margin-top:32px;">
+      <figure><img src="../assets/glove/07_left_click_thumb_index.jpg" alt="Render of the glove with the thumb tapping the index fingertip pad for a left click" loading="lazy" decoding="async" /><figcaption>Left click: thumb to index</figcaption></figure>
+      <figure><img src="../assets/glove/08_right_click_thumb_middle.jpg" alt="Render of the glove with the thumb tapping the middle fingertip pad for a right click" loading="lazy" decoding="async" /><figcaption>Right click: thumb to middle</figcaption></figure>
+      <figure><img src="../assets/glove/02_glove_palm_pads.jpg" alt="Render of the palm side of the glove with silver fingertip contact pads" loading="lazy" decoding="async" /><figcaption>Palm side: silver fingertip pads</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div class="prose">
+        <div class="section-head"><h2>The printed sensor</h2><span class="section-index">MATERIALS</span></div>
+        <p>Each bend sensor is a strip of carbon ink between silver leads, printed on stretchable TPU film and glued over a knuckle. When the joint bends, the film stretches, the carbon path gets longer and thinner, and its resistance should rise. Measuring how much, and how repeatably, is the first job for the printed test strips.</p>
+        <p>The fingertip pads are plain silver ink. They don&rsquo;t sense anything on their own: touching thumb to finger closes a circuit, which is the click.</p>
+        <p class="gl-cap">Layer thicknesses in the model are exaggerated.</p>
+      </div>
+      <div>
+        <ul class="gl-stack" aria-label="Sensor layers, top to bottom">
+          <li>Encapsulation (protective coating)</li>
+          <li>Wire bonded to a silver pad</li>
+          <li class="c">Carbon sensing element</li>
+          <li class="ag">Silver leads and pads</li>
+          <li>Stretchable TPU substrate</li>
+          <li>Adhesive layer</li>
+          <li>Glove fabric</li>
+        </ul>
+        <div class="gl-gallery" style="margin-top:16px;">
+          <figure><img src="../assets/glove/03_sensor_bending.jpg" alt="Render of a printed sensor stretching over a bent finger joint" loading="lazy" decoding="async" /><figcaption>Sensor stretching over a bent joint</figcaption></figure>
+          <figure><img src="../assets/glove/06_printing_on_voltera.jpg" alt="Render of the Voltera NOVA dispenser printing a silver trace on film" loading="lazy" decoding="async" /><figcaption>Printing a silver trace on the Voltera NOVA</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <div class="section-head"><h2>Animation</h2><span class="section-index">BLENDER</span></div>
+        <video src="../assets/glove/glove-animation.mp4" controls muted playsinline preload="metadata" poster="../assets/glove/01_glove_back.jpg" aria-label="Animation of the glove concept rendered in Blender"></video>
+        <p class="gl-cap">Rendered in Blender from the same models as the viewer above.</p>
+      </div>
+      <div>
+        <div class="section-head"><h2>Plan</h2><span class="section-index">2026&ndash;27</span></div>
+        <ol class="gl-time">
+          <li><b>Oct</b><span>Copper-tape test glove, to check clicks and cursor control before printing anything</span></li>
+          <li><b>Nov</b><span>Print silver and carbon strips and bend-test them (design review 2)</span></li>
+          <li><b>Jan</b><span>A repeatable sensor batch and glove v1 (design review 3)</span></li>
+          <li><b>Feb</b><span>Test against the targets above (design review 4)</span></li>
+          <li><b>Apr</b><span>Final demo</span></li>
+        </ol>
+        <p class="gl-cap" style="margin-top:16px;">Resources: Voltera NOVA, silver and carbon inks, TPU film, ESP32-S3, 6-axis IMU, ADC. Budget $600 including tax and shipping.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="note">Sensor layout, sizes and wire routing on the glove are not final. The microcontroller, the wired USB link and the fingertip pads are proposals at this stage. The models were built in Blender for the design review.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+(function () {
+  var mv = document.getElementById('glove-viewer');
+  var btns = document.querySelectorAll('.viewer-bar button');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce && mv) mv.removeAttribute('auto-rotate');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      mv.src = b.dataset.src; mv.alt = b.dataset.alt;
+    });
+  });
+})();
+</script>
+</body>
+</html>

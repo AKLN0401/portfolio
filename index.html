@@ -174,9 +174,25 @@
           <span class="proj-go">Case study &rarr;</span>
         </a>
 
-        <a class="proj" href="projects/riscv.html">
+        <a class="proj" href="projects/nvdla-asap7.html">
           <div class="proj-head">
             <span class="proj-num">02</span>
+            <h3>NVDLA at 1&nbsp;GHz on ASAP7 7&nbsp;nm</h3>
+            <span class="proj-cat">Synthesis &middot; Timing closure &middot; In progress</span>
+          </div>
+          <p class="proj-sum">Moved the NVDLA flow to the open ASAP7 7&nbsp;nm PDK and pushed synthesis from 800&nbsp;MHz to 1&nbsp;GHz. The biggest fix was rewriting one 2.66&nbsp;ns decoder path in the convolution sequencer.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>ASAP7 7&nbsp;nm FinFET (predictive) &middot; 448 SRAM macros in the convolution buffer partition</dd></div>
+            <div><dt>Tools</dt><dd>Genus &middot; Conformal &middot; Xcelium</dd></div>
+            <div><dt>Key fix</dt><dd>Partition C: 1,019 violations &rarr; 0, no area increase</dd></div>
+            <div><dt>Results</dt><dd>3 of 5 partitions met at 1.0&nbsp;ns so far</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
+        </a>
+
+        <a class="proj" href="projects/riscv.html">
+          <div class="proj-head">
+            <span class="proj-num">03</span>
             <h3>RISC-V Fault Detection</h3>
             <span class="proj-cat">DFT &middot; Reliability &middot; Research</span>
           </div>
@@ -192,7 +208,7 @@
 
         <a class="proj" href="projects/dft.html">
           <div class="proj-head">
-            <span class="proj-num">03</span>
+            <span class="proj-num">04</span>
             <h3>Error-Detection DFT Architectures</h3>
             <span class="proj-cat">DFT &middot; Verification &middot; Research</span>
           </div>
@@ -232,6 +248,7 @@
             </tbody>
           </table>
           <a class="btn" href="research.html" style="margin-top:28px;">Process detail &amp; cleanroom photos</a>
+          <a class="btn" href="projects/glove.html" style="margin-top:12px;">Capstone: printed-sensor glove (3D)</a>
         </div>
 
         <figure class="lab-figure fab-photo">
