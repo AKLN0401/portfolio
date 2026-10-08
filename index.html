@@ -155,9 +155,25 @@
           <span class="proj-go">Case study &rarr;</span>
         </a>
 
-        <a class="proj" href="projects/glove.html">
+        <a class="proj" href="projects/nvdla.html">
           <div class="proj-head">
             <span class="proj-num">02</span>
+            <h3>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h3>
+            <span class="proj-cat">Synthesis &middot; Place-and-route &middot; Physical verification &middot; In progress</span>
+          </div>
+          <p class="proj-sum">NVIDIA&rsquo;s open-source deep-learning accelerator, from RTL to a foundry-clean layout at 1.1&nbsp;GHz: three threshold-voltage flavours, clock gating, full scan, SRAM macros for a 13-metal stack, and hard-macro partitions in a mirror-symmetric floorplan.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 13-metal stack &middot; 128 dual-port SRAM macros</dd></div>
+            <div><dt>Tools</dt><dd>Genus 25.1 &middot; Innovus 25.1 &middot; Calibre &middot; Modus</dd></div>
+            <div><dt>Signoff</dt><dd>Foundry DRC and LVS on the merged GDS</dd></div>
+            <div><dt>Status</dt><dd>SRAMs generated &middot; synthesis running &middot; place-and-route scripted</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
+        </a>
+
+        <a class="proj" href="projects/glove.html">
+          <div class="proj-head">
+            <span class="proj-num">03</span>
             <h3>Tap-to-Click Glove, Printed Sensors</h3>
             <span class="proj-cat">Printed electronics &middot; ECE 4600 capstone</span>
           </div>
@@ -175,22 +191,6 @@
 
       <p class="label proj-group is-done" style="margin:48px 0 12px;">Completed</p>
       <div class="proj-list">
-        <a class="proj" href="projects/nvdla.html">
-          <div class="proj-head">
-            <span class="proj-num">03</span>
-            <h3>NVIDIA NVDLA, RTL-to-GDSII</h3>
-            <span class="proj-cat">Physical design &middot; Self-directed</span>
-          </div>
-          <p class="proj-sum">Carried NVIDIA's open-source deep-learning accelerator from RTL through a full physical-design flow: hierarchical synthesis across six partitions, SRAM hard-macro integration, floorplanning, place-and-route and physical verification.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 128 dual-port SRAM macros</dd></div>
-            <div><dt>Tools</dt><dd>Genus &middot; Modus &middot; Innovus</dd></div>
-            <div><dt>Scale</dt><dd>6.89&nbsp;M instances after synthesis, 8.76&nbsp;M after routing</dd></div>
-            <div><dt>Results</dt><dd>0 DRC violations &middot; 0 connectivity errors &middot; reg-to-reg setup met on 3.53&nbsp;M paths</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
-        </a>
-
         <a class="proj" href="projects/riscv.html">
           <div class="proj-head">
             <span class="proj-num">04</span>
