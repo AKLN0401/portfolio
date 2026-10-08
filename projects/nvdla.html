@@ -30,6 +30,32 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/style.css?v=20261004" />
+<style>
+.a7 { --a7-text: #17191c;  }
+
+.a7 h1 { margin: 6px 0 20px; font-size: clamp(2.1rem, 1.4rem + 3vw, 3.4rem); line-height: 1.04; letter-spacing: -0.025em; font-weight: 300; }
+.a7 h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); line-height: 1.15; letter-spacing: -0.015em; font-weight: 300; }
+.a7 h4 { font-size: 1.05rem; line-height: 1.3; font-weight: 600; margin: 0 0 4px; }
+.a7 .prose p, .a7 .pd-lede { line-height: 1.65; }
+.a7 .section-index { color: var(--a7-text); }
+.a7-plate { margin: 0; align-self: center; }
+.a7-plate svg { width: 100%; height: auto; display: block; }
+.a7-plate figcaption { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
+.a7-facts { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.6; color: var(--ink); max-width: 56ch; }
+.a7-fig { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; margin: 24px 0 8px; color: var(--ink); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.a7-fig svg { width: 100%; min-width: 640px; height: auto; display:block; }
+.a7-fig img { width: 100%; height: auto; display:block; }
+.a7-fig:focus-visible { outline: 2px solid var(--a7-text); outline-offset: 2px; }
+.a7-cap { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.a7-photos { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
+.a7-photos .a7-fig { border: 0; padding: 0; background: #000; }
+.a7-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 28px 32px; margin-top: 24px; }
+.a7-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+.a7-pnr th, .a7-pnr td { text-align: left; }
+.a7-pnr td.ok { color: #2e7d32; font-weight: 600; }
+.a7-status { display:block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--a7-text); margin-bottom: 6px; }
+</style>
+
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -58,123 +84,121 @@
   </div>
 </header>
 
-<main id="main">
+<main id="main" class="a7">
   <section class="page-hero">
-    <div class="wrap">
-      <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
-      <p class="label">NPU &middot; Physical Design &middot; ASIC &middot; In progress</p>
-      <h1>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h1>
-      <p class="dek">Implementing NVIDIA&rsquo;s open-source deep-learning accelerator from RTL to a foundry-clean layout in a 12&nbsp;nm FinFET flow, at 1.1&nbsp;GHz with power, test and symmetry built in from the start.</p>
-    </div>
-  </section>
-
-  <section class="section" style="border-top:none; padding-top:0;">
     <div class="wrap two-col">
-      <div class="prose">
-        <p>NVDLA (NVIDIA Deep Learning Accelerator) is an open-source inference engine. The full configuration used here has two multiply&ndash;accumulate arrays, a convolution buffer built from 128 dual-port SRAM macros, and post-processing engines for activation, pooling and normalization. It is a self-directed project, using tool and PDK access provided through the CMOS Design and Reliability Group.</p>
-        <p>The goal is a block that would pass a real tape-out review: timing met at the slow corner on every view, hold met at the fast corner, scan in place, and the merged GDS clean under the foundry&rsquo;s own DRC and LVS decks.</p>
-      </div>
       <div>
-        <table class="spec-table">
-          <tbody>
-            <tr><th>Context</th><td>Self-directed project, under group tool and PDK access</td></tr>
-            <tr><th>Design</th><td>NVIDIA NVDLA, full configuration, open-source RTL</td></tr>
-            <tr><th>Process</th><td>12&nbsp;nm FinFET &middot; 13-metal stack</td></tr>
-            <tr><th>Target</th><td>1.1&nbsp;GHz at the slow corner, 10% supply droop, both temperature extremes</td></tr>
-            <tr><th>Tools</th><td>Genus 25.1 &middot; Innovus 25.1 &middot; Calibre &middot; Modus &middot; Conformal</td></tr>
-            <tr><th>Status</th><td>SRAM macros generated &middot; synthesis running &middot; place-and-route scripted</td></tr>
-          </tbody>
-        </table>
+        <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
+        <p class="label">NPU &middot; 12&nbsp;nm FinFET &middot; Multi-V<sub>t</sub> &middot; Clock gating &middot; Scan DFT &middot; in progress</p>
+        <h1>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h1>
+        <p class="dek">NVIDIA&rsquo;s open-source deep-learning accelerator, taken from RTL to a foundry-clean layout under a licensed 12&nbsp;nm FinFET PDK, with power, test and floorplan symmetry built in from the start.</p>
+        <p class="a7-facts">Target 0.909&nbsp;ns (1.1&nbsp;GHz) at the slow corner with 10% supply droop, checked hot and cold, on a 13-metal stack with three threshold-voltage flavours. Signoff is the foundry&rsquo;s own DRC and LVS on the merged GDS. The SRAM macros are generated, and synthesis is under way, starting with partition A.</p>
+      </div>
+      <figure class="a7-plate"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pl12T"><title id="pl12T">Implementation flow: RTL, five partition syntheses, five partition hard macros with the MAC partition used twice, top-level assembly, then foundry DRC and LVS</title>
+<g font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" fill="#17191c">
+<defs><marker id="pa12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#17191c"/></marker></defs>
+<rect x="10" y="125" width="70" height="50" fill="none" stroke="#17191c"/><text x="45" y="155" text-anchor="middle" font-size="13" font-weight="600">RTL</text>
+<g font-size="11">
+<rect x="120" y="30"  width="96" height="34" fill="#c2185b" fill-opacity=".14" stroke="#c2185b"/><text x="168" y="51" text-anchor="middle">A &#183; Genus</text>
+<rect x="120" y="80"  width="96" height="34" fill="#2563a8" fill-opacity=".14" stroke="#2563a8"/><text x="168" y="101" text-anchor="middle">C &#183; Genus</text>
+<rect x="120" y="130" width="96" height="34" fill="#e08a00" fill-opacity=".14" stroke="#e08a00"/><text x="168" y="151" text-anchor="middle">M &#183; Genus</text>
+<rect x="120" y="180" width="96" height="34" fill="#7b4bb7" fill-opacity=".14" stroke="#7b4bb7"/><text x="168" y="201" text-anchor="middle">O &#183; Genus</text>
+<rect x="120" y="230" width="96" height="34" fill="#2e8b57" fill-opacity=".14" stroke="#2e8b57"/><text x="168" y="251" text-anchor="middle">P &#183; Genus</text>
+<rect x="250" y="30"  width="96" height="34" fill="#c2185b" fill-opacity=".14" stroke="#c2185b"/><text x="298" y="51" text-anchor="middle">A &#183; Innovus</text>
+<rect x="250" y="80"  width="96" height="34" fill="#2563a8" fill-opacity=".14" stroke="#2563a8"/><text x="298" y="101" text-anchor="middle">C &#183; Innovus</text>
+<rect x="250" y="130" width="96" height="34" fill="#e08a00" fill-opacity=".14" stroke="#e08a00"/><text x="298" y="151" text-anchor="middle">M &#183; Innovus &#215;2</text>
+<rect x="250" y="180" width="96" height="34" fill="#7b4bb7" fill-opacity=".14" stroke="#7b4bb7"/><text x="298" y="201" text-anchor="middle">O &#183; Innovus</text>
+<rect x="250" y="230" width="96" height="34" fill="#2e8b57" fill-opacity=".14" stroke="#2e8b57"/><text x="298" y="251" text-anchor="middle">P &#183; Innovus</text>
+</g>
+<rect x="380" y="115" width="58" height="70" fill="none" stroke="#17191c"/><text x="409" y="146" text-anchor="middle" font-size="11" font-weight="600">Top</text><text x="409" y="161" text-anchor="middle" font-size="10" fill-opacity=".65">6 macros</text>
+<rect x="460" y="115" width="52" height="70" fill="#17191c"/><text x="486" y="146" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff">DRC</text><text x="486" y="161" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff">LVS</text>
+<g stroke="#17191c" fill="none" marker-end="url(#pa12)">
+<path d="M80 150 L110 47"/><path d="M80 150 L110 97"/><path d="M80 150 L110 147"/><path d="M80 150 L110 197"/><path d="M80 150 L110 247"/>
+<path d="M216 47 L246 47"/><path d="M216 97 L246 97"/><path d="M216 147 L246 147"/><path d="M216 197 L246 197"/><path d="M216 247 L246 247"/>
+<path d="M346 47 L376 125"/><path d="M346 97 L376 135"/><path d="M346 147 L376 150"/><path d="M346 197 L376 165"/><path d="M346 247 L376 175"/>
+<path d="M438 150 L456 150"/>
+</g>
+<text x="10" y="292" font-size="10.5" fill="#6c6b67">Each partition is synthesized and laid out on its own, then placed as a hard macro.</text>
+</g></svg><figcaption>The flow: five partitions, each synthesized and laid out on its own</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="section" style="border-top:none;">
+    <div class="wrap">
+      <div class="section-head"><h2>How NVDLA works</h2><span class="section-index">ARCHITECTURE</span></div>
+      <div class="two-col">
+        <div class="prose">
+          <p>NVDLA (NVIDIA Deep Learning Accelerator) is a fixed-function inference engine that NVIDIA open-sourced in 2017. A host CPU programs it through a register interface (CSB), points it at feature maps and weights in memory, and the hardware runs a layer (convolution, activation, pooling, normalization) without the CPU touching the data.</p>
+          <p>The convolution core does most of the work. CDMA streams feature-map data and weights from memory into the on-chip convolution buffer (CBUF). The sequencer (CSC) reads them back in the order the math needs and feeds the MAC array (CMAC), split into two identical halves. CACC sums partial results across channels.</p>
+        </div>
+        <div class="prose">
+          <p>Results then flow through the post-processing pipeline: SDP applies per-element operations (bias, batch norm, ReLU/PReLU, element-wise add), PDP does pooling, and CDP does cross-channel normalization. BDMA and RUBIK copy and reshape tensors between layers.</p>
+          <p>For physical design, NVDLA is cut into five partitions, each synthesized and laid out on its own. Partition C carries the convolution buffer: 128 dual-port SRAM macros.</p>
+        </div>
+      </div>
+      <figure class="a7-fig" tabindex="0"><svg viewBox="0 0 960 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="df12T"><title id="df12T">NVDLA dataflow: memory to CDMA, CBUF, CSC, CMAC, CACC, SDP, then PDP, CDP, BDMA and RUBIK, coloured by partition</title><defs><marker id="ah12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor" fill-opacity=".6"/></marker></defs><rect x="0" y="10" width="960" height="48" rx="6" fill="#7b4bb7" fill-opacity=".16" stroke="#7b4bb7" stroke-width="1.5"/><text x="480.0" y="32.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">DRAM / SRAM · MCIF</text><text x="480.0" y="49.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">feature maps, weights, results</text><rect x="0" y="110" width="140" height="64" rx="6" fill="#2563a8" fill-opacity=".16" stroke="#2563a8" stroke-width="1.5"/><text x="70.0" y="140.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">CDMA</text><text x="70.0" y="157.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">fetch from memory</text><rect x="164" y="110" width="140" height="64" rx="6" fill="#2563a8" fill-opacity=".16" stroke="#2563a8" stroke-width="1.5"/><text x="234.0" y="140.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">CBUF</text><text x="234.0" y="157.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">128 SRAM macros</text><line x1="140" y1="142" x2="162" y2="142" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><rect x="328" y="110" width="140" height="64" rx="6" fill="#2563a8" fill-opacity=".16" stroke="#2563a8" stroke-width="1.5"/><text x="398.0" y="140.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">CSC</text><text x="398.0" y="157.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">weight decode</text><line x1="304" y1="142" x2="326" y2="142" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><rect x="492" y="110" width="140" height="64" rx="6" fill="#e08a00" fill-opacity=".16" stroke="#e08a00" stroke-width="1.5"/><text x="562.0" y="140.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">CMAC ×2</text><text x="562.0" y="157.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">multiply (ma, mb)</text><line x1="468" y1="142" x2="490" y2="142" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><rect x="656" y="110" width="140" height="64" rx="6" fill="#2e8b57" fill-opacity=".16" stroke="#2e8b57" stroke-width="1.5"/><text x="726.0" y="140.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">CACC</text><text x="726.0" y="157.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">partial sums</text><line x1="632" y1="142" x2="654" y2="142" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><rect x="820" y="110" width="140" height="64" rx="6" fill="#c2185b" fill-opacity=".16" stroke="#c2185b" stroke-width="1.5"/><text x="890.0" y="140.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">SDP</text><text x="890.0" y="157.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">bias, BN, ReLU</text><line x1="796" y1="142" x2="818" y2="142" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><rect x="492" y="230" width="140" height="64" rx="6" fill="#7b4bb7" fill-opacity=".16" stroke="#7b4bb7" stroke-width="1.5"/><text x="562.0" y="260.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">PDP</text><text x="562.0" y="277.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">pooling</text><rect x="656" y="230" width="140" height="64" rx="6" fill="#7b4bb7" fill-opacity=".16" stroke="#7b4bb7" stroke-width="1.5"/><text x="726.0" y="260.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">CDP</text><text x="726.0" y="277.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">LRN, LUT exp/log</text><rect x="820" y="230" width="140" height="64" rx="6" fill="#7b4bb7" fill-opacity=".16" stroke="#7b4bb7" stroke-width="1.5"/><text x="890.0" y="260.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="currentColor">BDMA · RUBIK</text><text x="890.0" y="277.0" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="10.5" fill="currentColor" fill-opacity=".7">copy, reshape</text><line x1="70.0" y1="58" x2="70.0" y2="108" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><line x1="890.0" y1="174" x2="890.0" y2="228" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><line x1="820" y1="262" x2="798" y2="262" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><line x1="656" y1="262" x2="634" y2="262" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><line x1="940" y1="108" x2="940" y2="60" stroke="currentColor" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah12)"/><g font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="11" fill="currentColor"><rect x="0" y="318" width="11" height="11" fill="#2563a8"/><text x="16" y="328">Partition C</text><rect x="130" y="318" width="11" height="11" fill="#e08a00"/><text x="146" y="328">Partition M</text><rect x="260" y="318" width="11" height="11" fill="#2e8b57"/><text x="276" y="328">Partition A</text><rect x="390" y="318" width="11" height="11" fill="#c2185b"/><text x="406" y="328">Partition P</text><rect x="520" y="318" width="11" height="11" fill="#7b4bb7"/><text x="536" y="328">Partition O</text></g></svg></figure>
+      <p class="a7-cap">NVDLA dataflow, coloured by partition</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Low power, test and PPA</h2><span class="section-index">IMPLEMENTATION</span></div>
+      <p class="pd-lede">All five partitions share one synthesis script and one place-and-route script, so each gets the same treatment.</p>
+      <div class="a7-grid">
+        <div class="a7-card"><h4>Three threshold voltages</h4><span class="a7-status">in synthesis</span><p>The slow, regular and fast V<sub>t</sub> flavours are loaded together. Optimization is weighted toward leakage, so cells stay on the slow flavour by default and switch to a faster one only where a path needs the speed. Hold fixing uses slow-flavour delay cells only.</p></div>
+        <div class="a7-card"><h4>Clock gating</h4><span class="a7-status">in synthesis</span><p>NVDLA&rsquo;s own RTL clock gates are imported as real gating cells, and synthesis adds more where 3 to 64 flops share an enable. Scan-enable is defined before the gates go in, so every gate&rsquo;s test pin is driven by it rather than tied to a constant.</p></div>
+        <div class="a7-card"><h4>Scan chains</h4><span class="a7-status">in synthesis</span><p>Muxed scan inserted by synthesis from the library&rsquo;s own scan flops, at least 128 chains per partition, written out as SCANDEF so placement can reorder each chain by location. Each netlist is checked by Conformal equivalence and by Modus chain tracing and ATPG.</p></div>
+        <div class="a7-card"><h4>PPA optimization</h4><span class="a7-status">applied</span><p>Genus 25.1 at its highest optimization effort, with physical libraries loaded so cell sizes and wire estimates are real. The clock period stays fixed: misses get fixed in the design or the flow, not by relaxing the target.</p></div>
+        <div class="a7-card"><h4>SRAM for 13 metals</h4><span class="a7-status">generated</span><p>Both CBUF macro sizes were generated with the memory compiler, with timing views at every signoff corner. A macro uses only the lower metal layers and blocks them; everything above routes straight over it, so the same layout works on the 13-metal stack.</p></div>
+        <div class="a7-card"><h4>Signoff corners</h4><span class="a7-status">set</span><p>Setup at the slow corner with 10% supply droop, hot and cold, since at FinFET voltages cold can be the slower case. Hold at the fast corner with 10% over-voltage, also hot and cold. Power at the typical corner, 85&nbsp;&deg;C.</p></div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><h2>Flow</h2><span class="section-index">01 / PLAN</span></div>
-      <div class="two-col">
-        <div class="prose">
-          <ul>
-            <li><strong>Synthesis at highest effort</strong>, one run per partition, with physical libraries loaded so the netlist sees real cell sizes.</li>
-            <li><strong>Multi-V<sub>t</sub></strong>: three threshold-voltage flavours. The leakage-weighted default uses the slowest flavour and spends the fast one only where timing needs it.</li>
-            <li><strong>Clock gating</strong> inserted by synthesis, with every gate&rsquo;s test pin tied to scan-enable.</li>
-            <li><strong>Full scan</strong>: muxed-scan chains inserted by synthesis and reordered during placement, checked by ATPG.</li>
-          </ul>
-        </div>
-        <div class="prose">
-          <ul>
-            <li><strong>SRAM macros</strong> generated for the 13-metal stack. Only the lower layers are used inside the macro, so the upper layers route over it.</li>
-            <li><strong>Hierarchical hard macros</strong>: each partition is placed and routed on its own, and the two CMAC copies share one layout.</li>
-            <li><strong>Hold</strong> fixed with low-leakage delay cells at the fast corner, at both temperatures.</li>
-            <li><strong>Foundry signoff</strong>: DRC with double-patterning colouring and metal fill, then LVS, on the merged GDS.</li>
-          </ul>
-        </div>
+      <div class="section-head"><h2>Synthesis</h2><span class="section-index">GENUS 25.1</span></div>
+      <p class="pd-lede">Partitions run one at a time on a shared server. Results go here as each one closes: setup slack at 0.909&nbsp;ns, cell count, scan chains, clock gates and the V<sub>t</sub> mix.</p>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Partition</th><th>Contents</th><th>Synthesis</th></tr></thead>
+        <tbody>
+          <tr><th>A</th><td>CACC</td><td>running</td></tr>
+          <tr><th>C</th><td>CDMA, CBUF (128 SRAM), CSC</td><td>next</td></tr>
+          <tr><th>M</th><td>CMAC (used twice)</td><td>queued</td></tr>
+          <tr><th>O</th><td>CDP, PDP, BDMA, MCIF</td><td>queued</td></tr>
+          <tr><th>P</th><td>SDP</td><td>queued</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Place-and-route plan</h2><span class="section-index">FLOORPLAN</span></div>
+      <p class="pd-lede">Each partition is placed and routed on its own as a hard macro, then the block is assembled from those macros. The floorplan is mirror-symmetric: one MAC partition layout is used twice, with MB flipped.</p>
+      <p class="pd-lede">The arrangement comes from counting every signal between partitions in NVDLA&rsquo;s top-level netlist. The connections are almost mirror-symmetric: MA talks to O and P exactly as MB talks to C and A (2,423 and 1,434 bits), and the only large links across the middle are O&ndash;C and P&ndash;A. With the MAC partitions on the outside and O/P, C/A in a 2&times;2 centre, every connected pair shares an edge. Inside C, the 128 SRAM macros sit in two banks along its top and bottom edges, mirrored about its centre line. Those are the edges with almost no traffic, so the left and right edges stay free for the 5,117 bits to O and the 2,423 bits to MB. Each bank is built from back-to-back pairs whose pin edges face a shared channel, and the logic band between the banks reaches upper rows by routing over the macros.</p>
+      <figure class="a7-fig" tabindex="0"><svg viewBox="0 0 930 646" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fp12T"><title id="fp12T">Planned NV_nvdla floorplan, to scale: MAC partitions MA and MB as full-height strips on the outer edges, O over P and C over A in the centre with one shared split line, mirrored about the vertical axis. C holds its 128 SRAM macros in two banks along its top and bottom edges. Every connected pair of partitions shares an edge.</title><defs><pattern id="sram12" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#ffffff"/><line x1="0" y1="6" x2="6" y2="0" stroke="#17191c" stroke-opacity=".35"/></pattern></defs><g font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" fill="currentColor"><rect x="40.0" y="52.0" width="76.2" height="523.8" fill="#e08a00" fill-opacity=".14" stroke="#e08a00" stroke-width="1.5"/><rect x="125.7" y="399.6" width="334.5" height="176.2" fill="#c2185b" fill-opacity=".14" stroke="#c2185b" stroke-width="1.5"/><rect x="125.7" y="52.0" width="334.5" height="338.1" fill="#7b4bb7" fill-opacity=".14" stroke="#7b4bb7" stroke-width="1.5"/><rect x="469.8" y="399.6" width="334.5" height="176.2" fill="#2e8b57" fill-opacity=".14" stroke="#2e8b57" stroke-width="1.5"/><rect x="469.8" y="52.0" width="334.5" height="338.1" fill="#2563a8" fill-opacity=".14" stroke="#2563a8" stroke-width="1.5"/><rect x="813.8" y="52.0" width="76.2" height="523.8" fill="#e08a00" fill-opacity=".14" stroke="#e08a00" stroke-width="1.5"/><rect x="479.2" y="57.4" width="315.6" height="37.6" fill="url(#sram12)" stroke="#17191c" stroke-width=".8"/><rect x="479.2" y="97.1" width="315.6" height="37.6" fill="url(#sram12)" stroke="#17191c" stroke-width=".8"/><rect x="479.2" y="136.8" width="315.6" height="23.0" fill="url(#sram12)" stroke="#17191c" stroke-width=".8"/><rect x="479.2" y="347.1" width="315.6" height="37.6" fill="url(#sram12)" stroke="#17191c" stroke-width=".8"/><rect x="479.2" y="307.4" width="315.6" height="37.6" fill="url(#sram12)" stroke="#17191c" stroke-width=".8"/><rect x="479.2" y="282.3" width="315.6" height="23.0" fill="url(#sram12)" stroke="#17191c" stroke-width=".8"/><text x="78.1" y="313.9" text-anchor="middle" font-size="18" font-weight="600">MA</text><text x="78.1" y="329.9" text-anchor="middle" font-size="10" fill-opacity=".65">MAC</text><text x="78.1" y="341.9" text-anchor="middle" font-size="10" fill-opacity=".65">array</text><text x="851.9" y="313.9" text-anchor="middle" font-size="18" font-weight="600">MB</text><text x="851.9" y="329.9" text-anchor="middle" font-size="10" fill-opacity=".65">MAC</text><text x="851.9" y="341.9" text-anchor="middle" font-size="10" fill-opacity=".65">array</text><text x="851.9" y="353.9" text-anchor="middle" font-size="10" fill-opacity=".65">(mirrored)</text><text x="293.0" y="221.0" text-anchor="middle" font-size="18" font-weight="600">O</text><text x="293.0" y="237.0" text-anchor="middle" font-size="10" fill-opacity=".65">CDP &#183; PDP &#183; BDMA &#183; MCIF</text><text x="293.0" y="487.7" text-anchor="middle" font-size="18" font-weight="600">P</text><text x="293.0" y="503.7" text-anchor="middle" font-size="10" fill-opacity=".65">SDP</text><text x="637.0" y="487.7" text-anchor="middle" font-size="18" font-weight="600">A</text><text x="637.0" y="503.7" text-anchor="middle" font-size="10" fill-opacity=".65">CACC</text><text x="637.0" y="221.0" text-anchor="middle" font-size="18" font-weight="600">C</text><text x="637.0" y="237.0" text-anchor="middle" font-size="10" fill-opacity=".65">CDMA &#183; CSC</text><text x="637.0" y="249.0" text-anchor="middle" font-size="10" fill-opacity=".65">logic between 2 SRAM banks</text><line x1="121.0" y1="53.9" x2="121.0" y2="392.0" stroke="#c0392b" stroke-width="3"/><text x="116.0" y="223.0" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b" transform="rotate(-90 116.0 223.0)">2,423 bits</text><line x1="121.0" y1="397.7" x2="121.0" y2="573.9" stroke="#c0392b" stroke-width="3"/><text x="116.0" y="485.8" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b" transform="rotate(-90 116.0 485.8)">1,434</text><line x1="465.0" y1="53.9" x2="465.0" y2="392.0" stroke="#c0392b" stroke-width="3"/><text x="460.0" y="223.0" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b" transform="rotate(-90 460.0 223.0)">5,117 bits</text><line x1="465.0" y1="397.7" x2="465.0" y2="573.9" stroke="#c0392b" stroke-width="3"/><text x="460.0" y="485.8" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b" transform="rotate(-90 460.0 485.8)">1,950</text><line x1="809.0" y1="53.9" x2="809.0" y2="392.0" stroke="#c0392b" stroke-width="3"/><text x="814.0" y="223.0" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b" transform="rotate(90 814.0 223.0)">2,423 bits</text><line x1="809.0" y1="397.7" x2="809.0" y2="573.9" stroke="#c0392b" stroke-width="3"/><text x="814.0" y="485.8" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b" transform="rotate(90 814.0 485.8)">1,434</text><line x1="127.6" y1="394.9" x2="458.3" y2="394.9" stroke="#c0392b" stroke-width="3"/><text x="293.0" y="407.9" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">6,280 bits</text><line x1="471.6" y1="394.9" x2="802.4" y2="394.9" stroke="#c0392b" stroke-width="3"/><text x="637.0" y="407.9" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">106 bits</text><line x1="465.0" y1="38" x2="465.0" y2="585.8" stroke="#17191c" stroke-dasharray="4 4" stroke-opacity=".5"/><text x="469.0" y="34" font-size="10" fill-opacity=".6">mirror axis</text><text x="293.0" y="34" text-anchor="middle" font-size="10" fill-opacity=".7">&#8593; 2,662 bits to chip-level ports</text><line x1="40" y1="609.8037014394487" x2="62" y2="609.8037014394487" stroke="#c0392b" stroke-width="3"/><text x="70" y="613.8037014394487" font-size="11">shared edge, signals crossing it</text><rect x="300" y="602.8037014394487" width="22" height="14" fill="url(#sram12)" stroke="#17191c"/><text x="330" y="613.8037014394487" font-size="11">SRAM rows (2 banks &#215; 64 macros, pins facing a shared channel)</text></g></svg></figure>
+      <p class="a7-cap">Planned floorplan, to scale from first-pass block areas. Red: shared edges and the signals crossing them</p>
+
+      <div class="a7-grid" style="margin-top:40px;">
+        <div class="a7-card"><h4>Power grid</h4><p>Each block carries its own grid from the cell rails up to the top two power layers, which also become the block&rsquo;s power pins. The top-level mesh lands directly on them. Every layer pair in the grid crosses at right angles, so every crossing gets a via.</p></div>
+        <div class="a7-card"><h4>Routing</h4><p>Signals route on the layers below the power mesh, with timing- and crosstalk-driven routing, antenna diodes, and up to three automatic repair passes on any design-rule marker. The clock uses double-width, double-space wires on the middle layers.</p></div>
+        <div class="a7-card"><h4>Foundry signoff</h4><p>The router&rsquo;s own checker is not the signoff. The merged GDS goes through the foundry DRC deck after double-patterning colouring and metal fill, then LVS against the routed netlist.</p></div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><h2>Floorplan</h2><span class="section-index">02 / SYMMETRY</span></div>
-      <div class="two-col">
-        <div class="prose">
-          <p>The top level instantiates six partitions, and the two CMAC halves are the same module. That makes a mirror-symmetric floorplan natural: one CMAC layout is placed twice, the second copy flipped, on either side of the convolution core.</p>
-          <p>Partition c sits on the centre line with its SRAM banks in two mirrored columns. Their pins face inward, so the read paths to both CMAC halves have the same length. The memory interface runs across the top, and accumulation and post-processing sit side by side along the bottom.</p>
-          <p>Every block keeps its own power grid and exposes it on the top two power layers. The top-level mesh lands directly on those pins, and the channels between blocks carry the inter-partition buses.</p>
-        </div>
-        <figure class="diagram-frame pd-figure" style="margin:0;">
-          <svg viewBox="0 0 640 540" role="img" aria-labelledby="fp-t fp-d" xmlns="http://www.w3.org/2000/svg">
-  <title id="fp-t">Planned NV_nvdla floorplan</title>
-  <desc id="fp-d">Six hard-macro partitions, mirror-symmetric about a vertical centre line. Partition o across the top; the two CMAC copies ma and mb on the left and right of the middle row, mb mirrored; partition c in the centre with its SRAM banks in two mirrored columns; partitions a and p side by side along the bottom. Routing channels separate the blocks and a power mesh covers the die.</desc>
-  <style>
-    .fp-die { fill: none; stroke: var(--ink); stroke-width: 2; }
-    .fp-blk { fill: var(--paper-raised); stroke: var(--ink); stroke-width: 1.2; }
-    .fp-c   { fill: var(--paper-raised); stroke: var(--clay, var(--accent)); stroke-width: 1.6; }
-    .fp-sram { fill: var(--clay, var(--accent)); opacity: .55; }
-    .fp-axis { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 6 5; }
-    .fp-mesh { stroke: var(--line); stroke-width: 1; }
-    .fp-n   { font: 600 15px var(--font-body); fill: var(--ink); text-anchor: middle; }
-    .fp-s   { font: 12px var(--font-body); fill: var(--muted); text-anchor: middle; }
-    .fp-k   { font: 11px var(--font-body); fill: var(--muted); }
-  </style>
-  <g class="fp-mesh"><line x1="20" y1="40" x2="620" y2="40"/><line x1="20" y1="70" x2="620" y2="70"/><line x1="20" y1="100" x2="620" y2="100"/><line x1="20" y1="130" x2="620" y2="130"/><line x1="20" y1="160" x2="620" y2="160"/><line x1="20" y1="190" x2="620" y2="190"/><line x1="20" y1="220" x2="620" y2="220"/><line x1="20" y1="250" x2="620" y2="250"/><line x1="20" y1="280" x2="620" y2="280"/><line x1="20" y1="310" x2="620" y2="310"/><line x1="20" y1="340" x2="620" y2="340"/><line x1="20" y1="370" x2="620" y2="370"/><line x1="20" y1="400" x2="620" y2="400"/><line x1="20" y1="430" x2="620" y2="430"/><line x1="20" y1="460" x2="620" y2="460"/><line x1="20" y1="490" x2="620" y2="490"/></g>
-  <rect class="fp-die" x="20" y="20" width="600" height="480"/>
-  <g class="fp-axis"><line x1="320" y1="26" x2="320" y2="56"/><line x1="320" y1="152" x2="320" y2="184"/><line x1="320" y1="352" x2="320" y2="494"/></g>
-  <rect class="fp-blk" x="60" y="56" width="520" height="96"/>
-  <text class="fp-n" x="320" y="98">partition o</text>
-  <text class="fp-s" x="320" y="118">memory interface &#183; config bus &#183; DMA &#183; RUBIK</text>
-  <rect class="fp-blk" x="60" y="184" width="150" height="168"/>
-  <text class="fp-n" x="135" y="262">ma</text>
-  <text class="fp-s" x="135" y="282">CMAC half</text>
-  <rect class="fp-c" x="240" y="184" width="160" height="168"/>
-  <rect x="250" y="196" width="10" height="13" class="fp-sram"/><rect x="250" y="212" width="10" height="13" class="fp-sram"/><rect x="250" y="228" width="10" height="13" class="fp-sram"/><rect x="250" y="244" width="10" height="13" class="fp-sram"/><rect x="250" y="260" width="10" height="13" class="fp-sram"/><rect x="250" y="276" width="10" height="13" class="fp-sram"/><rect x="250" y="292" width="10" height="13" class="fp-sram"/><rect x="250" y="308" width="10" height="13" class="fp-sram"/><rect x="250" y="324" width="10" height="13" class="fp-sram"/><rect x="250" y="340" width="10" height="13" class="fp-sram"/><rect x="264" y="196" width="10" height="13" class="fp-sram"/><rect x="264" y="212" width="10" height="13" class="fp-sram"/><rect x="264" y="228" width="10" height="13" class="fp-sram"/><rect x="264" y="244" width="10" height="13" class="fp-sram"/><rect x="264" y="260" width="10" height="13" class="fp-sram"/><rect x="264" y="276" width="10" height="13" class="fp-sram"/><rect x="264" y="292" width="10" height="13" class="fp-sram"/><rect x="264" y="308" width="10" height="13" class="fp-sram"/><rect x="264" y="324" width="10" height="13" class="fp-sram"/><rect x="264" y="340" width="10" height="13" class="fp-sram"/><rect x="366" y="196" width="10" height="13" class="fp-sram"/><rect x="366" y="212" width="10" height="13" class="fp-sram"/><rect x="366" y="228" width="10" height="13" class="fp-sram"/><rect x="366" y="244" width="10" height="13" class="fp-sram"/><rect x="366" y="260" width="10" height="13" class="fp-sram"/><rect x="366" y="276" width="10" height="13" class="fp-sram"/><rect x="366" y="292" width="10" height="13" class="fp-sram"/><rect x="366" y="308" width="10" height="13" class="fp-sram"/><rect x="366" y="324" width="10" height="13" class="fp-sram"/><rect x="366" y="340" width="10" height="13" class="fp-sram"/><rect x="380" y="196" width="10" height="13" class="fp-sram"/><rect x="380" y="212" width="10" height="13" class="fp-sram"/><rect x="380" y="228" width="10" height="13" class="fp-sram"/><rect x="380" y="244" width="10" height="13" class="fp-sram"/><rect x="380" y="260" width="10" height="13" class="fp-sram"/><rect x="380" y="276" width="10" height="13" class="fp-sram"/><rect x="380" y="292" width="10" height="13" class="fp-sram"/><rect x="380" y="308" width="10" height="13" class="fp-sram"/><rect x="380" y="324" width="10" height="13" class="fp-sram"/><rect x="380" y="340" width="10" height="13" class="fp-sram"/>
-  <text class="fp-n" x="320" y="250">c</text>
-  <text class="fp-s" x="320" y="272">CDMA &#183; CSC</text>
-  <text class="fp-s" x="320" y="290">CBUF SRAM</text>
-  <rect class="fp-blk" x="430" y="184" width="150" height="168"/>
-  <text class="fp-n" x="505" y="262">mb</text>
-  <text class="fp-s" x="505" y="282">CMAC half, mirrored</text>
-  <rect class="fp-blk" x="60" y="384" width="240" height="88"/>
-  <text class="fp-n" x="180" y="422">partition a</text>
-  <text class="fp-s" x="180" y="442">CACC</text>
-  <rect class="fp-blk" x="340" y="384" width="240" height="88"/>
-  <text class="fp-n" x="460" y="422">partition p</text>
-  <text class="fp-s" x="460" y="442">SDP &#183; PDP &#183; CDP</text>
-  <text class="fp-k" x="20" y="524">Not to scale. Dashed: mirror axis. Grey lines: top power mesh. Gaps: routing channels between blocks.</text>
-</svg>
-          <figcaption>
-            <span>FIG. 01 &mdash; PLANNED FLOORPLAN</span>
-            <span>MIRROR-SYMMETRIC &middot; 6 HARD MACROS</span>
-          </figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="disclosure">
-    <div class="wrap">
-      <div class="section-head"><h2>Disclosure</h2><span class="section-index">03 / SCOPE</span></div>
-      <p class="disclosure-note">The RTL is NVIDIA&rsquo;s open-source NVDLA. The work is done under licensed academic access to a 12&nbsp;nm FinFET PDK. The foundry, PDK revision, library and cell names, memory-compiler settings and any absolute area or power figures are not published here. Results will be added as normalized figures as each stage closes.</p>
+      <div class="section-head"><h2>Next</h2><span class="section-index">ROADMAP</span></div>
+      <ol class="process-list">
+        <li><div><h4>Synthesize all five partitions</h4><p>A first, then C, M, O and P, each at 0.909&nbsp;ns. Check each netlist with Conformal equivalence against the RTL and Modus chain tracing and ATPG.</p></div></li>
+        <li><div><h4>Block place-and-route</h4><p>C first, as it holds all 128 SRAM macros: init, placement with scan reorder, clock tree, routing and signoff timing on every corner. Then each block is exported as a hard macro: layout, abstract and timing models.</p></div></li>
+        <li><div><h4>Block assembly</h4><p>Six macros in the symmetric floorplan, the MAC partition used twice, the top-level clock balanced against each block&rsquo;s internal clock latency, and the inter-partition buses routed through the channels.</p></div></li>
+        <li><div><h4>Foundry signoff</h4><p>Double-patterning colouring, metal fill, foundry DRC to zero, then LVS on the merged GDS.</p></div></li>
+      </ol>
+      <p class="note" style="margin-top:24px;">See also the <a href="nvdla-asap7.html">7&nbsp;nm NVDLA implementation</a> on the open ASAP7 PDK. Under the licensed 12&nbsp;nm PDK, the foundry, library and cell names, memory-compiler settings and absolute area and power are not published here.</p>
     </div>
   </section>
 
