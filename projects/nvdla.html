@@ -92,7 +92,7 @@
         <p class="label">NPU &middot; 12&nbsp;nm FinFET &middot; Multi-V<sub>t</sub> &middot; Clock gating &middot; Scan DFT &middot; in progress</p>
         <h1>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h1>
         <p class="dek">NVIDIA&rsquo;s open-source deep-learning accelerator, taken from RTL to a foundry-clean layout under a licensed 12&nbsp;nm FinFET PDK, with power, test and floorplan symmetry built in from the start.</p>
-        <p class="a7-facts">Target 0.909&nbsp;ns (1.1&nbsp;GHz) at the slow corner with 10% supply droop, checked hot and cold, on a 13-metal stack with three threshold-voltage flavours. Signoff is the foundry&rsquo;s own DRC and LVS on the merged GDS. The SRAM macros are generated, and synthesis is under way, starting with partition A.</p>
+        <p class="a7-facts">Target 0.909&nbsp;ns (1.1&nbsp;GHz) at the slow corner with 10% supply droop, checked hot and cold, on a 13-metal stack with three threshold-voltage flavours. Signoff is the foundry&rsquo;s own DRC and LVS on the merged GDS. The SRAM macros are generated. Partitions A and C are synthesized and meet timing on both slow corners, and their floorplans are verified clean; M and O are synthesizing.</p>
       </div>
       <figure class="a7-plate"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pl12T"><title id="pl12T">Implementation flow: RTL, five partition syntheses, five partition hard macros with the MAC partition used twice, top-level assembly, then foundry DRC and LVS</title>
 <g font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" fill="#17191c">
@@ -159,15 +159,15 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head"><h2>Synthesis</h2><span class="section-index">GENUS 25.1</span></div>
-      <p class="pd-lede">Partitions run one at a time on a shared server. Results go here as each one closes: setup slack at 0.909&nbsp;ns, cell count, scan chains, clock gates and the V<sub>t</sub> mix.</p>
+      <p class="pd-lede">Partitions run one at a time on a shared server. Results go here as each one closes: setup slack at 0.909&nbsp;ns, cell count, scan chains, clock gates and the V<sub>t</sub> mix (regular / low / super-low). The floorplan column is the Innovus init check: DRC, power-grid connectivity and pin legality.</p>
       <div class="table-scroll"><table class="data-table a7-pnr">
-        <thead><tr><th>Partition</th><th>Contents</th><th>Synthesis</th></tr></thead>
+        <thead><tr><th>Partition</th><th>Contents</th><th>Synthesis</th><th>Floorplan</th></tr></thead>
         <tbody>
-          <tr><th>A</th><td>CACC</td><td>queued</td></tr>
-          <tr><th>C</th><td>CDMA, CBUF (128 SRAM), CSC</td><td>queued</td></tr>
-          <tr><th>M</th><td>CMAC (used twice)</td><td>next</td></tr>
-          <tr><th>O</th><td>CDP, PDP, BDMA, RUBIK, MCIF, CVIF, CSB, GLB</td><td>queued</td></tr>
-          <tr><th>P</th><td>SDP</td><td>queued</td></tr>
+          <tr><th>A</th><td>CACC</td><td class="ok">met 0.909&nbsp;ns, hot and cold &middot; 128 scan chains &middot; V<sub>t</sub> 82/13/5%</td><td class="ok">clean: 0 DRC, PG connected, 3,550 pins legal</td></tr>
+          <tr><th>C</th><td>CDMA, CBUF (128 SRAM), CSC</td><td class="ok">met 0.909&nbsp;ns, hot and cold &middot; 128 scan chains &middot; V<sub>t</sub> 74/17/8%</td><td class="ok">clean: 0 DRC, PG connected, 7,706 pins legal</td></tr>
+          <tr><th>M</th><td>CMAC (used twice)</td><td>running</td><td>script ready</td></tr>
+          <tr><th>O</th><td>CDP, PDP, BDMA, RUBIK, MCIF, CVIF, CSB, GLB</td><td>running</td><td>script ready</td></tr>
+          <tr><th>P</th><td>SDP</td><td>queued</td><td>script ready</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -194,8 +194,8 @@
     <div class="wrap">
       <div class="section-head"><h2>Next</h2><span class="section-index">ROADMAP</span></div>
       <ol class="process-list">
-        <li><div><h4>Synthesize all five partitions</h4><p>M first as a check of the flow, then A, C, O and P, each at 0.909&nbsp;ns. Check each netlist with Conformal equivalence against the RTL and Modus chain tracing and ATPG.</p></div></li>
-        <li><div><h4>Block place-and-route</h4><p>C first, as it holds all 128 SRAM macros: init, placement with scan reorder, clock tree, routing and signoff timing on every corner. Then each block is exported as a hard macro: layout, abstract and timing models.</p></div></li>
+        <li><div><h4>Synthesize all five partitions</h4><p>A and C done; M and O running, then P, each at 0.909&nbsp;ns. Check each netlist with Conformal equivalence against the RTL and Modus chain tracing and ATPG.</p></div></li>
+        <li><div><h4>Block place-and-route</h4><p>C first, as it holds all 128 SRAM macros. Init is done for C and A: SRAM banks kept free of standard-cell rows, a coloured power mesh with trimmed ends, zero DRC. Next: placement with scan reorder, clock tree, routing and signoff timing on every corner. Then each block is exported as a hard macro: layout, abstract and timing models.</p></div></li>
         <li><div><h4>Block assembly</h4><p>Six macros in the symmetric floorplan, the MAC partition used twice, the top-level clock balanced against each block&rsquo;s internal clock latency, and the inter-partition buses routed through the channels.</p></div></li>
         <li><div><h4>Foundry signoff</h4><p>Double-patterning colouring, metal fill, foundry DRC to zero, then LVS on the merged GDS.</p></div></li>
       </ol>
