@@ -53,7 +53,10 @@ def scope_block(text):
 scoped = scope_block(css)
 scoped += (".npu-doc h2[id] { scroll-margin-top: 72px; }\n"
            ".npu-doc > .facts { margin-top: 0; }\n"
-           ".npu-doc nav { margin-top: 28px; }\n")
+           ".npu-doc nav { margin-top: 28px; }\n"
+           # this page only: plain white, black ink (textbook figures), not the site's ivory
+           "body, .page-hero, .section { background: #fff; }\n"
+           ".npu-doc { color: #000; }\n")
 
 # ---------- body: drop the page's own label / h1 / subtitle ----------
 main = re.search(r"<main>(.*?)</main>", html, re.S).group(1)
