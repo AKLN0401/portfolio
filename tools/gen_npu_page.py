@@ -110,7 +110,6 @@ page = f"""{head}<style>
   <section class="page-hero">
     <div class="wrap">
       <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
-      <p class="label">ASIC Design &middot; Tiny Tapeout &middot; SkyWater SKY130</p>
       <h1>One-Tile int4 NPU for Tiny Tapeout</h1>
       <p class="dek">A 2×2 int4 multiply-accumulate array with 16-bit accumulators, one clock gate per row and a 96-flop scan chain, taken from RTL to a signed-off layout in a single 161&nbsp;×&nbsp;112&nbsp;µm Tiny Tapeout tile. Built for the TTSKY26d shuttle; the demo board's microcontroller drives it over the pins.</p>
       <p style="margin-top:24px;"><a class="btn btn-primary" href="{REPO}">Source on GitHub</a> <a class="btn" href="#layout">3D layout</a></p>
@@ -143,8 +142,7 @@ for old, new in [
     ("<li>Git repo ready; push to GitHub, <code>gds</code> action + precheck green</li>",
      "<li>Public GitHub repo; Tiny Tapeout <code>gds</code> build, precheck and gate-level test in CI</li>"),
 ]:
-    assert s.count(old) == 1, old
-    s = s.replace(old, new)
+    s = s.replace(old, new)   # no-op once the source page has the wording
 open(p, "w").write(s)
 
 # the OG image is quantized to 256 colours to stay < 1 MB
