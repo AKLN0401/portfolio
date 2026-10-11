@@ -56,7 +56,12 @@ scoped += (".npu-doc h2[id] { scroll-margin-top: 72px; }\n"
            ".npu-doc nav { margin-top: 28px; }\n"
            # this page only: plain white, black ink (textbook figures), not the site's ivory
            "body, .page-hero, .section { background: #fff; }\n"
-           ".npu-doc { color: #000; }\n")
+           ".npu-doc { color: #000; }\n"
+           # section nav keeps the earlier look: muted grey links, no underline, hairline rules
+           ".npu-doc nav { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; padding: 14px 0;"
+           " border-top: 1px solid #e3e0d6; border-bottom: 1px solid #e3e0d6; }\n"
+           ".npu-doc nav a { color: #5e5d59; text-decoration: none; margin: 0; }\n"
+           ".npu-doc nav a:hover { color: #141413; }\n")
 
 # ---------- body: drop the page's own label / h1 / subtitle ----------
 main = re.search(r"<main>(.*?)</main>", html, re.S).group(1)
@@ -146,6 +151,20 @@ for old, new in [
      "<li>Public GitHub repo; Tiny Tapeout <code>gds</code> build, precheck and gate-level test in CI</li>"),
 ]:
     s = s.replace(old, new)   # no-op once the source page has the wording
+open(p, "w").write(s)
+
+# Section 7 (write protocol) is left out of the portfolio page: drop it, its nav link and renumber 8-12
+s = open(p).read()
+s = re.sub(r'<!-- =+ -->\s*<h2 id="protocol">.*?(?=<!-- =+ -->\s*<h2 id="array">)', "", s, count=1, flags=re.S)
+s = s.replace('<a href="#protocol">Write protocol</a>', "")
+s = s.replace(" (§7)", "")
+for old, new in [("8. MAC array", "7. MAC array"), ("9. Clock gating", "8. Clock gating"), ("10. Scan chain", "9. Scan chain"),
+                 ("11. Pinout", "10. Pinout"), ("12. Host code", "11. Host code"),
+                 ("§9", "§8"), ("§10", "§9"), ("§12", "§11"),
+                 ("<b>Figure 7.</b>", "<b>Figure 6.</b>"), ("<b>Figure 8.</b>", "<b>Figure 7.</b>")]:
+    s = s.replace(old, new)
+# Figure 6 (timing diagram) is gone together with the section
+s = re.sub(r"<b>Figure 6\.</b> The synchronized edge.*?</p>", "", s, count=1, flags=re.S)
 open(p, "w").write(s)
 
 # the OG image is quantized to 256 colours to stay < 1 MB

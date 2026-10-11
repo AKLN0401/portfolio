@@ -109,6 +109,9 @@
 .npu-doc nav { margin-top: 28px; }
 body, .page-hero, .section { background: #fff; }
 .npu-doc { color: #000; }
+.npu-doc nav { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; padding: 14px 0; border-top: 1px solid #e3e0d6; border-bottom: 1px solid #e3e0d6; }
+.npu-doc nav a { color: #5e5d59; text-decoration: none; margin: 0; }
+.npu-doc nav a:hover { color: #141413; }
 </style>
 </head>
 <body>
@@ -154,7 +157,7 @@ body, .page-hero, .section { background: #fff; }
 <nav>
   <a href="#specs">Specs</a><a href="#how">How it works</a><a href="#layout">Layout &amp; 3D</a><a href="#tapeout">Tapeout</a>
   <a href="#system">System</a><a href="#regs">Registers</a>
-  <a href="#protocol">Write protocol</a><a href="#array">MAC array</a><a href="#cg">Clock gating</a><a href="#dft">Scan chain</a>
+  <a href="#array">MAC array</a><a href="#cg">Clock gating</a><a href="#dft">Scan chain</a>
   <a href="#pins">Pinout</a><a href="#host">Host code</a>
 </nav>
 
@@ -170,7 +173,7 @@ body, .page-hero, .section { background: #fff; }
   <tr><td>Clock</td><td>50&nbsp;MHz; setup +5.70&nbsp;ns, hold +0.162&nbsp;ns over 12 corners (−40…100&nbsp;°C, 1.60–1.95&nbsp;V)</td></tr>
   <tr><td>Cells</td><td>1,595 placed (excl. fill): 98 flops, 2 clock gates, 914 logic gates, 321 timing/fanout buffers, 22 clock-tree cells, 225 taps, 13 diodes</td></tr>
   <tr><td>Utilization</td><td>84.4% · 32.8&nbsp;mm of routing on met1–met4</td></tr>
-  <tr><td>Power</td><td>0.19–0.28&nbsp;mW at 50&nbsp;MHz, typical corner, depending on the workload (vector-based estimate, <a href="#cg-power">§9</a>)</td></tr>
+  <tr><td>Power</td><td>0.19–0.28&nbsp;mW at 50&nbsp;MHz, typical corner, depending on the workload (vector-based estimate, <a href="#cg-power">§8</a>)</td></tr>
 </table>
 <table>
   <tr><th colspan="2">Accelerator</th></tr>
@@ -179,7 +182,7 @@ body, .page-hero, .section { background: #fff; }
   <tr><td>Per step</td><td>4 MACs in one clock (outer product <code>acc[i][j] += a[i]·b[j]</code>)</td></tr>
   <tr><td>Throughput</td><td>One register write ≥ 6 clocks, a step needs 3 writes → ≤ 2.8M steps/s (11M MAC/s) at 50&nbsp;MHz; the host's GPIO speed sets the real rate</td></tr>
   <tr><td>Interface</td><td>8-bit write data, 8-bit read data, 3-bit address, write strobe; 7 registers</td></tr>
-  <tr><td>Clock gating</td><td>1 ICG (<code>dlclkp_1</code>) per row; a row's clock runs only on step/clear cycles. Saves 45–59% of core power (<a href="#cg-power">§9</a>)</td></tr>
+  <tr><td>Clock gating</td><td>1 ICG (<code>dlclkp_1</code>) per row; a row's clock runs only on step/clear cycles. Saves 45–59% of core power (<a href="#cg-power">§8</a>)</td></tr>
   <tr><td>Test</td><td>Full scan: 96 flops in one chain, <code>uio[6]</code> → <code>uio[7]</code> (only the 2 reset-sync flops are off it)</td></tr>
 </table>
 </div>
@@ -188,14 +191,14 @@ body, .page-hero, .section { background: #fff; }
 <h2 id="how">2. How it works</h2>
 <p>The chip is a small matrix-multiply engine without a CPU. A CPU does not fit in one tile: TinyQV alone synthesizes to ~65.6k&nbsp;µm², 3.6× the 17,955&nbsp;µm² die. The microcontroller on the Tiny Tapeout demo board acts as the host instead: it writes operands into the chip over the pins, tells it to step, and reads the results back.</p>
 <ol class="how">
-  <li><b>Write a register.</b> The host puts the address on <code>uio[2:0]</code> and the byte on <code>ui[7:0]</code>, then raises the strobe <code>uio[3]</code>. The strobe is synchronized to the chip clock (2 flops) and its rising edge loads the byte (§7).</li>
+  <li><b>Write a register.</b> The host puts the address on <code>uio[2:0]</code> and the byte on <code>ui[7:0]</code>, then raises the strobe <code>uio[3]</code>. The strobe is synchronized to the chip clock (2 flops) and its rising edge loads the byte.</li>
   <li><b>Load operands.</b> <code>A0</code> holds two int4 values <code>a[0]</code>, <code>a[1]</code> (one column of A), <code>B0</code> holds <code>b[0]</code>, <code>b[1]</code> (one row of B).</li>
   <li><b>Step.</b> A <code>CTRL</code> step (or, in auto mode, any <code>B1</code> write) opens each enabled row's clock gate for exactly one cycle, and all four PEs add <code>a[i]·b[j]</code> to their accumulator. <code>K</code> steps compute a 2×2 block of <code>C = A·B</code> with inner dimension <code>K</code> (up to 511 without overflow).</li>
   <li><b>Read back.</b> Writing <code>RSEL</code> picks an accumulator and a byte; <code>uo[7:0]</code> then shows that byte. Four reads give the 32-bit sign-extended value.</li>
-  <li><b>Sleep between steps.</b> When nothing is stepping, the row clock gates are closed: the 64 accumulator flops and their clock tree get no clock edges (§9).</li>
-  <li><b>Test on silicon.</b> <code>test_mode</code> (<code>uio[4]</code>) forces the clocks on and links all 96 flops into one shift register from <code>uio[6]</code> to <code>uio[7]</code>, so any internal state can be loaded and read out on the bench (§10).</li>
+  <li><b>Sleep between steps.</b> When nothing is stepping, the row clock gates are closed: the 64 accumulator flops and their clock tree get no clock edges (§8).</li>
+  <li><b>Test on silicon.</b> <code>test_mode</code> (<code>uio[4]</code>) forces the clocks on and links all 96 flops into one shift register from <code>uio[6]</code> to <code>uio[7]</code>, so any internal state can be loaded and read out on the bench (§9).</li>
 </ol>
-<p>Block diagram in §5, register map in §6, host code in §12.</p>
+<p>Block diagram in §5, register map in §6, host code in §11.</p>
 
 <!-- ============================================================ -->
 <h2 id="layout">3. Layout: GDS and 3D model</h2>
@@ -330,74 +333,13 @@ body, .page-hero, .section { background: #fff; }
 <p>ID bytes: <code>4E 22 10 01</code> = 'N', 2×2 array, 16-bit accumulators, version 1. Reset clears every accumulator and the A/B operand registers.</p>
 
 <!-- ============================================================ -->
-<h2 id="protocol">7. Write protocol</h2>
-<p>The host's pins are asynchronous to the chip clock. Only the strobe is synchronized (2 flops plus one for edge detect); address and data are sampled directly, which is safe because the host holds them stable while the synchronized edge arrives.</p>
-<div class="fig">
-<svg viewBox="0 0 900 646" role="img" aria-label="Write protocol timing diagram">
-<line class="guide" x1="196" y1="44" x2="196" y2="602"/>
-<text class="tick" x="196" y="38" text-anchor="middle">0</text>
-<line class="guide" x1="272" y1="44" x2="272" y2="602"/>
-<text class="tick" x="272" y="38" text-anchor="middle">1</text>
-<line class="guide" x1="348" y1="44" x2="348" y2="602"/>
-<text class="tick" x="348" y="38" text-anchor="middle">2</text>
-<line class="guide" x1="424" y1="44" x2="424" y2="602"/>
-<text class="tick" x="424" y="38" text-anchor="middle">3</text>
-<line class="guide" x1="500" y1="44" x2="500" y2="602"/>
-<text class="tick" x="500" y="38" text-anchor="middle">4</text>
-<line class="guide" x1="576" y1="44" x2="576" y2="602"/>
-<text class="tick" x="576" y="38" text-anchor="middle">5</text>
-<line class="guide" x1="652" y1="44" x2="652" y2="602"/>
-<text class="tick" x="652" y="38" text-anchor="middle">6</text>
-<line class="guide" x1="728" y1="44" x2="728" y2="602"/>
-<text class="tick" x="728" y="38" text-anchor="middle">7</text>
-<line class="guide" x1="804" y1="44" x2="804" y2="602"/>
-<text class="tick" x="804" y="38" text-anchor="middle">8</text>
-<text class="tick" x="182" y="38" text-anchor="end">clock edge</text>
-<text class="nm mono" x="170" y="80" text-anchor="end">clk</text>
-<text class="nm mono" x="170" y="130" text-anchor="end">uio[3]</text>
-<text class="nm" x="170" y="180" text-anchor="end">ui[7:0], uio[2:0]</text>
-<text class="nm mono" x="170" y="230" text-anchor="end">wr_sync[0]</text>
-<text class="nm mono" x="170" y="280" text-anchor="end">wr_sync[1]</text>
-<text class="nm mono" x="170" y="330" text-anchor="end">wr_sync[2]</text>
-<text class="nm mono" x="170" y="380" text-anchor="end">wr</text>
-<text class="nm" x="170" y="430" text-anchor="end">addressed register</text>
-<text class="nm mono" x="170" y="480" text-anchor="end">step_q</text>
-<text class="nm" x="170" y="530" text-anchor="end">row gated clock</text>
-<text class="nm mono" x="170" y="580" text-anchor="end">acc</text>
-<path class="sig" d="M180,84 H196 L199,64 H234 L237,84 H272 L275,64 H310 L313,84 H348 L351,64 H386 L389,84 H424 L427,64 H462 L465,84 H500 L503,64 H538 L541,84 H576 L579,64 H614 L617,84 H652 L655,64 H690 L693,84 H728 L731,64 H766 L769,84 H804 L807,64 H842 L845,84 H880"/>
-<path class="sig" d="M180,134 H218 L221,114 H522 L525,134 H750 L753,114 H880"/>
-<path class="sig" d="M180,174.0 H200 L208,164 H536 L544,174.0 H880 M200,174.0 L208,184 H536 L544,174.0"/>
-<text class="nm" x="372" y="179" text-anchor="middle">valid</text>
-<path class="sig" d="M180,234 H277 L280,214 H581 L584,234 H809 L812,214 H880"/>
-<path class="sig" d="M180,284 H353 L356,264 H657 L660,284 H880"/>
-<path class="sig" d="M180,334 H429 L432,314 H733 L736,334 H880"/>
-<path class="sig" d="M180,384 H359 L362,364 H435 L438,384 H880"/>
-<path class="sig" d="M180,414 H429 H880 M180,434 H429 H880 M429,414 L443,434 M429,434 L443,414"/>
-<text class="nm" x="312" y="429" text-anchor="middle">old</text>
-<text class="nm" x="662" y="429" text-anchor="middle">new</text>
-<path class="sig" d="M180,484 H429 L432,464 H505 L508,484 H880"/>
-<path class="sig" d="M180,534 H500 L503,514 H538 L541,534 H880"/>
-<path class="sig" d="M180,564 H505 H880 M180,584 H505 H880 M505,564 L519,584 M505,584 L519,564"/>
-<text class="nm" x="350" y="579" text-anchor="middle">acc</text>
-<text class="nm" x="700" y="579" text-anchor="middle">acc + a·b</text>
-<path class="dim" d="M218,150 H522" marker-start="url(#da)" marker-end="url(#db)"/>
-<text class="tick" x="370.0" y="145" text-anchor="middle" style="fill:#000;font-size:12px">high ≥ 4 clk</text>
-<path class="dim" d="M522,150 H750" marker-start="url(#da)" marker-end="url(#db)"/>
-<text class="tick" x="636.0" y="145" text-anchor="middle" style="fill:#000;font-size:12px">low ≥ 2 clk</text>
-<defs><marker id="da" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#000"/></marker><marker id="db" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker></defs>
-</svg>
-</div>
-<p class="cap"><b>Figure 6.</b> The synchronized edge fires <code>wr</code> 1–2 clocks after the strobe rises; the register takes the new value on the next edge, 2–3 clocks after the rise. A step or clear requested by that write acts one clock later still, so an auto-step on <code>B1</code> sees the new B byte.</p>
-<p>At 50&nbsp;MHz one write needs ≥ 120&nbsp;ns on the chip side — far below what host GPIO code takes, so the host's own speed sets throughput, not the chip clock.</p>
-
-<!-- ============================================================ -->
-<h2 id="array">8. MAC array</h2>
+<h2 id="array">7. MAC array</h2>
 <p>One step is an outer product: for every enabled row <code>i</code> and every column <code>j</code>, <code>acc[i][j] += a[i] · b[j]</code>. A matrix product <code>C = A·B</code> with inner dimension <code>K</code> is <code>K</code> steps, each loading one column of <code>A</code> and one row of <code>B</code>.</p>
 <pre><code><span class="l"><span class="c">// npu_pe.v — one MAC unit, clocked by its row's gated clock</span></span><span class="l"><span class="k">if</span> (scan_en)    acc &lt;= {acc[ACC_W-2:0], scan_in};</span><span class="l"><span class="k">else</span> <span class="k">if</span> (clear) acc &lt;= 0;</span><span class="l"><span class="k">else</span> <span class="k">if</span> (step)  acc &lt;= acc + sign_extend(a * b);   <span class="c">// int4 × int4 → 8-bit product</span></span></code></pre>
 <p><b>Accumulator width: 16 bit.</b> The largest product is −8·−8 = 64. 16-bit accumulators (max 32,767) take 511 worst-case steps, so a whole 64-input dot product (8×8 digit image) fits in one pass; 12-bit would have allowed only 31 (the host would have to split <code>K</code>). Overflow wraps (two's complement).</p>
 
 <!-- ============================================================ -->
-<h2 id="cg">9. Clock gating</h2>
+<h2 id="cg">8. Clock gating</h2>
 <p>Each row has one <code>sky130_fd_sc_hd__dlclkp_1</code> integrated clock gate (wrapper <code>src/dft/clk_gate.v</code>). The latch is transparent while <code>clk</code> is low, so the enable can't glitch the gated clock.</p>
 <pre><span class="l"><span class="c">// functional enable</span></span><span class="l">en[i] = (step_q &amp;&amp; !scan_en &amp;&amp; row_en[i]) || clear_q || !rstn</span><span class="l"><span class="c">// test mode forces the clock on</span></span><span class="l">GATE  = en[i] || test_mode</span></pre>
 <p>A row's accumulators and their clock tree toggle only on the cycle after a step or clear. Between steps the host is busy writing operands for dozens of chip clocks, so the array is idle almost all the time. The cocotb test counts the edges of each row's gated clock: for every <code>ROWEN</code> mask, 3 steps give 3 edges on an enabled row and 0 on a disabled one, and test mode keeps both clocks running.</p>
@@ -465,7 +407,7 @@ body, .page-hero, .section { background: #fff; }
 </svg>
 
 </div>
-<p class="cap"><b>Figure 7.</b> Core power of this tile at the typical corner (tt, 25&nbsp;°C, 1.80&nbsp;V), 50&nbsp;MHz, 400&nbsp;µs per run. Activity from unit-delay gate-level simulation; all 4,546 pins annotated.</p>
+<p class="cap"><b>Figure 6.</b> Core power of this tile at the typical corner (tt, 25&nbsp;°C, 1.80&nbsp;V), 50&nbsp;MHz, 400&nbsp;µs per run. Activity from unit-delay gate-level simulation; all 4,546 pins annotated.</p>
 <details><summary>Table: every workload at three corners</summary>
 <table>
   <tr><th>Workload</th><th>Corner</th><th class="num">Gating on</th><th class="num">No gating</th><th class="num">Saved</th></tr>
@@ -502,7 +444,7 @@ body, .page-hero, .section { background: #fff; }
 </ol>
 <div class="note">This is a pre-silicon estimate of this tile's 1.8&nbsp;V core only (no pads, Tiny Tapeout multiplexer or other projects). The absolute values depend on the liberty models; the gated/ungated ratio is the robust result. On the bench, the same comparison is one pin: run a workload with <code>uio[4]</code> (test_mode) low, then high with <code>uio[5]</code> low, and compare the core current (≈&nbsp;0.15&nbsp;mA difference expected at 1.8&nbsp;V).</div>
 <!-- ============================================================ -->
-<h2 id="dft">10. Scan chain</h2>
+<h2 id="dft">9. Scan chain</h2>
 <p>Mux-D scan in RTL. <code>test_mode</code> (<code>uio[4]</code>) forces all row clocks on and puts <code>scan_out</code> on <code>uio[7]</code>; <code>scan_en</code> (<code>uio[5]</code>) is ANDed with <code>test_mode</code>; <code>scan_in</code> is <code>uio[6]</code>. Every flop is on the chain except the two reset-synchronizer flops, which stay off it so reset remains controllable in test mode.</p>
 <div class="fig">
 <svg viewBox="0 0 960 120" role="img" aria-label="Scan chain order">
@@ -541,11 +483,11 @@ body, .page-hero, .section { background: #fff; }
   </g>
 </svg>
 </div>
-<p class="cap"><b>Figure 8.</b> Chain order from <code>scan_in</code> to <code>scan_out</code>, with the flop count of each field. Every field shifts in LSB first.</p>
+<p class="cap"><b>Figure 7.</b> Chain order from <code>scan_in</code> to <code>scan_out</code>, with the flop count of each field. Every field shifts in LSB first.</p>
 <p>Length = 3 + 8 + 8 + 1 + 2 + 8 + 2 + 4 × 16 = <b>96</b> flops. The shift test runs through the pins in RTL and on the gate-level netlist; the per-bit map is generated by <code>test/scan_map.py</code>.</p>
 
 <!-- ============================================================ -->
-<h2 id="pins">11. Pinout</h2>
+<h2 id="pins">10. Pinout</h2>
 <table>
   <tr><th>Pin</th><th>Dir</th><th>Function</th></tr>
   <tr><td class="mono">ui[7:0]</td><td>in</td><td>Write data byte</td></tr>
@@ -560,7 +502,7 @@ body, .page-hero, .section { background: #fff; }
 </table>
 
 <!-- ============================================================ -->
-<h2 id="host">12. Host code</h2>
+<h2 id="host">11. Host code</h2>
 <p>Pseudocode for the demo board's microcontroller; <code>set_pins</code>/<code>read_uo</code> stand in for whatever GPIO API the firmware uses (TT MicroPython SDK or C SDK). Strobe timing is in chip clocks: MicroPython is far slower than 4 chip clocks per pin change, but C code writing the GPIO registers directly can toggle in a few ns, so it needs the explicit waits.</p>
 <pre><code><span class="l">A0, A1, B0, B1, CTRL, ROWEN, RSEL = <span class="k">range</span>(7)</span><span class="l"></span><span class="l"><span class="k">def</span> wr(addr, data):</span><span class="l">    set_pins(ui=data, addr=addr, strobe=0)</span><span class="l">    set_pins(strobe=1)</span><span class="l">    wait_chip_clocks(4)     <span class="c"># hold addr/data ≥ 4 chip clocks</span></span><span class="l">    set_pins(strobe=0)</span><span class="l">    wait_chip_clocks(2)     <span class="c"># low ≥ 2 chip clocks before the next write</span></span><span class="l"></span><span class="l"><span class="k">def</span> nib(lo, hi):            <span class="c"># two signed int4 → one byte</span></span><span class="l">    <span class="k">return</span> (lo &amp; 0xF) | (hi &amp; 0xF) &lt;&lt; 4</span><span class="l"></span><span class="l"><span class="k">def</span> read_acc(n):            <span class="c"># 32-bit sign-extended accumulator n = COLS*i + j</span></span><span class="l">    v = 0</span><span class="l">    <span class="k">for</span> byte <span class="k">in</span> <span class="k">range</span>(4):</span><span class="l">        wr(RSEL, byte &lt;&lt; 4 | n)</span><span class="l">        v |= read_uo() &lt;&lt; (8 * byte)</span><span class="l">    <span class="k">return</span> v - (1 &lt;&lt; 32) <span class="k">if</span> v &amp; 0x80000000 <span class="k">else</span> v</span><span class="l"></span><span class="l"><span class="k">def</span> matmul(A, B):           <span class="c"># A: ROWS×K, B: K×COLS, int4 entries</span></span><span class="l">    wr(CTRL, 0b101)         <span class="c"># clear + auto-step on B1 writes</span></span><span class="l">    <span class="k">for</span> k <span class="k">in</span> <span class="k">range</span>(len(B)): <span class="c"># K up to 511 with 16-bit accumulators</span></span><span class="l">        wr(A0, nib(A[0][k], A[1][k]))                  <span class="c"># column k of A</span></span><span class="l">        wr(B0, nib(B[k][0], B[k][1]))                  <span class="c"># row k of B</span></span><span class="l">        wr(B1, 0)                                      <span class="c"># B1 data unused at 2×2: just steps</span></span><span class="l">    <span class="k">return</span> [[read_acc(COLS*i + j) <span class="k">for</span> j <span class="k">in</span> <span class="k">range</span>(COLS)] <span class="k">for</span> i <span class="k">in</span> <span class="k">range</span>(ROWS)]</span></code></pre>
 <p class="cap">For the 2×2 array (<code>ROWS = COLS = 2</code>). Without auto mode, step with <code>wr(CTRL, 0b010)</code> instead of the B1 write. The array size can be read from ID byte 1 (<code>wr(RSEL, 0x81)</code> → <code>0x22</code>).</p>
