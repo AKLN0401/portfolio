@@ -163,12 +163,13 @@
             <h3>One-Tile int4 NPU: SKY130 Tapeout with Clock Gating and Full Scan</h3>
             <span class="proj-cat">RTL &middot; Verification &middot; Place-and-route &middot; Tiny Tapeout &middot; In progress</span>
           </div>
-          <p class="proj-sum">A 2&times;2 int4 multiply-accumulate array with 16-bit accumulators, one clock gate per row and a 96-flop scan chain, driven over the pins by the demo board&rsquo;s microcontroller. Taken from RTL to a signed-off layout in a single Tiny Tapeout tile; interactive 3D view of the GDS on the page.</p>
+          <p class="proj-sum">A 2&times;2 int4 multiply-accumulate array with 16-bit accumulators, one clock gate per row and a 96-flop scan chain, driven over the pins by the demo board&rsquo;s microcontroller. Taken from RTL to a signed-off layout in a single Tiny Tapeout tile. Vector-based power analysis of the routed netlist shows the clock gates cut core power by about half (45&ndash;59%); interactive 3D view of the GDS on the page.</p>
           <dl class="proj-spec">
             <div><dt>Technology</dt><dd>SkyWater SKY130 130&nbsp;nm &middot; 1 tile, 161&nbsp;&times;&nbsp;112&nbsp;&micro;m &middot; 50&nbsp;MHz</dd></div>
             <div><dt>Tools</dt><dd>LibreLane (Yosys, OpenROAD, Magic, KLayout) &middot; cocotb &middot; Icarus &middot; Verilator</dd></div>
             <div><dt>Signoff</dt><dd>DRC and LVS clean &middot; timing met from &minus;40 to 100&nbsp;&deg;C &middot; TT precheck 15/15</dd></div>
-            <div><dt>Status</dt><dd>Tiny Tapeout CI green (GDS, precheck, gate-level) Layout signed off &middot; TTSKY26d shuttle, submission pendingmiddot; TTSKY26d submission next</dd></div>
+            <div><dt>Power</dt><dd>191&ndash;277&nbsp;&micro;W at 50&nbsp;MHz (typical corner) &middot; clock gating saves 45&ndash;59%</dd></div>
+            <div><dt>Status</dt><dd>Layout signed off &middot; Tiny Tapeout CI green (GDS, precheck, gate-level) &middot; TTSKY26d submission next</dd></div>
           </dl>
           <span class="proj-go">Case study &rarr;</span>
         </a>
