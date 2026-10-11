@@ -82,7 +82,7 @@ top = (h - ch) // 2
 im.crop((0, top, w, top + ch)).resize((1200, 630), Image.LANCZOS).save(os.path.join(port, "assets", "og", "npu.png"), optimize=True)
 
 # ---------- page ----------
-TITLE = "One-Tile int4 NPU for Tiny Tapeout — Khoi Nguyen"
+TITLE = "One-Tile int4 NPU (2x2 MAC Array) for Tiny Tapeout — Khoi Nguyen"
 DESC = ("A 2×2 int4 MAC-array accelerator with per-row clock gating and full scan, taken from RTL to a "
         "signed-off SkyWater SKY130 layout in one Tiny Tapeout tile.")
 URL = "https://akln0401.github.io/portfolio/projects/npu-tapeout.html"
@@ -110,7 +110,7 @@ page = f"""{head}<style>
   <section class="page-hero">
     <div class="wrap">
       <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
-      <h1>One-Tile int4 NPU for Tiny Tapeout</h1>
+      <h1>One-Tile int4 NPU (2x2 MAC Array) for Tiny Tapeout</h1>
       <p class="dek">A 2×2 int4 multiply-accumulate array with 16-bit accumulators, one clock gate per row and a 96-flop scan chain, taken from RTL to a signed-off layout in a single 161&nbsp;×&nbsp;112&nbsp;µm Tiny Tapeout tile. Built for the TTSKY26d shuttle; the demo board's microcontroller drives it over the pins.</p>
       <p style="margin-top:24px;"><a class="btn btn-primary" href="{REPO}">Source on GitHub</a> <a class="btn" href="#layout">3D layout</a></p>
     </div>
