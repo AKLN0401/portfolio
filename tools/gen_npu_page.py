@@ -57,7 +57,7 @@ scoped += (".npu-doc h2[id] { scroll-margin-top: 72px; }\n"
 
 # ---------- body: drop the page's own label / h1 / subtitle ----------
 main = re.search(r"<main>(.*?)</main>", html, re.S).group(1)
-main = re.sub(r'\s*<p class="label">.*?</p>\s*<h1>.*?</h1>\s*<p class="sub">.*?</p>', "\n", main, count=1, flags=re.S)
+main = re.sub(r'\s*(?:<p class="label">.*?</p>\s*)?<h1>.*?</h1>\s*<p class="sub">.*?</p>', "\n", main, count=1, flags=re.S)
 assert "<h1" not in main
 
 # ---------- assets ----------
