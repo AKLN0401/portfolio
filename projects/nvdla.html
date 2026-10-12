@@ -146,9 +146,9 @@
       <div class="section-head"><h2>Low power, test and PPA</h2><span class="section-index">IMPLEMENTATION</span></div>
       <p class="pd-lede">All five partitions share one synthesis script and one place-and-route script, so each gets the same treatment.</p>
       <div class="a7-grid">
-        <div class="a7-card"><h4>Three threshold voltages</h4><span class="a7-status">in synthesis</span><p>The slow, regular and fast V<sub>t</sub> flavours are loaded together. Optimization is weighted toward leakage, so cells stay on the slow flavour by default and switch to a faster one only where a path needs the speed. Hold fixing uses slow-flavour delay cells only.</p></div>
-        <div class="a7-card"><h4>Clock gating</h4><span class="a7-status">in synthesis</span><p>NVDLA&rsquo;s own RTL clock gates are imported as real gating cells, and synthesis adds more where 3 to 64 flops share an enable. Scan-enable is defined before the gates go in, so every gate&rsquo;s test pin is driven by it rather than tied to a constant.</p></div>
-        <div class="a7-card"><h4>Scan chains</h4><span class="a7-status">in synthesis</span><p>Muxed scan inserted by synthesis from the library&rsquo;s own scan flops: 128 chains per partition behind on-chip compression, so each block needs only 8 scan-in and 8 scan-out pins and the assembled design still fits a pad ring. Written out as SCANDEF so placement can reorder each chain by location. Each netlist is checked by Conformal equivalence and by Modus chain tracing and ATPG.</p></div>
+        <div class="a7-card"><h4>Three threshold voltages</h4><span class="a7-status">done</span><p>The slow, regular and fast V<sub>t</sub> flavours are loaded together. Optimization is weighted toward leakage, so cells stay on the slow flavour by default and switch to a faster one only where a path needs the speed. Hold fixing uses slow-flavour delay cells only.</p></div>
+        <div class="a7-card"><h4>Clock gating</h4><span class="a7-status">done &middot; 99.9% of flops gated</span><p>NVDLA&rsquo;s own RTL clock gates are imported as real gating cells, and synthesis adds more where 3 to 64 flops share an enable. Scan-enable is defined before the gates go in, so every gate&rsquo;s test pin is driven by it rather than tied to a constant.</p></div>
+        <div class="a7-card"><h4>Scan chains</h4><span class="a7-status">done &middot; 1.86&nbsp;M scan flops</span><p>Muxed scan inserted by synthesis from the library&rsquo;s own scan flops: 128 chains per partition behind on-chip compression, so each block needs only 8 scan-in and 8 scan-out pins and the assembled design still fits a pad ring. Written out as SCANDEF so placement can reorder each chain by location. Each netlist is checked by Conformal equivalence and by Modus chain tracing and ATPG.</p></div>
         <div class="a7-card"><h4>PPA optimization</h4><span class="a7-status">applied</span><p>Genus 25.1 at its highest optimization effort, with physical libraries and the extraction tech file loaded so cell sizes and wire estimates are real. Timing carries margin from the first run: clock uncertainty for jitter and skew, a flat on-chip-variation derate, and a boundary budget on every partition port, checked at both slow corners. The clock period stays fixed: misses get fixed in the design or the flow, not by relaxing the target.</p></div>
         <div class="a7-card"><h4>SRAM for 13 metals</h4><span class="a7-status">generated</span><p>Both CBUF macro sizes were generated with the memory compiler, with timing views at every signoff corner. A macro uses only the lower metal layers and blocks them; everything above routes straight over it, so the same layout works on the 13-metal stack.</p></div>
         <div class="a7-card"><h4>Signoff corners</h4><span class="a7-status">set</span><p>Setup at the slow corner with 10% supply droop, hot and cold, since at FinFET voltages cold can be the slower case. Hold at the fast corner with 10% over-voltage, also hot and cold. Power at the typical corner, 85&nbsp;&deg;C.</p></div>
@@ -170,6 +170,19 @@
           <tr><th>P</th><td>SDP</td><td class="ok">met 0.909&nbsp;ns, hot and cold &middot; 128 scan chains &middot; V<sub>t</sub> 78/14/7%</td><td class="ok">clean: 0 DRC, PG connected, 9,724 pins legal</td></tr>
         </tbody>
       </table></div>
+      <h3 style="margin-top:40px;">Scan chains and clock gating</h3>
+      <p class="pd-lede">Every partition has the same test structure: 128 balanced internal chains behind on-chip compression, so the tester drives only 8 scan-in and 8 scan-out pins per block and each test pattern shifts in 16&times; fewer cycles. Clock gating covers practically every flop: across the five partitions, 52,976 gates switch off 99.9% of 1.86&nbsp;million flops when their data is not changing. In every partition, all clock-gate test pins are driven by scan-enable (0 left tied), so the gated flops still shift during test.</p>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Partition</th><th>Flops</th><th>Scan flops</th><th>Chain length</th><th>Clock gates</th><th>Flops gated</th></tr></thead>
+        <tbody>
+          <tr><th>A</th><td>396,759</td><td>396,623</td><td>3,099</td><td>7,656</td><td class="ok">99.95%</td></tr>
+          <tr><th>C</th><td>231,871</td><td>231,607</td><td>1,810</td><td>6,375</td><td class="ok">99.79%</td></tr>
+          <tr><th>M</th><td>66,034</td><td>65,898</td><td>515</td><td>2,847</td><td class="ok">99.77%</td></tr>
+          <tr><th>O</th><td>744,144</td><td>744,008</td><td>5,856</td><td>25,163</td><td class="ok">99.85%</td></tr>
+          <tr><th>P</th><td>422,975</td><td>422,839</td><td>3,304</td><td>10,935</td><td class="ok">99.93%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="a7-cap">From the Genus scan-chain and clock-gating reports. M is counted once, though it is placed twice in the block. Most of A&rsquo;s flops are its accumulator buffers, built as flop RAMs so they can be scanned. Chain length is the longest of the 128 chains. Equivalence checks and ATPG coverage come next.</p>
     </div>
   </section>
 
