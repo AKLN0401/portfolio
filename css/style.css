@@ -1586,3 +1586,14 @@ strong { font-weight: 600; }
 @media (max-width: 1024px) {
   .hero-portrait { justify-self: start; max-width: 360px; }
 }
+
+/* Publications */
+.pub-list { list-style: none; margin: 0; padding: 0; }
+.pub-list li { border-top: 1px solid var(--line); padding: 20px 0; }
+.pub-list li:last-child { border-bottom: 1px solid var(--line); }
+.pub-title { font-size: 17px; font-weight: 600; line-height: 1.4; margin: 0 0 6px; max-width: 72ch; }
+.pub-title a { color: var(--ink); text-decoration: none; }
+.pub-title a:hover { text-decoration: underline; }
+.pub-authors, .pub-venue, .pub-links { font-size: 14.5px; color: var(--muted); margin: 0 0 4px; line-height: 1.55; }
+.pub-authors strong { color: var(--ink); font-weight: 600; }
+.pub-links { margin: 10px 0 0; }
