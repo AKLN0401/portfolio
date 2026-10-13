@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20261013" />
+<link rel="stylesheet" href="css/style.css?v=20261013b" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -46,6 +46,7 @@
         <li><a href="index.html#projects">Projects</a></li>
         <li><a href="index.html#fabrication">Fabrication</a></li>
         <li><a href="research.html">Research</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
         <li><a href="index.html#skills">Skills</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="index.html#contact">Contact</a></li>
@@ -209,9 +210,24 @@
 
       <p class="label proj-group is-done" style="margin:48px 0 12px;">Completed</p>
       <div class="proj-list">
-        <a class="proj" href="projects/riscv.html">
+        <a class="proj" href="projects/mems-switch.html">
           <div class="proj-head">
             <span class="proj-num">04</span>
+            <h3>Printed Flexible Lorentz-Force MEMS Switch with Electrostatic Hold-Down</h3>
+            <span class="proj-cat">MEMS &middot; Printed electronics &middot; Published, EUROSENSORS 2026</span>
+          </div>
+          <p class="proj-sum">A MEMS switch printed in silver on flexible polyimide and released by O<sub>2</sub> plasma etch. A Lorentz force pulls the shuttle onto its contacts and a low electrostatic force holds it there, so the drive current can be turned off while the switch stays closed.</p>
+          <dl class="proj-spec">
+            <div><dt>Materials</dt><dd>15&nbsp;&micro;m printed silver &middot; 25&nbsp;&micro;m polyimide</dd></div>
+            <div><dt>Tools</dt><dd>COMSOL &middot; Voltera NOVA &middot; O<sub>2</sub> RIE</dd></div>
+            <div><dt>Simulated</dt><dd>120&nbsp;mA &rarr; ~110&nbsp;&micro;m &middot; 33&nbsp;Hz &middot; 0.018&nbsp;N/m</dd></div>
+            <div><dt>Measured</dt><dd>Repeatable switching &middot; hold-down releases at 28&nbsp;V</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
+        </a>
+        <a class="proj" href="projects/riscv.html">
+          <div class="proj-head">
+            <span class="proj-num">05</span>
             <h3>RISC-V Fault Detection</h3>
             <span class="proj-cat">DFT &middot; Reliability &middot; Research</span>
           </div>
@@ -227,7 +243,7 @@
 
         <a class="proj" href="projects/dft.html">
           <div class="proj-head">
-            <span class="proj-num">05</span>
+            <span class="proj-num">06</span>
             <h3>Error-Detection DFT Architectures</h3>
             <span class="proj-cat">DFT &middot; Verification &middot; Research</span>
           </div>
@@ -358,6 +374,24 @@
           </figcaption>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="section" id="publications">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Publications</h2>
+        <span class="section-index">Peer-reviewed</span>
+      </div>
+      <ol class="pub-list">
+        <li>
+          <p class="pub-title"><a href="projects/mems-switch.html">A Low-Power Printed Flexible Lorentz Force MEMS Switch with Electrostatic Hold-down</a></p>
+          <p class="pub-authors">M. Meybodi, <strong>K. Nguyen</strong>, T. Chen, C. Shafai</p>
+          <p class="pub-venue"><i>EUROSENSORS 2026</i>, Actuators, paper 4.4.3, pp.&nbsp;152&ndash;153 &middot; DOI <a href="https://doi.org/10.5162/eurosensors2026/4.4.3">10.5162/eurosensors2026/4.4.3</a></p>
+          <p class="pub-links"><a href="assets/papers/meybodi-eurosensors2026-lorentz-mems-switch.pdf">PDF</a> &middot; <a href="projects/mems-switch.html">Project page</a></p>
+        </li>
+      </ol>
     </div>
   </section>
 
