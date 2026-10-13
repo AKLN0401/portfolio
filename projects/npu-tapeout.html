@@ -29,13 +29,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/style.css?v=20261004" />
+<link rel="stylesheet" href="../css/style.css?v=20261013" />
 <style>
 /* chip-page styles, scoped to the case-study body */
 .npu-doc { --ink: #000; --paper: #fff; --muted: #444; --line: #000; --rule: #bbb; }
 .npu-doc * { box-sizing: border-box; }
 .npu-doc { font-size: 16px; line-height: 1.6; color: var(--ink); }
-.npu-doc h2, .npu-doc h3, .npu-doc h4 { font-family: "Source Serif 4", "Times New Roman", Times, serif; font-weight: 700; line-height: 1.2; }
+.npu-doc h2 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 1.2; }
+.npu-doc h3, .npu-doc h4 { font-family: var(--font-body); font-weight: 600; line-height: 1.2; }
 .npu-doc h2 { font-size: 24px; margin: 56px 0 14px; padding-top: 0; }
 .npu-doc h3 { font-size: 18px; margin: 28px 0 8px; }
 .npu-doc p { max-width: 70ch; margin: 10px 0; }
@@ -83,7 +84,7 @@
 .npu-doc .step .st { text-align: right; font-style: italic; }
 .npu-doc ul { padding-left: 22px; }
 .npu-doc li { margin-bottom: 4px; }
-.npu-doc svg text { font-family: Helvetica, Arial, sans-serif; fill: #000; }
+.npu-doc svg text { font-family: var(--font-body); fill: #000; }
 .npu-doc svg .t-muted { fill: #333; }
 .npu-doc svg .mono { font-family: "IBM Plex Mono", Consolas, monospace; }
 .npu-doc svg rect { rx: 0; }
@@ -348,7 +349,7 @@ body, .page-hero, .section { background: #fff; }
 <p>To find out what the clock gates buy, the post-PnR netlist was simulated running real workloads, and its switching activity went into the signoff timer's power engine with the routed parasitics. Each workload ran twice with identical bus traffic: once normally, and once with <code>test_mode</code> high, which forces both row clocks on. That second run is the design as it would be without clock gating.</p>
 <p><b>58.6%</b> less core power with the clock gates working while the array waits for the host (idle at 50&nbsp;MHz, typical corner). Across all four workloads and three corners the saving is 45–59%.</p>
 <div class="fig">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="Helvetica, Arial, sans-serif" font-size="13" role="img" aria-label="Core power with and without clock gating for four workloads">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="13" role="img" aria-label="Core power with and without clock gating for four workloads">
 <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#fff"/><line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="1.6"/></pattern></defs>
 <rect width="760" height="400" fill="#fff"/>
 <line x1="73" y1="316.0" x2="78" y2="316.0" stroke="#000" stroke-width="1"/>
