@@ -1597,3 +1597,6 @@ strong { font-weight: 600; }
 .pub-authors, .pub-venue, .pub-links { font-size: 14.5px; color: var(--muted); margin: 0 0 4px; line-height: 1.55; }
 .pub-authors strong { color: var(--ink); font-weight: 600; }
 .pub-links { margin: 10px 0 0; }
+
+/* Logic schematics: white sheet, like a textbook figure */
+.diagram-frame.schematic { background: #fff; }
