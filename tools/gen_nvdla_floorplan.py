@@ -21,7 +21,7 @@ SRAM_W = 46.643                   # sram2p macro width (LEF)
 SRAM_H = {"144": 158.976, "80": 97.536}
 COL = ["144"] * 6 + ["80"] * 2    # one column, top to bottom
 N_COLS = 8                        # per side
-PAIR_CH, GAP = 12.0, 3.0          # channel between a facing pair, gap between pairs
+PAIR_CH, GAP = 36.0, 3.0          # pin channel between a facing pair (std-cell rows inside), gap between pairs
 BITS = {"op": 6280, "co": 5117, "mao": 2423, "cmb": 2423, "ap": 1950, "map": 1434, "amb": 1434, "ac": 106}
 
 # ---- drawing
@@ -38,7 +38,7 @@ PART = {  # colour, name, contents lines
     "a":  ("#2e8b57", "A",  ["CACC"]),
 }
 INK, MUTED, LINK = "#161616", "#525252", "#da1e28"
-SANS = "IBM Plex Sans, Helvetica Neue, Arial, sans-serif"
+SANS = "Inter Tight, Helvetica Neue, Arial, sans-serif"
 MONO = "IBM Plex Mono, SFMono-Regular, Consolas, monospace"
 
 
@@ -105,7 +105,7 @@ for k, flip in (("ma", False), ("mb", True)):
         x0, y0 = X(x + w), Y(y + h)
         a(f'<path d="M{f(x0)} {f(y0)} h-11 L{f(x0)} {f(y0+11)} z" fill="{c}"/>')
 
-# SRAM banks in C (same placement rule as the PnR script: pairs face a shared channel, right bank = mirror)
+# SRAM banks in C (same placement rule as the PnR script: pairs face a 36 um pin channel with rows, right bank = mirror)
 cx, cy, cw, ch = BLK["c"]
 cx0, cx1, cy1 = cx + EDGE_M, cx + cw - EDGE_M, cy + ch - EDGE_M
 xm = cx0 + 3.0
@@ -122,6 +122,10 @@ for i in range(N_COLS):
             px = X(xx + SRAM_W) if pr else X(xx)
             a(f'<line x1="{f(px)}" y1="{f(Y(ytop)+.4)}" x2="{f(px)}" y2="{f(Y(ybot)-.4)}" stroke="#2563a8" stroke-width="1.8"/>')
             ytop = ybot - 6.0 - GAP
+    if i % 2 == 0:  # pin channel of this pair: std-cell rows for the read-data and clock buffers
+        for side in ("L", "R"):
+            ch0 = xm + SRAM_W + 3.0 if side == "L" else cx0 + cx1 - (xm + SRAM_W + PAIR_CH - 3.0)
+            a(f'<rect x="{f(X(ch0))}" y="{f(Y(cy1))}" width="{f((PAIR_CH-6.0)*S)}" height="{f((cy1-ytop-GAP)*S)}" fill="url(#fpRowc)" stroke="#2563a8" stroke-opacity=".35" stroke-width=".4"/>')
     xm += SRAM_W + (6.0 + GAP if i % 2 else PAIR_CH)
 
 # mirror axis
