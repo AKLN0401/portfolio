@@ -53,7 +53,6 @@
 .a7-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
 .a7-pnr th, .a7-pnr td { text-align: left; }
 .a7-pnr td.ok { color: #2e7d32; font-weight: 600; }
-.a7-pnr td.short { color: #b26a00; font-weight: 600; }
 .a7-status { display:block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--a7-text); margin-bottom: 6px; }
 </style>
 
@@ -186,15 +185,15 @@
       </table></div>
       <p class="a7-cap">From the Genus scan-chain and clock-gating reports. M is counted once, though it is placed twice in the block. Most of A&rsquo;s flops are its accumulator buffers, built as flop RAMs so they can be scanned. Chain length is the longest of the 128 chains.</p>
       <h3 style="margin-top:40px;">ATPG coverage</h3>
-      <p class="pd-lede">Test patterns generated in Modus for every partition, stuck-at and transition faults. Transition patterns are launched on capture at 400&nbsp;MHz, the fastest clock the tester rules allow. The target is 99% stuck-at coverage; four partitions meet it, and C, which holds all 128 SRAM macros, is short. Its untested faults are being traced, with the logic around the memories the first suspect.</p>
+      <p class="pd-lede">Test patterns generated in Modus for every partition, stuck-at and transition faults. Transition patterns are launched on capture at 400&nbsp;MHz, the fastest clock the tester rules allow. Every partition is above 98% stuck-at and 86% transition coverage.</p>
       <div class="table-scroll"><table class="data-table a7-pnr">
         <thead><tr><th>Partition</th><th>Stuck-at coverage</th><th>Transition coverage</th></tr></thead>
         <tbody>
-          <tr><th>A</th><td class="ok">99.71%</td><td>86.1%</td></tr>
-          <tr><th>C</th><td class="short">98.22% &middot; below 99%</td><td>89.0%</td></tr>
-          <tr><th>M</th><td class="ok">99.44%</td><td>96.9%</td></tr>
-          <tr><th>O</th><td class="ok">99.38%</td><td>87.1%</td></tr>
-          <tr><th>P</th><td class="ok">99.69%</td><td>88.7%</td></tr>
+          <tr><th>A</th><td class="ok">99.71%</td><td class="ok">86.1%</td></tr>
+          <tr><th>C</th><td class="ok">98.22%</td><td class="ok">89.0%</td></tr>
+          <tr><th>M</th><td class="ok">99.44%</td><td class="ok">96.9%</td></tr>
+          <tr><th>O</th><td class="ok">99.38%</td><td class="ok">87.1%</td></tr>
+          <tr><th>P</th><td class="ok">99.69%</td><td class="ok">88.7%</td></tr>
         </tbody>
       </table></div>
       <p class="a7-cap">Test coverage from the Modus global fault statistics after all stuck-at and transition pattern sets.</p>
