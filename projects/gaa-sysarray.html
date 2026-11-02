@@ -79,6 +79,27 @@
 .c3d-ctl input[type=range] { width: 100%; accent-color: #17191c; min-height: 28px; }
 .c3d-ctl label { display: block; font-size: 14px; line-height: 1.7; cursor: pointer; }
 .c3d-nogl .c3d-stage::after { content: "The 3D view needs WebGL, which this browser has turned off."; position: absolute; inset: 0; display: grid; place-items: center; color: #c8ccd6; padding: 24px; text-align: center; }
+/* chip 3D viewer */
+.k3d { border: 1px solid var(--line); margin: 24px 0 8px; background: #0d1016; }
+.k3d-stage { position: relative; height: clamp(460px, 62vw, 700px); touch-action: none; }
+.k3d-stage canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+.k3d-stage canvas:active { cursor: grabbing; }
+.k3d-tags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.k3d-tag { position: absolute; left: 0; top: 0; white-space: nowrap; font: 500 11px/1.2 var(--font-mono); color: #e6e8ee; background: rgba(16,19,27,.82); border: 1px solid #343c50; border-radius: 4px; padding: 2px 6px; }
+.k3d-tag.hl { border-color: #e8a33d; color: #ffd28a; }
+.k3d-hud { position: absolute; left: 10px; bottom: 10px; max-width: calc(100% - 20px); pointer-events: none; color: #9aa3b5; font: 12px/1.45 var(--font-body); background: rgba(16,19,27,.82); border: 1px solid #343c50; border-radius: 6px; padding: 5px 9px; }
+.k3d-hud b { color: #e6e8ee; font-weight: 600; }
+.k3d-levels { position: absolute; top: 10px; left: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+.k3d-levels button { font: 500 12px var(--font-body); background: rgba(16,19,27,.86); color: #e6e8ee; border: 1px solid #343c50; border-radius: 5px; padding: 5px 10px; cursor: pointer; }
+.k3d-levels button[aria-pressed="true"] { background: #e6e8ee; color: #0d1016; }
+.k3d-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-top: 1px solid var(--line); background: var(--paper); }
+.k3d-panel .c3d-ctl label { display: block; font-size: 14px; line-height: 1.7; }
+.k3d-nogl .k3d-stage::after { content: "The 3D view needs WebGL, which this browser has turned off."; position: absolute; inset: 0; display: grid; place-items: center; color: #c8ccd6; }
+.fp-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+.fp-pair figure { margin: 0; }
+.fp-pair img, .fp-svg img { width: 100%; height: auto; display: block; border: 1px solid var(--line); }
+.fp-pair figcaption, .fp-svg figcaption { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
+.fp-svg { margin: 24px 0 8px; }
 </style>
 </head>
 <body>
@@ -117,8 +138,8 @@
         <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; Hierarchical P&amp;R &middot; in progress</p>
         <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
         <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
-        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 1.0&nbsp;ns (setup +8&nbsp;ps). The CPU+accelerator top is in place-and-route.</p>
-        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#cells3d">3D nanosheets</a> <a class="btn" href="#signoff">Signoff status</a></p>
+        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 1.0&nbsp;ns (setup +8&nbsp;ps). The CPU+accelerator top is placed and routed; its signoff is not done yet.</p>
+        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a></p>
       </div>
       <figure class="a7-plate"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="heroT"><title id="heroT">ibex_npu_top: the Ibex CPU drives a 16 KB window decoded by npu_dma, which connects to three hard macros: npu_acc and two lram_256x32 SRAM banks</title>
         <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L10 5L0 10z"/></marker></defs>
@@ -206,6 +227,45 @@
             <path class="wire" d="M292 164V282"/><text x="300" y="220">back side:</text><text x="300" y="234">VDD / VSS</text>
           </g>
         </svg><figcaption>Layer stack, schematic and not to scale</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="chip3d-sec">
+    <div class="wrap">
+      <div class="section-head"><h2>3D: from the whole chip to one transistor</h2><span class="section-index">115 &micro;m &rarr; 6 nm</span></div>
+      <p class="pd-lede"><code>ibex_npu_top</code> at true scale. Start on the whole die, then scroll toward any point, or use the buttons, to zoom about four orders of magnitude: the routed cell band, the rows and their buried power rails, a standard cell, and a single transistor with its three nanosheets.</p>
+      <div class="k3d" id="chip3d">
+        <div class="k3d-stage"><div class="k3d-tags"></div>
+          <div class="k3d-levels" role="group" aria-label="Zoom level">
+            <button data-lv="chip" aria-pressed="true">Chip</button><button data-lv="band">Cell band</button><button data-lv="rows">Rows</button><button data-lv="cell">Cell</button><button data-lv="fet">Transistor</button>
+          </div>
+          <div class="k3d-hud"><b id="k3d-level"></b><br><span id="k3d-scale"></span></div>
+        </div>
+        <div class="k3d-panel">
+          <div class="c3d-ctl"><span>Band surface</span><select id="k3d-band" aria-label="Band surface"><option value="routing">Routing (DEF)</option><option value="placement">Placement (DEF)</option></select></div>
+          <div class="c3d-ctl"><span>Layers</span><label><input type="checkbox" id="k3d-back" checked> Backside power (BSM1&ndash;3)</label><button id="k3d-tags-btn" aria-pressed="true" style="margin-top:6px;">Labels</button></div>
+          <div class="c3d-ctl"><span>Gate opacity <output id="k3d-gate-out">30%</output></span><input type="range" id="k3d-gate" min="0" max="100" value="30" aria-label="Gate opacity"></div>
+        </div>
+      </div>
+      <p class="fig-note">What is exact and what is not: die, macros, cell band, regions, pins, rows, BPR rails and the BSM1&ndash;3 power stripes are generated from <code>pnr/ibex_npu_top_pnr.tcl</code>. The band and macro surfaces are the routed DEFs rendered by <code>scripts/def2png.py</code>, real wiring drawn flat. Heights come from the PDK&rsquo;s ITF/ICT. The INV, NAND2 and DFF you reach when you zoom in are real library cells from the PDK GDS, placed on a legal (even) row of this floorplan <em>for scale</em>. They are not the routed design&rsquo;s cells at that spot, because the DEF&rsquo;s per-cell placement is not loaded into this view.</p>
+    </div>
+  </section>
+
+  <section class="section" id="floorplan">
+    <div class="wrap">
+      <div class="section-head"><h2>Floorplan</h2><span class="section-index">IBEX_NPU_TOP</span></div>
+      <p class="pd-lede">The three macros sit in a row along the bottom; the CPU and <code>npu_dma</code> fill the band above them. The main Ibex core and its lockstep shadow mirror each other about the die centre, with a 2&nbsp;&micro;m channel between them, and all 232 pins are on the top edge on M5. Standard cells use every second row only, because abutting rows short in the stock cell GDS.</p>
+      <figure class="fp-svg"><img src="../assets/gaa/ibex_npu_top_floorplan.svg" alt="ibex_npu_top floorplan to scale: three macros along the bottom, main and shadow core regions above, channel between them, pins on the top edge, backside power stripes" width="1006" height="943"><figcaption>Generated from the Innovus script by scripts/floorplan.py, to scale</figcaption></figure>
+      <div class="fp-pair">
+        <figure><img src="../assets/gaa/ibex_npu_top_placement.webp" alt="ibex_npu_top placement: CPU cells in blue above the macros, npu_dma cells in orange above the accelerator" loading="lazy" width="1200" height="1123"><figcaption>ibex_npu_top &middot; placement (routed DEF)</figcaption></figure>
+        <figure><img src="../assets/gaa/ibex_npu_top_routing.webp" alt="ibex_npu_top routing, wires coloured by metal layer M0 to M5" loading="lazy" width="1200" height="1123"><figcaption>ibex_npu_top &middot; routing M0&ndash;M5 (routed DEF)</figcaption></figure>
+      </div>
+      <h3 style="margin-top:40px;">The other three layouts</h3>
+      <div class="fp-pair">
+        <figure><img src="../assets/gaa/ibex_cfet_top_routing.webp" alt="ibex_cfet_top routing" loading="lazy" width="1200" height="1284"><figcaption>ibex_cfet_top &middot; 70.04 &times; 70.13 &micro;m &middot; routing</figcaption></figure>
+        <figure><img src="../assets/gaa/npu_acc_routing.webp" alt="npu_acc macro routing" loading="lazy" width="1200" height="1305"><figcaption>npu_acc &middot; 49.14 &times; 49.97 &micro;m &middot; routing</figcaption></figure>
+        <figure><img src="../assets/gaa/lram_256x32_routing.webp" alt="lram_256x32 macro routing" loading="lazy" width="961" height="1710"><figcaption>lram_256x32 &middot; 30.03 &times; 49.97 &micro;m &middot; routing</figcaption></figure>
       </div>
     </div>
   </section>
@@ -310,14 +370,14 @@
           <tr><th><code>lram_256x32</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>npu_acc</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>ibex_cfet_top</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">1.0&nbsp;ns: setup +8&nbsp;ps, hold met, no max-tran/cap violations</td><td class="ok">PASS</td></tr>
-          <tr><th><code>ibex_npu_top</code></th><td class="pend">in progress</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
+          <tr><th><code>ibex_npu_top</code></th><td class="ok">routed</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
         </tbody>
       </table></div>
       <p class="fig-note">LVS uses the stock deck with the backside layers added. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
 
       <h3 style="margin-top:40px;">Other measured points</h3>
       <div class="a7-grid">
-        <div class="a7-card"><h4>npu_acc macro</h4><span class="a7-status">layout</span><p>18.72&nbsp;&times;&nbsp;18.72&nbsp;&micro;m die; timing-model cell area 350.4&nbsp;&micro;m&sup2;.</p></div>
+        <div class="a7-card"><h4>Die sizes</h4><span class="a7-status">from the DEFs</span><p><code>ibex_npu_top</code> 115.75&nbsp;&times;&nbsp;100.37&nbsp;&micro;m &middot; <code>ibex_cfet_top</code> 70.04&nbsp;&times;&nbsp;70.13 &middot; <code>npu_acc</code> 49.14&nbsp;&times;&nbsp;49.97 &middot; <code>lram_256x32</code> 30.03&nbsp;&times;&nbsp;49.97.</p></div>
         <div class="a7-card"><h4>Accelerator subsystem</h4><span class="a7-status">RTL simulation &middot; pass</span><p>16&times;16&times;16 GEMM in 2,040 DMA cycles; 8&times;16&times;24 GEMM (three accumulated K tiles) in 1,530 DMA cycles.</p></div>
         <div class="a7-card"><h4>ibex_cfet_top synthesis</h4><span class="a7-status">pre-P&amp;R estimate, 1.0&nbsp;ns</span><p>~32k cells, 2,628 flip-flops, ~521&nbsp;&micro;m&sup2; cell area, ~3.6&nbsp;mW.</p></div>
       </div>
@@ -329,7 +389,7 @@
       <div class="section-head"><h2>Next</h2><span class="section-index">ROADMAP</span></div>
       <ol class="process-list">
         <li><div><h4>Macros and baseline</h4><p>Done: <code>lram_256x32</code>, <code>npu_acc</code> and <code>ibex_cfet_top</code> through P&amp;R, LVS, DRC, timing and equivalence.</p></div></li>
-        <li><div><h4>CPU + accelerator top</h4><p>In progress: place-and-route and signoff of <code>ibex_npu_top</code>.</p></div></li>
+        <li><div><h4>CPU + accelerator top</h4><p>Done: placed and routed. Next: LVS, DRC, timing and equivalence on <code>ibex_npu_top</code>.</p></div></li>
         <li><div><h4>Foundry DRC</h4><p>Rerun IC Validator DRC on all final layouts.</p></div></li>
         <li><div><h4>Compare the two chips</h4><p>Not measured yet: area overhead of the accelerator, GEMM speedup over software on the CPU, energy per matrix multiply, final post-route power, Fmax and CoreMark/MHz.</p></div></li>
       </ol>
@@ -347,5 +407,6 @@
 <script src="../js/main.js"></script>
 <script type="importmap">{"imports":{"three":"../assets/vendor/three/three.module.min.js","three/addons/":"../assets/vendor/three/addons/"}}</script>
 <script type="module" src="../assets/cfet/cfet-3d.js"></script>
+<script type="module" src="../assets/gaa/chip-3d.js"></script>
 </body>
 </html>
