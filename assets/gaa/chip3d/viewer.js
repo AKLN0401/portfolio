@@ -16,10 +16,12 @@ async function fetchGz(name, onBytes) {
   const res = await fetch(BASE + name);
   if (!res.ok) throw new Error(name + ': HTTP ' + res.status);
   const total = +res.headers.get('content-length') || 0;
-  let got = 0;
-  const counted = new TransformStream({ transform(chunk, ctl) { got += chunk.length; onBytes && onBytes(chunk.length, total); ctl.enqueue(chunk); } });
-  const stream = res.body.pipeThrough(counted).pipeThrough(new DecompressionStream('gzip'));
-  return new Uint8Array(await new Response(stream).arrayBuffer());
+  const reader = res.body.getReader(), parts = []; let n = 0;
+  for (;;) { const { done, value } = await reader.read(); if (done) break; parts.push(value); n += value.length; onBytes && onBytes(value.length, total); }
+  const raw = new Uint8Array(n); let o = 0; for (const p of parts) { raw.set(p, o); o += p.length; }
+  // gzip magic: unpack here; otherwise the server already did (Content-Encoding: gzip)
+  if (raw[0] !== 0x1f || raw[1] !== 0x8b) return raw;
+  return new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
 }
 
 function init(root) {
