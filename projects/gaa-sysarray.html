@@ -61,6 +61,24 @@
 .a7 svg .wire { stroke: #17191c; fill: none; stroke-width: 1.3; }
 .a7 svg .wire-d { stroke: #17191c; fill: none; stroke-width: 1.3; stroke-dasharray: 6 4; }
 .a7 svg .arrow { fill: #17191c; }
+/* CFET 3D viewer */
+.c3d { border: 1px solid var(--line); margin: 24px 0 8px; background: #0d1016; }
+.c3d-stage { position: relative; height: clamp(420px, 60vw, 640px); touch-action: none; }
+.c3d-stage canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+.c3d-stage canvas:active { cursor: grabbing; }
+.c3d-tags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.c3d-tag { position: absolute; left: 0; top: 0; white-space: nowrap; font: 500 11px/1.2 var(--font-mono); color: #e6e8ee; background: rgba(16,19,27,.82); border: 1px solid #343c50; border-radius: 4px; padding: 2px 6px; }
+.c3d-info { position: absolute; left: 12px; bottom: 10px; right: 12px; color: #9aa3b5; font: 12px/1.45 var(--font-body); pointer-events: none; }
+.c3d-info b { color: #e6e8ee; font-family: var(--font-mono); font-weight: 600; }
+.c3d-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-top: 1px solid var(--line); background: var(--paper); }
+.c3d-ctl { padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.c3d-ctl > span { display: flex; justify-content: space-between; font: 500 11px/1.4 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.c3d-ctl output { color: var(--ink); font-weight: 600; text-transform: none; }
+.c3d-ctl select, .c3d-ctl button { font: 14px var(--font-body); padding: 5px 8px; border: 1px solid var(--line); background: #fff; color: var(--ink); }
+.c3d-ctl button { cursor: pointer; margin: 0 4px 4px 0; }
+.c3d-ctl input[type=range] { width: 100%; accent-color: #17191c; min-height: 28px; }
+.c3d-ctl label { display: block; font-size: 14px; line-height: 1.7; cursor: pointer; }
+.c3d-nogl .c3d-stage::after { content: "The 3D view needs WebGL, which this browser has turned off."; position: absolute; inset: 0; display: grid; place-items: center; color: #c8ccd6; padding: 24px; text-align: center; }
 </style>
 </head>
 <body>
@@ -100,7 +118,7 @@
         <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
         <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
         <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 1.0&nbsp;ns (setup +8&nbsp;ps). The CPU+accelerator top is in place-and-route.</p>
-        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#signoff">Signoff status</a></p>
+        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#cells3d">3D nanosheets</a> <a class="btn" href="#signoff">Signoff status</a></p>
       </div>
       <figure class="a7-plate"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="heroT"><title id="heroT">ibex_npu_top: the Ibex CPU drives a 16 KB window decoded by npu_dma, which connects to three hard macros: npu_acc and two lram_256x32 SRAM banks</title>
         <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L10 5L0 10z"/></marker></defs>
@@ -189,6 +207,41 @@
           </g>
         </svg><figcaption>Layer stack, schematic and not to scale</figcaption></figure>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="cells3d">
+    <div class="wrap">
+      <div class="section-head"><h2>3D: the cells, nanosheet by nanosheet</h2><span class="section-index">GDS &rarr; 3D</span></div>
+      <p class="pd-lede">The standard cells the whole chip is built from, extruded from the PDK&rsquo;s cell GDS. Each transistor is three stacked nanosheets with the gate wrapped all the way round; the nFET tier sits directly on top of the pFET tier, and the supply comes up from the buried power rail underneath. Use the section plane to cut through the sheets, and the gate slider to see inside the gate.</p>
+      <div class="c3d" id="cfet3d">
+        <div class="c3d-stage"><div class="c3d-tags"></div><div class="c3d-info" id="c3d-info"></div></div>
+        <div class="c3d-panel">
+          <div class="c3d-ctl"><span>Cell</span><select id="c3d-cell" aria-label="Standard cell"></select>
+            <div style="margin-top:10px;"><button data-view="iso">3D</button><button data-view="section">Side</button><button data-view="top">Top</button><button id="c3d-tags-btn" aria-pressed="true">Labels</button></div></div>
+          <div class="c3d-ctl"><span>Layers</span><div id="c3d-groups"></div></div>
+          <div class="c3d-ctl"><span>Gate opacity <output id="c3d-gate-out">35%</output></span><input type="range" id="c3d-gate" min="0" max="100" value="35" aria-label="Gate opacity">
+            <span style="margin-top:14px;">Section <output id="c3d-cut-out">y = 36.0 nm</output></span>
+            <select id="c3d-axis" aria-label="Section plane"><option value="y" selected>Along the sheets (cut in y)</option><option value="x">Across the gates (cut in x)</option><option value="none">Off</option></select>
+            <input type="range" id="c3d-cut" min="0" max="1000" value="500" aria-label="Section position"></div>
+        </div>
+      </div>
+      <p class="fig-note">True scale in all three axes. Drag to rotate, scroll to zoom, right-drag to pan.</p>
+
+      <h3 style="margin-top:40px;">Where each dimension comes from</h3>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>What</th><th>Value</th><th>PDK source</th></tr></thead>
+        <tbody>
+          <tr><th>x, y of every shape</th><td>as drawn</td><td>Cell GDS <code>gtA5_cfet_stdcells.gds</code>; layer numbers from the LVS layer map</td></tr>
+          <tr><th>Which tier is which</th><td>ACT/GATE = pFET (bottom), ACT2/GATE2 = nFET (top)</td><td>LVS runset device definitions</td></tr>
+          <tr><th>Channel and source/drain</th><td>channel = ACT and GATE, not DUMMY, not GCUT; S/D = ACT not GATE</td><td>LVS runset (same derivations)</td></tr>
+          <tr><th>Sheets per device, thickness, gap</th><td>3 &times; 6&nbsp;nm, 10&nbsp;nm apart</td><td>BSIM-CMG card <code>ngaa</code>, <code>tgaa</code>, <code>tsus</code></td></tr>
+          <tr><th>Sheet width, gate length</th><td>11&nbsp;nm, 12&nbsp;nm</td><td>Drawn ACT and GATE widths (match <code>WGAA</code>, <code>L</code> in the CDL)</td></tr>
+          <tr><th>Heights: BPR, both device tiers, contacts, vias, M0&ndash;M13</th><td>BPR 5&ndash;37&nbsp;nm, pFET slab 128&ndash;163&nbsp;nm, nFET slab 246&ndash;281&nbsp;nm, M0 324&ndash;348&nbsp;nm</td><td>StarRC ITF, parsed layer by layer</td></tr>
+          <tr><th>Backside metals BSM1&ndash;3 and their vias</th><td>not drawn in cells</td><td>QRC ICT (used when rendering chip-level GDS)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">The PDK is not fully self-consistent here: the model card&rsquo;s sheet stack (3&times;6 + 2&times;10 = 38&nbsp;nm) is 3&nbsp;nm taller than the ITF&rsquo;s 35&nbsp;nm ACT slab, so the outer sheets extend 1.5&nbsp;nm past the source/drain block. Both are shown as the PDK gives them. Shapes are taken unclipped from the GDS, so the active strips stick out past the cell boundary (dashed) where they overlap the next cell. Geometry from the MATRIX-A5 PDK (M. Shon et al., IEEE JXCDC 2026, <a href="https://doi.org/10.1109/JXCDC.2026.3744406">doi:10.1109/JXCDC.2026.3744406</a>), MATRIX-PDK Academic and Non-Commercial License v1.0, &copy; Georgia Institute of Technology.</p>
     </div>
   </section>
 
@@ -292,5 +345,7 @@
 </footer>
 
 <script src="../js/main.js"></script>
+<script type="importmap">{"imports":{"three":"../assets/vendor/three/three.module.min.js","three/addons/":"../assets/vendor/three/addons/"}}</script>
+<script type="module" src="../assets/cfet/cfet-3d.js"></script>
 </body>
 </html>
