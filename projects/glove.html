@@ -104,8 +104,8 @@
         <a class="breadcrumb" href="../index.html#fabrication">&larr; Back</a>
         <p class="label">ECE 4600 capstone &middot; Printed electronics &middot; Team G15 &middot; in progress</p>
         <h1>A glove that works as a mouse</h1>
-        <p class="dek">Tap your thumb to your index finger to left-click, to your middle finger to right-click, and tilt your hand to move the cursor. The sensors are silver and carbon inks printed on stretchable TPU film with a Voltera NOVA.</p>
-        <p class="gl-facts">Six-person capstone at the University of Manitoba, supervised by Dr. Cyrus Shafai. My part is sensor fabrication and hardware design: printing the silver and carbon sensors and designing the glove&rsquo;s electronics. The design is at the concept stage: the 3D models on this page are what we&rsquo;re building toward, not finished hardware.</p>
+        <p class="dek">Thumb taps click, tilting the hand moves the cursor. Silver and carbon sensors printed on stretchable TPU with a Voltera NOVA.</p>
+        <p class="gl-facts">ECE 4600 capstone, team of 6, supervised by Dr. Cyrus Shafai. My part: sensor printing and glove electronics. Concept stage; models are design targets.</p>
       </div>
       <div>
         <div class="viewer">
@@ -121,20 +121,7 @@
     </div>
   </section>
 
-  <section class="section" style="border-top:none; padding-top:0;">
-    <div class="wrap">
-      <div class="section-head"><h2>From a finger tap to a click</h2><span class="section-index">SIGNAL PATH</span></div>
-      <ol class="gl-steps">
-        <li>Thumb taps a finger, or a finger bends.</li>
-        <li>A silver pad closes, or a carbon sensor stretches.</li>
-        <li>The change in resistance is read as a voltage.</li>
-        <li>An ESP32-S3 on the wrist reads the signals.</li>
-        <li>It talks to the PC over USB, as a mouse.</li>
-        <li>The PC registers a click or a cursor move.</li>
-      </ol>
-      <p class="pd-lede" style="margin-top:20px;">Cursor movement comes from a motion sensor (IMU) on the wrist: tilt the hand and the pointer follows.</p>
-    </div>
-  </section>
+  
 
   <section class="section">
     <div class="wrap two-col">
@@ -174,9 +161,7 @@
     <div class="wrap two-col">
       <div class="prose">
         <div class="section-head"><h2>The printed sensor</h2><span class="section-index">MATERIALS</span></div>
-        <p>Each bend sensor is a strip of carbon ink between silver leads, printed on stretchable TPU film and glued over a knuckle. When the joint bends, the film stretches, the carbon path gets longer and thinner, and its resistance should rise. Measuring how much, and how repeatably, is the first job for the printed test strips.</p>
-        <p>The fingertip pads are plain silver ink. They don&rsquo;t sense anything on their own: touching thumb to finger closes a circuit, which is the click.</p>
-        <p class="gl-cap">Layer thicknesses in the model are exaggerated.</p>
+        <p>Carbon ink between silver leads on stretchable TPU; resistance rises as the knuckle bends. Fingertip pads are plain silver contacts.</p>
       </div>
       <div>
         <ul class="gl-stack" aria-label="Sensor layers, top to bottom">
@@ -197,29 +182,16 @@
   </section>
 
   <section class="section">
-    <div class="wrap two-col">
-      <div>
-        <div class="section-head"><h2>Animation</h2><span class="section-index">BLENDER</span></div>
-        <video src="../assets/glove/glove-animation.mp4" controls muted playsinline preload="metadata" poster="../assets/glove/01_glove_back.jpg" aria-label="Animation of the glove concept rendered in Blender"></video>
-        <p class="gl-cap">Rendered in Blender from the same models as the viewer above.</p>
-      </div>
-      <div>
-        <div class="section-head"><h2>Plan</h2><span class="section-index">2026&ndash;27</span></div>
-        <ol class="gl-time">
-          <li><b>Oct</b><span>Copper-tape test glove, to check clicks and cursor control before printing anything</span></li>
-          <li><b>Nov</b><span>Print silver and carbon strips and bend-test them (design review 2)</span></li>
-          <li><b>Jan</b><span>A repeatable sensor batch and glove v1 (design review 3)</span></li>
-          <li><b>Feb</b><span>Test against the targets above (design review 4)</span></li>
-          <li><b>Apr</b><span>Final demo</span></li>
-        </ol>
-        <p class="gl-cap" style="margin-top:16px;">Resources: Voltera NOVA, silver and carbon inks, TPU film, ESP32-S3, 6-axis IMU, ADC. Budget $600 including tax and shipping.</p>
-      </div>
+    <div class="wrap">
+      <div class="section-head"><h2>Animation</h2><span class="section-index">BLENDER</span></div>
+      <div style="max-width:720px;"><video src="../assets/glove/glove-animation.mp4" controls muted playsinline preload="metadata" poster="../assets/glove/01_glove_back.jpg" aria-label="Animation of the glove concept rendered in Blender"></video>
+      <p class="gl-cap">Rendered in Blender from the same models as the viewer above.</p></div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <p class="note">Sensor layout, sizes and wire routing on the glove are not final. The microcontroller, the wired USB link and the fingertip pads are proposals at this stage. The models were built in Blender for the design review.</p>
+      <p class="note">Concept models built in Blender for the design review; layout and electronics not final.</p>
     </div>
   </section>
 

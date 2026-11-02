@@ -70,7 +70,7 @@
       <div class="hero-text">
         <p class="label hero-eyebrow">Digital IC / ASIC physical design</p>
         <h1>Khoi Nguyen</h1>
-        <p class="hero-intro">Electrical engineering student at the University of Manitoba, focused on digital IC and ASIC physical design. I have taken designs from RTL to GDSII in a 12&nbsp;nm FinFET process &mdash; synthesis, DFT, floorplanning, place-and-route and timing closure &mdash; including a tapeout with the CMOS Design and Reliability Group at the University of Waterloo. Before that I spent a year in a Class&nbsp;10 cleanroom fabricating CMOS and MEMS devices.</p>
+        <p class="hero-intro">Electrical engineering student at the University of Manitoba. RTL-to-GDSII in 12&nbsp;nm FinFET, DFT and timing closure, plus a year of CMOS and MEMS fabrication in a Class&nbsp;10 cleanroom.</p>
 
         <dl class="hero-facts">
           <div><dt>Focus</dt><dd>Digital IC / ASIC &middot; RTL-to-GDSII &middot; DFT</dd></div>
@@ -108,9 +108,9 @@
             <h3 class="exp-role">ASIC Design Co-op / Visiting Research Fellow</h3>
             <p class="exp-org">CMOS Design and Reliability Group, University of Waterloo &mdash; Prof. Manoj Sachdev</p>
             <ul class="exp-points">
-              <li>Submitted a 2-core RV32IM test chip for fabrication in GF 12LP+ (12nm FinFET), with Calibre DRC/LVS clean. Owned my CPU block&rsquo;s full RTL-to-GDSII flow (Genus, Innovus, Joules, Modus).</li>
-              <li>Architected 6 variable D-Q delay flip-flop fault-detection architectures with custom scan chain/DFF designs for delay-fault and timing-error detection.</li>
-              <li>Ensured testability of the 12nm tape-out test chip with Cadence Modus DFT: scan insertion, ATPG and fault-simulation debug, reaching 97.5% stuck-at and 97.8&ndash;97.9% transition-fault coverage.</li>
+              <li>Taped out a 2-core RV32IM test chip in GF 12LP+; owned my CPU block from RTL to GDSII, Calibre DRC/LVS clean.</li>
+              <li>Designed 6 variable D-Q delay flip-flop architectures for delay-fault and timing-error detection.</li>
+              <li>Scan insertion and ATPG in Modus: 97.5% stuck-at, 97.8&ndash;97.9% transition coverage.</li>
             </ul>
             <p class="exp-tools">Genus &middot; Innovus &middot; Joules &middot; Modus &middot; Calibre</p>
           </div>
@@ -122,9 +122,8 @@
             <h3 class="exp-role">Student Researcher</h3>
             <p class="exp-org">Nano-Systems Fabrication Laboratory (Class 10 cleanroom), University of Manitoba</p>
             <ul class="exp-points">
-              <li>Executed end-to-end CMOS and MEMS fabrication in a Class 10 cleanroom, including 200&nbsp;nm DUV photolithography, ion implantation, RIE/ICP etching, and PVD/CVD thin-film deposition.</li>
-              <li>Developed and optimized 200&nbsp;nm DUV lithography processes (alignment, exposure dose, focus tuning), achieving high pattern fidelity and sub-micron critical dimension (CD) control.</li>
-              <li>Optimized plasma etch and lithography recipes, reducing defect rate by 30&ndash;50% and improving etch throughput by 40%.</li>
+              <li>CMOS and MEMS fabrication: 200&nbsp;nm DUV lithography, ion implantation, RIE/ICP etch, PVD/CVD.</li>
+              <li>Tuned lithography and plasma-etch recipes: 30&ndash;50% fewer defects, 40% higher etch throughput.</li>
             </ul>
           </div>
         </article>
@@ -141,141 +140,69 @@
       </div>
 
       <p class="label proj-group is-active" style="margin:0 0 12px;">In progress</p>
-      <div class="proj-list">
-        <!-- HIDDEN for now (7nm NVDLA); restore by removing this comment wrapper
-        <a class="proj" href="projects/nvdla-asap7.html">
-          <div class="proj-head">
-            <span class="proj-num">01</span>
-            <h3>NVIDIA NVDLA 7&nbsp;nm Full-Chip Implementation: Low-Power, PPA-Optimized, DFT</h3>
-            <span class="proj-cat">Synthesis &middot; Place-and-route &middot; Chip assembly &middot; In progress</span>
+      <div class="card-grid">
+        <a class="card" href="projects/gaa-sysarray.html">
+          <div class="card-media"><img src="assets/gaa/ibex_npu_top_routing.webp" alt="Routed layout of the CPU and accelerator chip" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
+          <div class="card-body">
+            <h3>RISC-V + INT8 Systolic Array on CFET</h3>
+            <p>Ibex core + 8&times;8 INT8 accelerator, RTL to GDS on a research CFET PDK with backside power. Interactive 3D chip.</p>
+            <span class="card-tags">CFET &middot; Genus &middot; Innovus &middot; ICV</span>
           </div>
-          <p class="proj-sum">NVDLA on the open ASAP7 7&nbsp;nm PDK at 1&nbsp;GHz, with the kit files left read-only: full scan checked by ATPG, memory BIST for the SRAM macros, and hard-macro partitions in a mirror-symmetric floorplan.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>ASAP7 7&nbsp;nm FinFET (predictive) &middot; 448 SRAM macros in the convolution buffer partition</dd></div>
-            <div><dt>Tools</dt><dd>Genus &middot; Conformal &middot; Xcelium</dd></div>
-            <div><dt>Key fix</dt><dd>Partition C: 1,019 violations &rarr; 0, no area increase</dd></div>
-            <div><dt>Results</dt><dd>3 of 5 partitions met at 1.0&nbsp;ns so far</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
         </a>
-        -->
-
-        <a class="proj" href="projects/gaa-sysarray.html">
-          <div class="proj-head">
-            <span class="proj-num">01</span>
-            <h3>RISC-V + INT8 Systolic Array on a CFET PDK</h3>
-            <span class="proj-cat">RTL &middot; Synthesis &middot; Hierarchical P&amp;R &middot; Signoff &middot; In progress</span>
+        <a class="card" href="projects/npu-tapeout.html">
+          <div class="card-media"><img src="assets/npu/iso3d.webp" alt="3D view of the NPU tile layout" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
+          <div class="card-body">
+            <h3>int4 NPU for Tiny Tapeout</h3>
+            <p>2&times;2 MAC array with clock gating and full scan in one SKY130 tile. DRC/LVS clean, 45&ndash;59% power saved.</p>
+            <span class="card-tags">SKY130 &middot; LibreLane &middot; cocotb</span>
           </div>
-          <p class="proj-sum">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator and DMA, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with backside power delivery, and built twice: with and without the accelerator. The research kit needed scripted work-arounds before industrial signoff would pass. Interactive 3D view from the whole chip down to a single nanosheet transistor.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>MATRIX-A5 CFET (predictive) &middot; 0.7&nbsp;V &middot; backside power &middot; 3 V<sub>t</sub>s</dd></div>
-            <div><dt>Tools</dt><dd>Genus 25.1 &middot; Innovus 25.1 &middot; IC Validator &middot; Conformal &middot; Xcelium</dd></div>
-            <div><dt>Signoff</dt><dd>Accelerator and SRAM macros: LVS, DRC, LEC clean, 750&nbsp;ps &middot; CPU top: LVS and LEC pass, 1.0&nbsp;ns met</dd></div>
-            <div><dt>Status</dt><dd>CPU + accelerator top placed and routed &middot; its signoff next</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
         </a>
-
-        <a class="proj" href="projects/npu-tapeout.html">
-          <div class="proj-head">
-            <span class="proj-num">02</span>
-            <h3>One-Tile int4 NPU (2x2 MAC Array) for Tiny Tapeout</h3>
-            <span class="proj-cat">RTL &middot; Verification &middot; Place-and-route &middot; Tiny Tapeout &middot; In progress</span>
+        <a class="card" href="projects/nvdla.html">
+          <div class="card-media"><img src="assets/thumbs/nvdla.webp" alt="Mirror-symmetric NVDLA floorplan" loading="lazy" decoding="async" style="object-fit:contain;" /></div>
+          <div class="card-body">
+            <h3>NVIDIA NVDLA, 12&nbsp;nm</h3>
+            <p>Deep-learning accelerator at 1.1&nbsp;GHz: multi-V<sub>t</sub>, clock gating, full scan, symmetric hard-macro floorplan.</p>
+            <span class="card-tags">12&nbsp;nm FinFET &middot; Genus &middot; Innovus &middot; Modus</span>
           </div>
-          <p class="proj-sum">A 2&times;2 int4 multiply-accumulate array with 16-bit accumulators, one clock gate per row and a 96-flop scan chain, driven over the pins by the demo board&rsquo;s microcontroller. Taken from RTL to a signed-off layout in a single Tiny Tapeout tile. Vector-based power analysis of the routed netlist shows the clock gates cut core power by about half (45&ndash;59%); interactive 3D view of the GDS on the page.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>SkyWater SKY130 130&nbsp;nm &middot; 1 tile, 161&nbsp;&times;&nbsp;112&nbsp;&micro;m &middot; 50&nbsp;MHz</dd></div>
-            <div><dt>Tools</dt><dd>LibreLane (Yosys, OpenROAD, Magic, KLayout) &middot; cocotb &middot; Icarus &middot; Verilator</dd></div>
-            <div><dt>Signoff</dt><dd>DRC and LVS clean &middot; timing met from &minus;40 to 100&nbsp;&deg;C &middot; TT precheck 15/15</dd></div>
-            <div><dt>Power</dt><dd>191&ndash;277&nbsp;&micro;W at 50&nbsp;MHz (typical corner) &middot; clock gating saves 45&ndash;59%</dd></div>
-            <div><dt>Status</dt><dd>Layout signed off &middot; Tiny Tapeout CI green (GDS, precheck, gate-level) &middot; TTSKY26d submission next</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
         </a>
-
-        <a class="proj" href="projects/nvdla.html">
-          <div class="proj-head">
-            <span class="proj-num">03</span>
-            <h3>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h3>
-            <span class="proj-cat">Synthesis &middot; Place-and-route &middot; Physical verification &middot; In progress</span>
+        <a class="card" href="projects/glove.html">
+          <div class="card-media"><img src="assets/glove/01_glove_back.jpg" alt="Render of the sensor glove" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
+          <div class="card-body">
+            <h3>Tap-to-Click Glove</h3>
+            <p>Capstone: a glove mouse with silver and carbon sensors printed on stretchable TPU.</p>
+            <span class="card-tags">Printed electronics &middot; ESP32-S3</span>
           </div>
-          <p class="proj-sum">NVIDIA&rsquo;s open-source deep-learning accelerator, from RTL to a foundry-clean layout at 1.1&nbsp;GHz: three threshold-voltage flavours, clock gating, full scan, SRAM macros for a 13-metal stack, and hard-macro partitions in a mirror-symmetric floorplan.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 13-metal stack &middot; 128 dual-port SRAM macros</dd></div>
-            <div><dt>Tools</dt><dd>Genus 25.1 &middot; Innovus 25.1 &middot; Calibre &middot; Modus</dd></div>
-            <div><dt>Signoff</dt><dd>Foundry DRC and LVS on the merged GDS</dd></div>
-            <div><dt>Status</dt><dd>SRAMs generated &middot; synthesis running &middot; place-and-route scripted</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
         </a>
-
-        <a class="proj" href="projects/glove.html">
-          <div class="proj-head">
-            <span class="proj-num">04</span>
-            <h3>Tap-to-Click Glove, Printed Sensors</h3>
-            <span class="proj-cat">Printed electronics &middot; ECE 4600 capstone</span>
-          </div>
-          <p class="proj-sum">A glove that works as a mouse: thumb taps on silver fingertip pads click, carbon strain sensors over the knuckles read a fist, and an IMU on the wrist moves the cursor. Sensors printed on stretchable TPU with a Voltera NOVA; interactive 3D models on the page.</p>
-          <dl class="proj-spec">
-            <div><dt>Materials</dt><dd>Silver and carbon inks &middot; stretchable TPU film</dd></div>
-            <div><dt>Tools</dt><dd>Voltera NOVA &middot; ESP32-S3 &middot; Blender</dd></div>
-            <div><dt>My role</dt><dd>Sensor fabrication and hardware design (team of 6)</dd></div>
-            <div><dt>Targets</dt><dd>&ge; 97% taps detected &middot; &le; 50&nbsp;ms tap-to-click</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
-        </a>
-
       </div>
 
       <p class="label proj-group is-done" style="margin:48px 0 12px;">Completed</p>
-      <div class="proj-list">
-        <a class="proj" href="projects/mems-switch.html">
-          <div class="proj-head">
-            <span class="proj-num">05</span>
-            <h3>Printed Flexible Lorentz-Force MEMS Switch with Electrostatic Hold-Down</h3>
-            <span class="proj-cat">MEMS &middot; Printed electronics &middot; Published, EUROSENSORS 2026</span>
+      <div class="card-grid">
+        <a class="card" href="projects/mems-switch.html">
+          <div class="card-media"><img src="assets/mems/fig3-fabricated.webp" alt="Fabricated printed MEMS switch" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
+          <div class="card-body">
+            <h3>Printed Flexible MEMS Switch</h3>
+            <p>Lorentz-force switch with electrostatic hold-down on polyimide. Published at EUROSENSORS 2026.</p>
+            <span class="card-tags">MEMS &middot; COMSOL &middot; Voltera NOVA</span>
           </div>
-          <p class="proj-sum">A MEMS switch printed in silver on flexible polyimide and released by O<sub>2</sub> plasma etch. A Lorentz force pulls the shuttle onto its contacts and a low electrostatic force holds it there, so the drive current can be turned off while the switch stays closed.</p>
-          <dl class="proj-spec">
-            <div><dt>Materials</dt><dd>15&nbsp;&micro;m printed silver &middot; 25&nbsp;&micro;m polyimide</dd></div>
-            <div><dt>Tools</dt><dd>COMSOL &middot; Voltera NOVA &middot; O<sub>2</sub> RIE</dd></div>
-            <div><dt>Simulated</dt><dd>120&nbsp;mA &rarr; ~110&nbsp;&micro;m &middot; 33&nbsp;Hz &middot; 0.018&nbsp;N/m</dd></div>
-            <div><dt>Measured</dt><dd>Repeatable switching &middot; hold-down releases at 28&nbsp;V</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="proj" href="projects/riscv.html">
-          <div class="proj-head">
-            <span class="proj-num">06</span>
+        <a class="card" href="projects/riscv.html">
+          <div class="card-media"><span class="card-text">RV32IM</span></div>
+          <div class="card-body">
             <h3>RISC-V Fault Detection</h3>
-            <span class="proj-cat">DFT &middot; Reliability &middot; Research</span>
+            <p>Fault-detection hardware on an RV32IM core: coverage, timing, area and power.</p>
+            <span class="card-tags">DFT &middot; 12&nbsp;nm</span>
           </div>
-          <p class="proj-sum">Evaluated hardware fault-detection approaches on an RV32IM processor: DFT instrumentation, ATPG coverage, timing closure, and the area and power cost against the un-instrumented core.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>RV32IM RISC-V &middot; 12&nbsp;nm FinFET</dd></div>
-            <div><dt>Flow</dt><dd>DFT instrumentation &middot; ATPG &middot; STA &middot; area/power analysis</dd></div>
-            <div><dt>Group</dt><dd>CMOS Design and Reliability Group, Waterloo</dd></div>
-            <div><dt>Results</dt><dd>Coverage, area and power figures held until publication</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
         </a>
-
-        <a class="proj" href="projects/dft.html">
-          <div class="proj-head">
-            <span class="proj-num">07</span>
+        <a class="card" href="projects/dft.html">
+          <div class="card-media"><span class="card-text">DFT</span></div>
+          <div class="card-body">
             <h3>Error-Detection DFT Architectures</h3>
-            <span class="proj-cat">DFT &middot; Verification &middot; Research</span>
+            <p>Fault-detection schemes compared on 12&nbsp;nm benchmarks and RISC-V blocks.</p>
+            <span class="card-tags">Modus &middot; Genus &middot; Innovus</span>
           </div>
-          <p class="proj-sum">Designed and compared fault-detection architectures on 12&nbsp;nm benchmark circuits and RISC-V blocks, under identical synthesis, timing and operating conditions, from RTL through physical implementation.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; benchmark circuits &middot; RISC-V</dd></div>
-            <div><dt>Tools</dt><dd>Genus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Innovus</dd></div>
-            <div><dt>Flow</dt><dd>RTL &rarr; synthesis &rarr; DFT insertion &rarr; simulation &rarr; equivalence &rarr; STA &rarr; P&amp;R</dd></div>
-            <div><dt>Results</dt><dd>Per-scheme overhead held until publication</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
         </a>
       </div>
+    </div>
     </div>
   </section>
 
@@ -289,7 +216,7 @@
 
       <div class="fab-grid">
         <div>
-          <p class="fab-lead">A year in the Nano-Systems Fabrication Laboratory, running CMOS and MEMS process steps on 6-inch wafers and measuring the results: CMOS transistors, and flexible and MEMS sensors with interdigitated electrode arrays.</p>
+          <p class="fab-lead">CMOS transistors and MEMS sensors on 6-inch wafers, Nano-Systems Fabrication Laboratory.</p>
           <table class="spec-table">
             <tbody>
               <tr><th>Facility</th><td>Class 10 cleanroom, University of Manitoba</td></tr>
@@ -326,7 +253,7 @@
 
       <div class="research-teaser">
         <div>
-          <p>A variable D-Q delay flip-flop for transition-fault testing on an RV32IM RISC-V core, with the CMOS Design and Reliability Group at Waterloo. The same test vectors run twice, at nominal delay and with extra launch delay; a path carrying a delay fault captures a different value on the second run. The technique reuses the launching flip-flop instead of adding a shadow register and comparator.</p>
+          <p>A variable D-Q delay flip-flop for transition-fault testing on an RV32IM core: the same vectors run twice, the second time with extra launch delay, and a delay fault shows up as a different captured value.</p>
           <table class="spec-table" style="margin-bottom:28px;">
             <tbody>
               <tr><th>Implementation</th><td>12&nbsp;nm FinFET, 1&nbsp;GHz target</td></tr>
