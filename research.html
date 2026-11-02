@@ -64,7 +64,7 @@
     <div class="wrap">
       <p class="label">Research &middot; Two threads, two institutions</p>
       <h1>Sensor fabrication, and silicon reliability.</h1>
-      <p class="dek">Cleanroom sensor fabrication at the University of Manitoba, and delay-fault test research on a 12&nbsp;nm RISC-V core at the University of Waterloo.</p>
+      <p class="dek">Two separate research threads: flexible and MEMS sensor fabrication in a Class 10 cleanroom at the University of Manitoba, and 12-nm RISC-V delay-fault research with the CMOS Design and Reliability Group at the University of Waterloo.</p>
     </div>
   </section>
 
@@ -76,7 +76,8 @@
       </div>
       <div class="two-col">
         <div class="prose">
-          <p>Flexible and MEMS sensors, run step by step in a Class&nbsp;10 cleanroom and characterized with SEM, profilometry and ellipsometry.</p>
+          <p>At the Nano-Systems Fabrication Laboratory at the University of Manitoba, I work on flexible and MEMS sensor devices, directly running the process steps that turn a bare substrate into a functioning device. That means running lithography and etch steps myself, tracking process parameters across a full fabrication sequence, and characterizing the resulting devices rather than only reading about the process.</p>
+          <p>The work is hands-on cleanroom fabrication rather than simulation: photolithography, ion implantation, dry etching, deposition, and wafer processing, followed by characterization with SEM, profilometry, and ellipsometry.</p>
         </div>
 
         <div>
@@ -93,7 +94,46 @@
     </div>
   </section>
 
-  
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Process steps</h2>
+        <span class="section-index">01A / CLEANROOM</span>
+      </div>
+      <ol class="process-list">
+        <li>
+          <div>
+            <h4>Photolithography</h4>
+            <p>Patterning photoresist to define device geometry on the wafer surface.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Ion implantation</h4>
+            <p>Introducing dopants to set device electrical properties at specific depths and concentrations.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Dry etching (RIE / ICP)</h4>
+            <p>Removing material selectively to transfer patterned geometry into functional structures.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Deposition (PVD / CVD)</h4>
+            <p>Building up thin films — conductors, dielectrics, and structural layers — across the wafer.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Wafer processing &amp; characterization</h4>
+            <p>Tracking the full process sequence and verifying device outcomes with SEM, profilometry, and ellipsometry.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
 
   <section class="section">
     <div class="wrap">
@@ -104,7 +144,8 @@
 
       <div class="two-col lab-intro">
         <div class="prose">
-          <p>Class&nbsp;10 facility, University of Manitoba. Lithography bays run under yellow light to protect the photoresist.</p>
+          <p>The yellow cast is the point: photoresist is sensitive to short wavelengths, so the lithography bays run under filtered light that carries none of them. Everything here is the Class 10 facility at Manitoba where the process steps above actually happen.</p>
+          <p>The wafer alongside is the output end of that sequence — a substrate stepped through lithography, etch and deposition until each die carries a finished set of interdigitated electrode arrays and test structures, ready for characterization.</p>
         </div>
 
         <figure class="lab-figure lab-feature">
@@ -154,7 +195,8 @@
 
       <div class="two-col" style="margin-bottom:48px;">
         <div class="prose">
-          <p>With Prof. Manoj Sachdev&rsquo;s CMOS Design and Reliability Group. A flip-flop with adjustable D-Q delay: the same test vectors run at nominal and extended delay, and a transition fault shows up as a different captured value. No shadow register or comparator needed.</p>
+          <p>This is a separate thread from the fabrication work above, carried out with the CMOS Design and Reliability Group at the University of Waterloo under Prof. Manoj Sachdev. It is a research paper on a variable D-Q delay flip-flop for transition-fault testing, implemented on an RV32IM RISC-V core in a 12 nm FinFET process.</p>
+          <p>The flip-flop's data-to-output delay is made deliberately adjustable. Running the same test vectors first at nominal delay and then with the additional delay enabled shrinks the effective timing margin on a path, so a transition fault shows up as a difference between the two captured responses — catching delay faults that standard scan-based DFT can miss, and reusing the existing transmitting flip-flop instead of adding shadow registers and comparison logic.</p>
         </div>
 
         <div>
@@ -249,7 +291,7 @@
         </figcaption>
       </figure>
 
-      <p class="fig-note">Only <code>DLY_SEL</code> changes between the two runs.</p>
+      <p class="fig-note">Both runs use the same test vectors and the same capture flip-flop; only <code>DLY_SEL</code> changes between them. A path with margin to spare produces the same captured response twice, so the difference between the two runs isolates the paths that have lost their slack — and the existing scan chain already carries both responses off-chip.</p>
 
       <figure class="diagram-frame dq-figure dq-figure--pan schematic" style="max-width:760px; margin-top:44px;">
           <div class="fig-scroll"><svg viewBox="0 0 720 226" role="img" aria-label="Comparison of what each delay-fault detection scheme adds at an instrumented site. Drawn as logic schematics. Razor: the logic output feeds the main D flip-flop and a shadow D latch enabled by a delayed clock, and an XOR gate compares their outputs to flag an error. Pre-sampling: the logic output also passes through a guardband delay buffer into an extra D flip-flop, and an XOR gate compares it with the main flip-flop to flag aging. This work: one variable delay element after the launch D flip-flop, controlled by DLY_SEL, and an unmodified capture flip-flop.">
@@ -366,13 +408,130 @@
         </figcaption>
       </figure>
 
-      <p class="fig-note">Razor and the pre-sampling aging sensor add a storage element and comparator at each capture site; the variable-delay flip-flop adds one cell on the launch side.</p>
+      <p class="fig-note">The established alternatives detect the error in space: they hold a second copy of the captured value and compare the two within the cycle. Razor pairs each flip-flop with a shadow latch on a delayed clock and an XOR comparator. The pre-sampling aging sensor adds a guardband delay element, a second flip-flop, and an XOR. Both put a storage element and a comparator at every instrumented capture site. Comparing in time instead moves the only added cell to the launch side and leaves the capture end alone — which is where the area and power difference comes from.</p>
 
       <p class="fig-refs">Razor &mdash; Ernst et al., &ldquo;Razor: Circuit-Level Correction of Timing Errors for Low-Power Operation,&rdquo; IEEE Micro, Nov&ndash;Dec 2004. Pre-sampling aging sensor &mdash; Agarwal et al., &ldquo;Optimized Circuit Failure Prediction for Aging: Practicality and Promise.&rdquo;</p>
 
-      
+      <p style="margin-top:24px; max-width:62ch; color:var(--muted); font-size:14.5px;">The variable delay element above is itself built from chained standard cells — inverters and gates whose transistor-level layout sets the actual delay-per-stage. The sketches below are generic illustrations of that cell structure, not views of any specific library: how N-well and diffusion, poly gates, and metal-1 with contacts stack up in an inverter, a 2-input NAND, and a 2-input NOR, color-coded by layer the way a layout tool renders them.</p>
 
-      
+      <div class="diagram-frame" style="max-width:720px; margin-top:20px;">
+        <svg viewBox="0 0 460 300" role="img" aria-labelledby="cellsTitle cellsDesc">
+          <title id="cellsTitle">Generic standard-cell layout sketches: inverter, 2-input NAND, 2-input NOR</title>
+          <desc id="cellsDesc">Illustrative layer-colored sketches of three generic standard cells sharing one track height and rail structure: an inverter with one poly gate, a 2-input NAND with two series NMOS transistors, and a 2-input NOR with two series PMOS transistors, each showing N-well, diffusion, poly, contacts, and metal-1 rails. These are schematic illustrations of cell structure, not views of a specific cell library.</desc>
+          <defs>
+            <pattern id="cellGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#c9c6bd" stroke-width="0.4" opacity="0.5" />
+            </pattern>
+            <pattern id="wellHatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#5b7ca8" stroke-width="1.1" />
+            </pattern>
+            <pattern id="diffHatch" width="6" height="6" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#4c8f5c" stroke-width="1.1" />
+            </pattern>
+            <pattern id="polyHatch" width="6" height="6" patternTransform="rotate(90)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#c8863b" stroke-width="1.6" />
+            </pattern>
+          </defs>
+
+          <rect x="0" y="0" width="460" height="270" fill="url(#cellGrid)" />
+
+          <!-- ===== Cell template repeated at x0 = 20, 175, 330 ===== -->
+
+          <!-- INV_X1 -->
+          <g>
+            <rect x="20" y="26" width="110" height="200" fill="none" stroke="#c9c6bd" stroke-dasharray="3 2" />
+            <rect x="20" y="26" width="110" height="92" fill="url(#wellHatch)" fill-opacity="0.28" stroke="#5b7ca8" stroke-dasharray="2 2" />
+            <text x="24" y="35" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#5b7ca8">N-WELL</text>
+
+            <rect x="20" y="26" width="110" height="9" fill="#17191c" /><text x="26" y="33" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#f4f2ed">VDD</text>
+            <rect x="20" y="217" width="110" height="9" fill="#17191c" /><text x="26" y="224" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#f4f2ed">VSS</text>
+
+            <rect x="35" y="55" width="80" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="35" y="170" width="80" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+
+            <rect x="70" y="40" width="10" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <text x="58" y="36" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#8a5a26">A</text>
+
+            <rect x="57" y="61" width="5" height="5" fill="#b5539c" /><rect x="57" y="176" width="5" height="5" fill="#b5539c" />
+            <rect x="93" y="61" width="5" height="5" fill="#b5539c" /><rect x="93" y="176" width="5" height="5" fill="#b5539c" />
+            <line x1="95" y1="63" x2="95" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="95" y1="178" x2="95" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="60" y1="63" x2="60" y2="178" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="60" y1="120" x2="122" y2="120" stroke="#3b5fa0" stroke-width="2.2" />
+            <text x="124" y="118" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#3b5fa0">Z</text>
+
+            <text x="75" y="244" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="8" fill="#17191c">INV_X1</text>
+          </g>
+
+          <!-- NAND2_X1: two series NMOS (stacked), two parallel PMOS -->
+          <g>
+            <rect x="175" y="26" width="110" height="200" fill="none" stroke="#c9c6bd" stroke-dasharray="3 2" />
+            <rect x="175" y="26" width="110" height="92" fill="url(#wellHatch)" fill-opacity="0.28" stroke="#5b7ca8" stroke-dasharray="2 2" />
+            <text x="179" y="35" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#5b7ca8">N-WELL</text>
+
+            <rect x="175" y="26" width="110" height="9" fill="#17191c" /><text x="181" y="33" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#f4f2ed">VDD</text>
+            <rect x="175" y="217" width="110" height="9" fill="#17191c" /><text x="181" y="224" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#f4f2ed">VSS</text>
+
+            <rect x="190" y="55" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="235" y="55" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="190" y="150" width="80" height="40" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+
+            <rect x="212" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <rect x="240" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <text x="209" y="36" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#8a5a26">A</text>
+            <text x="237" y="36" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#8a5a26">B</text>
+
+            <rect x="197" y="61" width="5" height="5" fill="#b5539c" /><rect x="258" y="61" width="5" height="5" fill="#b5539c" />
+            <rect x="197" y="166" width="5" height="5" fill="#b5539c" /><rect x="258" y="166" width="5" height="5" fill="#b5539c" />
+            <line x1="199" y1="63" x2="199" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="260" y1="63" x2="260" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="199" y1="168" x2="199" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="230" y1="75" x2="230" y2="150" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="199" y1="115" x2="277" y2="115" stroke="#3b5fa0" stroke-width="2.2" />
+            <text x="279" y="118" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#3b5fa0">Z</text>
+
+            <text x="230" y="244" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="8" fill="#17191c">NAND2_X1</text>
+          </g>
+
+          <!-- NOR2_X1: two series PMOS (stacked), two parallel NMOS -->
+          <g>
+            <rect x="330" y="26" width="110" height="200" fill="none" stroke="#c9c6bd" stroke-dasharray="3 2" />
+            <rect x="330" y="26" width="110" height="92" fill="url(#wellHatch)" fill-opacity="0.28" stroke="#5b7ca8" stroke-dasharray="2 2" />
+            <text x="334" y="35" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#5b7ca8">N-WELL</text>
+
+            <rect x="330" y="26" width="110" height="9" fill="#17191c" /><text x="336" y="33" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#f4f2ed">VDD</text>
+            <rect x="330" y="217" width="110" height="9" fill="#17191c" /><text x="336" y="224" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#f4f2ed">VSS</text>
+
+            <rect x="345" y="45" width="80" height="40" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="345" y="170" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+            <rect x="390" y="170" width="35" height="20" fill="url(#diffHatch)" stroke="#17191c" stroke-width="0.8" />
+
+            <rect x="367" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <rect x="395" y="40" width="9" height="165" fill="url(#polyHatch)" stroke="#8a5a26" stroke-width="0.6" />
+            <text x="364" y="36" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#8a5a26">A</text>
+            <text x="392" y="36" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#8a5a26">B</text>
+
+            <rect x="352" y="61" width="5" height="5" fill="#b5539c" /><rect x="352" y="176" width="5" height="5" fill="#b5539c" />
+            <rect x="413" y="61" width="5" height="5" fill="#b5539c" /><rect x="413" y="176" width="5" height="5" fill="#b5539c" />
+            <line x1="354" y1="63" x2="354" y2="35" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="354" y1="178" x2="354" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="415" y1="178" x2="415" y2="205" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="385" y1="75" x2="385" y2="150" stroke="#3b5fa0" stroke-width="2.2" />
+            <line x1="354" y1="115" x2="432" y2="115" stroke="#3b5fa0" stroke-width="2.2" />
+            <text x="434" y="118" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="6.5" fill="#3b5fa0">Z</text>
+
+            <text x="385" y="244" text-anchor="middle" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="8" fill="#17191c">NOR2_X1</text>
+          </g>
+
+          <g font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-size="7" fill="#6c6b67">
+            <rect x="20" y="262" width="8" height="8" fill="url(#wellHatch)" fill-opacity="0.4" stroke="#5b7ca8" /><text x="32" y="269">N-WELL</text>
+            <rect x="95" y="262" width="8" height="8" fill="url(#diffHatch)" stroke="#4c8f5c" /><text x="107" y="269">DIFFUSION</text>
+            <rect x="180" y="262" width="8" height="8" fill="url(#polyHatch)" stroke="#8a5a26" /><text x="192" y="269">POLY</text>
+            <rect x="235" y="262" width="8" height="4" fill="#3b5fa0" /><text x="247" y="269">METAL 1</text>
+            <rect x="310" y="262" width="6" height="6" fill="#b5539c" /><text x="320" y="269">CONTACT</text>
+          </g>
+        </svg>
+      </div>
     </div>
   </section>
 
@@ -384,8 +543,10 @@
       </div>
       <div class="two-col">
         <div class="prose">
-          <p>Implemented on an RV32IM core at 1&nbsp;GHz in 12&nbsp;nm FinFET, applied to the most critical paths by slack and compared with established schemes under identical conditions. Every configuration met timing with zero TNS, with lower area and power overhead than the alternatives.</p>
-          <p class="note">Numbers are held until the paper is published.</p>
+          <p>The variable D-Q delay flip-flop was implemented in an open-source 32-bit RV32IM RISC-V core, synthesized standalone in a 12 nm FinFET process at a 1 GHz target frequency, followed by scan insertion, ATPG, and static timing analysis.</p>
+          <p>Rather than instrumenting every path, the delay flip-flop was applied progressively to the most timing-critical fraction of paths by slack, at several coverage levels up to full coverage, and compared against established delay-fault detection flip-flop architectures under identical synthesis, timing, and operating conditions. Power was evaluated in Cadence Joules against a functional program exercising the processor; area came from Genus's mapped standard-cell reporting.</p>
+          <p>Every instrumented configuration closed timing at the 1 GHz target with zero total negative slack. Because the technique reuses the existing transmitting flip-flop rather than adding a shadow register and comparison logic, it carries lower area and power overhead than the alternatives evaluated, and the margin widens as coverage increases.</p>
+          <p class="note">Quantified overhead figures are held back until the paper is published. See <a href="#disclosure">Disclosure</a>.</p>
         </div>
         <div>
           <table class="spec-table">
@@ -402,7 +563,39 @@
     </div>
   </section>
 
-  
+  <section class="section" id="disclosure">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Disclosure</h2>
+        <span class="section-index">03 / SCOPE</span>
+      </div>
+
+      <div class="disclosure">
+        <div class="disclosure-col">
+          <p class="label">Open to walk through</p>
+          <ul class="disclosure-list">
+            <li>The mechanism in full: why running the same vectors at nominal and extended delay turns a transition fault into a difference between two captured responses.</li>
+            <li>Why reusing the transmitting flip-flop avoids the shadow register and comparison logic that the alternatives need, and where that saving comes from.</li>
+            <li>The coverage-selection method &mdash; instrumenting paths by slack rather than uniformly, and why that ordering matters.</li>
+            <li>The evaluation setup: synthesis and timing conditions held identical across architectures, the 1&nbsp;GHz target, the functional program used for power, and how area was extracted.</li>
+            <li>On the fabrication side, every process step run at the Nano-Systems Fabrication Laboratory and the characterization behind it.</li>
+          </ul>
+        </div>
+
+        <div class="disclosure-col disclosure-held">
+          <p class="label">Not published here</p>
+          <ul class="disclosure-list">
+            <li>Quantified area, power and overhead figures, and the head-to-head numbers against the comparison architectures &mdash; held until the paper is published.</li>
+            <li>Absolute area and power in the target process, which characterize the library rather than the design.</li>
+            <li>The foundry and PDK revision, library and cell names, and the transistor-level schematic and layout of the flip-flop itself.</li>
+            <li>RTL, netlists, constraint files and tool scripts.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclosure-note">The Waterloo thread is carried out with the CMOS Design and Reliability Group under licensed academic access to a 12&nbsp;nm FinFET PDK, and its results are under embargo until publication. The method, the reasoning and the negative results are all open to discussion &mdash; ask, and I will walk through any of it.</p>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">

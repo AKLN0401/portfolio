@@ -139,15 +139,15 @@
 </header>
 
 <main id="main" class="a7">
-
   <section class="page-hero">
     <div class="wrap two-col">
       <div>
         <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
-        <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; in progress</p>
+        <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; Hierarchical P&amp;R &middot; in progress</p>
         <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
-        <p class="dek">A lowRISC Ibex core with an 8&times;8 INT8 systolic-array accelerator, RTL to GDS on MATRIX-A5, a research CFET PDK with backside power delivery.</p>
-        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a></p>
+        <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
+        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 1.0&nbsp;ns (setup +8&nbsp;ps). The CPU+accelerator top is placed and routed; its signoff is not done yet.</p>
+        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a></p>
       </div>
       <figure class="a7-plate"><img src="../assets/gaa/chip3d.webp" alt="ibex_npu_top rendered in 3D from the routed GDS: CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" width="1190" height="700"><figcaption>ibex_npu_top, rendered from the routed GDS</figcaption></figure>
     </div>
@@ -182,9 +182,23 @@
     </div>
   </section>
 
+  <section class="section" id="cfet">
+    <div class="wrap">
+      <div class="section-head"><h2>The process: CFET with backside power</h2><span class="section-index">TECHNOLOGY</span></div>
+      <div class="two-col">
+        <div class="prose">
+          <p>A complementary FET stacks the nFET directly on top of the pFET instead of placing them side by side, shrinking the standard-cell footprint. MATRIX-A5 pairs this with backside power delivery: the supply comes up from the back of the wafer through a buried power rail (BPR) and backside metals BSM1&ndash;BSM3, and the front-side metals M0&ndash;M13 carry signals only.</p>
+          <p>The PDK is a research kit, not a production one. The cell library has only x1 flip-flops and no tie, tap, endcap, decap, clock-gating or scan cells, and several of its views needed work-arounds before signoff would run (<a href="#problems">below</a>). At 0.7&nbsp;V the slowest setup corner is the cold one: temperature inversion makes SSG &minus;40&nbsp;&deg;C the worst case.</p>
+        </div>
+        <figure class="a7-plate"><img src="../assets/cfet/cfet-cutaway.webp" alt="Cutaway of a MATRIX-A5 CFET NAND2 cell cut through the channel centre: an N-FET tier with three blue nanosheets stacked above a P-FET tier with three red nanosheets, gates wrapped around each sheet, an inter-tier gate via, M0 on top and buried power rails below" width="1800" height="2200" loading="lazy" style="border-radius:4px;"><figcaption>Rendered from the PDK cell GDS and device model, true scale (tools/cfet-figure)</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="chip3d-sec">
     <div class="wrap">
-      <div class="section-head"><h2>3D chip view</h2><span class="section-index">GDS &rarr; 3D</span></div>
+      <div class="section-head"><h2>3D: from the whole chip to one transistor</h2><span class="section-index">GDS &rarr; 3D</span></div>
+      <p class="pd-lede"><code>ibex_npu_top</code> at true scale. Start on the whole die, then scroll toward any point, or use the buttons, to zoom about four orders of magnitude: the routed cell band, the rows and their buried power rails, a standard cell, and a single transistor with its three nanosheets.</p>
       <div class="k3d" id="chip3d">
         <div class="k3d-stage"><div class="k3d-tags"></div>
           <div class="k3d-levels" role="group" aria-label="Zoom level">
@@ -205,18 +219,21 @@
             <small>Drag to rotate &middot; scroll or pinch to zoom toward the cursor &middot; right-drag or shift-drag to pan</small></div>
         </div>
       </div>
-      <p class="fig-note">The routed <code>ibex_npu_top</code> at true scale, from the full die down to a single nanosheet transistor. <i>Clock pulse</i> sends an edge through the extracted clock tree. Drag to rotate, scroll to zoom.</p>
+      <p class="fig-note"><b>This is the routed chip.</b> Every wire (2.23 million rectangles on M0&ndash;M5), every placed cell (441,214, coloured by block: Ibex core blue, lockstep shadow purple, <code>npu_dma</code> orange, CTS red, the macros&rsquo; cells green, fillers dark) and every via (853,576) of <code>ibex_npu_top</code>, the macros included, comes from the GDS, converted by <code>scripts/gds2web.py</code>. Zoom in and the cells turn into their real layouts from the same GDS, with both transistor tiers and three nanosheets per device; heights come from the PDK.</p>
+      <p class="fig-note"><b>The clock.</b> The clock network was extracted from the layout geometry (metal and vias joined into nets) and traced from the <code>clk_i</code> pin through 2,505 buffers, inverters and clock gates, across 14 stages and into all three macros, to all 28,425 flip-flop and latch clock pins. <i>Clock pulse</i> sends a rising edge down that tree, stage by stage and along each wire. That is the order the edge travels, not a timing analysis, and it is slowed down by about ten billion times. Zoom into any clock-tree cell (<i>Clock buffer</i>, then <i>Transistor</i>) and its transistors switch as the edge reaches it: a switch-level simulation of that cell&rsquo;s own transistor netlist, checked against the PDK. Nodes are red for 1, blue for 0 and grey where the value comes from data logic that is not simulated, and a channel lights up while it conducts. Cell geometry comes from the MATRIX-A5 PDK (MATRIX-PDK Academic and Non-Commercial License v1.0, &copy; Georgia Institute of Technology), as modified for this chip.</p>
     </div>
   </section>
 
   <section class="section" id="floorplan">
     <div class="wrap">
-      <div class="section-head"><h2>Floorplan and layouts</h2><span class="section-index">IBEX_NPU_TOP</span></div>
+      <div class="section-head"><h2>Floorplan</h2><span class="section-index">IBEX_NPU_TOP</span></div>
+      <p class="pd-lede">The three macros sit in a row along the bottom; the CPU and <code>npu_dma</code> fill the band above them. The main Ibex core and its lockstep shadow mirror each other about the die centre, with a 2&nbsp;&micro;m channel between them, and all 232 pins are on the top edge on M5. Standard cells use every second row only, because abutting rows short in the stock cell GDS.</p>
       <figure class="fp-svg"><img src="../assets/gaa/ibex_npu_top_floorplan.svg" alt="ibex_npu_top floorplan to scale: three macros along the bottom, main and shadow core regions above, channel between them, pins on the top edge, backside power stripes" width="1006" height="943"><figcaption>Generated from the Innovus script by scripts/floorplan.py, to scale</figcaption></figure>
       <div class="fp-pair">
         <figure><img src="../assets/gaa/ibex_npu_top_placement.webp" alt="ibex_npu_top placement: CPU cells in blue above the macros, npu_dma cells in orange above the accelerator" loading="lazy" width="1200" height="1123"><figcaption>ibex_npu_top &middot; placement (routed DEF)</figcaption></figure>
         <figure><img src="../assets/gaa/ibex_npu_top_routing.webp" alt="ibex_npu_top routing, wires coloured by metal layer M0 to M5" loading="lazy" width="1200" height="1123"><figcaption>ibex_npu_top &middot; routing M0&ndash;M5 (routed DEF)</figcaption></figure>
       </div>
+      <h3 style="margin-top:40px;">The other three layouts</h3>
       <div class="fp-pair">
         <figure><img src="../assets/gaa/ibex_cfet_top_routing.webp" alt="ibex_cfet_top routing" loading="lazy" width="1200" height="1284"><figcaption>ibex_cfet_top &middot; 70.04 &times; 70.13 &micro;m &middot; routing</figcaption></figure>
         <figure><img src="../assets/gaa/npu_acc_routing.webp" alt="npu_acc macro routing" loading="lazy" width="1200" height="1305"><figcaption>npu_acc &middot; 49.14 &times; 49.97 &micro;m &middot; routing</figcaption></figure>
@@ -225,9 +242,10 @@
     </div>
   </section>
 
-  <section class="section" id="cfet">
+  <section class="section" id="cells3d">
     <div class="wrap">
-      <div class="section-head"><h2>CFET cells</h2><span class="section-index">NANOSHEETS</span></div>
+      <div class="section-head"><h2>3D: the cells, nanosheet by nanosheet</h2><span class="section-index">GDS &rarr; 3D</span></div>
+      <p class="pd-lede">The standard cells the whole chip is built from, extruded from the PDK&rsquo;s cell GDS. Each transistor is three stacked nanosheets with the gate wrapped all the way round; the nFET tier sits directly on top of the pFET tier, and the supply comes up from the buried power rail underneath. Use the section plane to cut through the sheets, and the gate slider to see inside the gate.</p>
       <div class="c3d" id="cfet3d">
         <div class="c3d-stage"><div class="c3d-tags"></div><div class="c3d-info" id="c3d-info"></div></div>
         <div class="c3d-panel">
@@ -240,8 +258,78 @@
             <input type="range" id="c3d-cut" min="0" max="1000" value="500" aria-label="Section position"></div>
         </div>
       </div>
-      <div style="max-width:420px;margin-top:32px;"><figure class="a7-plate"><img src="../assets/cfet/cfet-cutaway.webp" alt="Cutaway of a MATRIX-A5 CFET NAND2 cell cut through the channel centre: an N-FET tier with three blue nanosheets stacked above a P-FET tier with three red nanosheets, gates wrapped around each sheet, an inter-tier gate via, M0 on top and buried power rails below" width="1800" height="2200" loading="lazy" style="border-radius:4px;"><figcaption>Rendered from the PDK cell GDS and device model, true scale (tools/cfet-figure)</figcaption></figure></div>
-      <p class="fig-note">nFET stacked on pFET, three nanosheets per device, power from the backside. Cell geometry from the MATRIX-A5 PDK (M. Shon et al., IEEE JXCDC 2026, <a href="https://doi.org/10.1109/JXCDC.2026.3744406">doi:10.1109/JXCDC.2026.3744406</a>), MATRIX-PDK Academic and Non-Commercial License v1.0, &copy; Georgia Institute of Technology.</p>
+      <p class="fig-note">True scale in all three axes. Drag to rotate, scroll to zoom, right-drag to pan.</p>
+
+      <h3 style="margin-top:40px;">Where each dimension comes from</h3>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>What</th><th>Value</th><th>PDK source</th></tr></thead>
+        <tbody>
+          <tr><th>x, y of every shape</th><td>as drawn</td><td>Cell GDS <code>gtA5_cfet_stdcells.gds</code>; layer numbers from the LVS layer map</td></tr>
+          <tr><th>Which tier is which</th><td>ACT/GATE = pFET (bottom), ACT2/GATE2 = nFET (top)</td><td>LVS runset device definitions</td></tr>
+          <tr><th>Channel and source/drain</th><td>channel = ACT and GATE, not DUMMY, not GCUT; S/D = ACT not GATE</td><td>LVS runset (same derivations)</td></tr>
+          <tr><th>Sheets per device, thickness, gap</th><td>3 &times; 6&nbsp;nm, 10&nbsp;nm apart</td><td>BSIM-CMG card <code>ngaa</code>, <code>tgaa</code>, <code>tsus</code></td></tr>
+          <tr><th>Sheet width, gate length</th><td>11&nbsp;nm, 12&nbsp;nm</td><td>Drawn ACT and GATE widths (match <code>WGAA</code>, <code>L</code> in the CDL)</td></tr>
+          <tr><th>Heights: BPR, both device tiers, contacts, vias, M0&ndash;M13</th><td>BPR 5&ndash;37&nbsp;nm, pFET slab 128&ndash;163&nbsp;nm, nFET slab 246&ndash;281&nbsp;nm, M0 324&ndash;348&nbsp;nm</td><td>StarRC ITF, parsed layer by layer</td></tr>
+          <tr><th>Backside metals BSM1&ndash;3 and their vias</th><td>not drawn in cells</td><td>QRC ICT (used when rendering chip-level GDS)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">The PDK is not fully self-consistent here: the model card&rsquo;s sheet stack (3&times;6 + 2&times;10 = 38&nbsp;nm) is 3&nbsp;nm taller than the ITF&rsquo;s 35&nbsp;nm ACT slab, so the outer sheets extend 1.5&nbsp;nm past the source/drain block. Both are shown as the PDK gives them. Shapes are taken unclipped from the GDS, so the active strips stick out past the cell boundary (dashed) where they overlap the next cell. Geometry from the MATRIX-A5 PDK (M. Shon et al., IEEE JXCDC 2026, <a href="https://doi.org/10.1109/JXCDC.2026.3744406">doi:10.1109/JXCDC.2026.3744406</a>), MATRIX-PDK Academic and Non-Commercial License v1.0, &copy; Georgia Institute of Technology.</p>
+    </div>
+  </section>
+
+  <section class="section" id="system">
+    <div class="wrap">
+      <div class="section-head"><h2>System</h2><span class="section-index">ARCHITECTURE</span></div>
+      <p class="pd-lede">Data accesses inside a 16&nbsp;KB window at <code>0x1000_0000</code> go to <code>npu_dma</code>; everything else, including instruction fetch, goes to the external memory port. The window is split four ways.</p>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Offset</th><th>Region</th><th>Contents</th></tr></thead>
+        <tbody>
+          <tr><th><code>0x0000</code></th><td><code>npu_acc</code></td><td>Accelerator registers</td></tr>
+          <tr><th><code>0x1000</code></th><td>SRAM0, 1&nbsp;KB</td><td>A and B, row-major INT8, four values per word</td></tr>
+          <tr><th><code>0x2000</code></th><td>SRAM1, 1&nbsp;KB</td><td>C, row-major INT32</td></tr>
+          <tr><th><code>0x3000</code></th><td>DMA</td><td><code>CTRL</code>, <code>STATUS</code>, <code>DIMS</code> (M/N/K in 8&times;8 tiles), <code>ABASE</code>, <code>BBASE</code>, <code>CBASE</code>, <code>CYCLES</code></td></tr>
+        </tbody>
+      </table></div>
+      <h3 style="margin-top:40px;">One GEMM, tile by tile</h3>
+      <ol class="process-list">
+        <li><div><h4>Load</h4><p>The CPU writes A and B into SRAM0, sets the tile counts and base addresses, and writes <code>CTRL</code>.</p></div></li>
+        <li><div><h4>Copy a tile</h4><p>For each tile (i,&nbsp;j,&nbsp;k) the DMA copies the 8&times;8 A and B tiles from SRAM0 into <code>npu_acc</code>.</p></div></li>
+        <li><div><h4>Compute</h4><p>The DMA starts the array and polls for done. Each processing element keeps its own 32-bit accumulator (output-stationary).</p></div></li>
+        <li><div><h4>Write or accumulate C</h4><p>The 64 results are written into SRAM1 for k&nbsp;=&nbsp;0 and added to what is there for k&nbsp;&gt;&nbsp;0, so K can span several tiles.</p></div></li>
+        <li><div><h4>Count</h4><p><code>CYCLES</code> holds the clock cycles of the last run. While the engine is busy, CPU accesses to the SRAMs and the array wait; the DMA registers and external memory stay reachable.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="wrap">
+      <div class="section-head"><h2>Flow</h2><span class="section-index">RTL &rarr; GDS</span></div>
+      <ol class="process-list">
+        <li><div><h4>Lint and RTL simulation</h4><p>Verilator lint; RTL testbenches for the array, the SRAM and the accelerator subsystem.</p></div></li>
+        <li><div><h4>Synthesis (Genus, iSpatial)</h4><p>One script per design. A post-synthesis script inserts tie-off generators, since the library has no tie cells.</p></div></li>
+        <li><div><h4>Macros (Innovus)</h4><p><code>lram_256x32</code> and <code>npu_acc</code> are placed, routed and exported as LEF and timing models, with M3 access stubs for their pins.</p></div></li>
+        <li><div><h4>Top level (Innovus)</h4><p>The top is synthesized with the macros as black boxes, then floorplanned, placed, clock-tree synthesized, routed and ECO&rsquo;d with the macros beside the CPU.</p></div></li>
+        <li><div><h4>Extraction and timing (Quantus)</h4><p>Setup and hold checked on all four corners.</p></div></li>
+        <li><div><h4>Physical verification (IC Validator)</h4><p>LVS with a deck extended for the backside layers.</p></div></li>
+        <li><div><h4>Equivalence (Conformal)</h4><p>RTL against the post-P&amp;R netlist for each design.</p></div></li>
+        <li><div><h4>Gate-level simulation (Xcelium)</h4><p>SDF-annotated smoke test of <code>ibex_npu_top</code>.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="problems">
+    <div class="wrap">
+      <div class="section-head"><h2>Signoff on an immature PDK</h2><span class="section-index">PROBLEMS SOLVED</span></div>
+      <p class="pd-lede">Most of the work was getting a research kit through an industrial signoff flow. Each fix below is scripted in the repository.</p>
+      <div class="a7-grid">
+        <div class="a7-card"><h4>No tie cells</h4><span class="a7-status">fix_ties*.py</span><p>Constant pins are driven from small reset-derived generators that a script inserts into the netlist after synthesis.</p></div>
+        <div class="a7-card"><h4>Abutted rows short</h4><span class="a7-status">alt_rows.tcl</span><p>The stock cell GDS shorts internal nets when rows abut, so standard cells are placed on alternate rows only.</p></div>
+        <div class="a7-card"><h4>LVS turns M4+ into ports</h4><span class="a7-status">M3 and below</span><p>Internal nets are routed on M3 and below; only chip-port nets use M4/M5. Macro pins are M3 access stubs with an internal stack.</p></div>
+        <div class="a7-card"><h4>LVS stops at BPR</h4><span class="a7-status">lvs_bsm.rs</span><p>The stock deck had no backside layers, so the supply network never joined. TSV, BSM1&ndash;3 and BSV1&ndash;2 were added to the deck.</p></div>
+        <div class="a7-card"><h4>svt-only GDS and CDL</h4><span class="a7-status">make_vt_alias.py</span><p>The PDK ships layout and netlist views for svt cells only; lvt and ulvt views are generated as aliases so all three V<sub>t</sub>s can be used and verified.</p></div>
+        <div class="a7-card"><h4>Hold with backside layers</h4><span class="a7-status">front-side clock</span><p>The router was assigning clock nets to backside layers. A front-side clock route type and a hold-specific uncertainty closed hold.</p></div>
+        <div class="a7-card"><h4>Eight ECO rounds on the CPU top</h4><span class="a7-status">pnr/eco/</span><p>Rerouting a patched design broke earlier patches, so later rounds used reroute-free M0 patches until the top was LVS-clean.</p></div>
+      </div>
     </div>
   </section>
 
@@ -257,10 +345,28 @@
           <tr><th><code>ibex_npu_top</code></th><td class="ok">routed</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
         </tbody>
       </table></div>
-      <p class="fig-note">Foundry DRC (IC Validator) not yet rerun on the final layouts.</p>
+      <p class="fig-note">LVS uses the stock deck with the backside layers added. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
+
+      <h3 style="margin-top:40px;">Other measured points</h3>
+      <div class="a7-grid">
+        <div class="a7-card"><h4>Die sizes</h4><span class="a7-status">from the DEFs</span><p><code>ibex_npu_top</code> 115.75&nbsp;&times;&nbsp;100.37&nbsp;&micro;m &middot; <code>ibex_cfet_top</code> 70.04&nbsp;&times;&nbsp;70.13 &middot; <code>npu_acc</code> 49.14&nbsp;&times;&nbsp;49.97 &middot; <code>lram_256x32</code> 30.03&nbsp;&times;&nbsp;49.97.</p></div>
+        <div class="a7-card"><h4>Accelerator subsystem</h4><span class="a7-status">RTL simulation &middot; pass</span><p>16&times;16&times;16 GEMM in 2,040 DMA cycles; 8&times;16&times;24 GEMM (three accumulated K tiles) in 1,530 DMA cycles.</p></div>
+        <div class="a7-card"><h4>ibex_cfet_top synthesis</h4><span class="a7-status">pre-P&amp;R estimate, 1.0&nbsp;ns</span><p>~32k cells, 2,628 flip-flops, ~521&nbsp;&micro;m&sup2; cell area, ~3.6&nbsp;mW.</p></div>
+      </div>
     </div>
   </section>
 
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Next</h2><span class="section-index">ROADMAP</span></div>
+      <ol class="process-list">
+        <li><div><h4>Macros and baseline</h4><p>Done: <code>lram_256x32</code>, <code>npu_acc</code> and <code>ibex_cfet_top</code> through P&amp;R, LVS, DRC, timing and equivalence.</p></div></li>
+        <li><div><h4>CPU + accelerator top</h4><p>Done: placed and routed. Next: LVS, DRC, timing and equivalence on <code>ibex_npu_top</code>.</p></div></li>
+        <li><div><h4>Foundry DRC</h4><p>Rerun IC Validator DRC on all final layouts.</p></div></li>
+        <li><div><h4>Compare the two chips</h4><p>Not measured yet: area overhead of the accelerator, GEMM speedup over software on the CPU, energy per matrix multiply, final post-route power, Fmax and CoreMark/MHz.</p></div></li>
+      </ol>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">
