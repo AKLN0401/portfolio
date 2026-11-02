@@ -106,6 +106,12 @@
 .k3d-logic button[aria-pressed="true"] { background: #17191c; color: #fff; }
 .k3d-wave { border-top: 1px solid var(--line); background: var(--paper); padding: 10px 16px; }
 .k3d-wave svg { width: 100%; height: auto; display: block; max-height: 150px; }
+.k3d-loadbox { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(320px, 80%); color: #c8ccd6; font: 12px var(--font-mono); text-align: center; }
+.k3d-loadbar { height: 4px; background: #232a38; border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
+.k3d-loadbar i { display: block; height: 100%; width: 0; background: #e8a33d; transition: width .2s; }
+.k3d-layers { display: grid; grid-template-columns: repeat(3, auto); gap: 0 12px; }
+.k3d-layers label { font-size: 13px !important; }
+.c3d-ctl small { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; line-height: 1.45; }
 </style>
 </head>
 <body>
@@ -222,26 +228,30 @@
 
   <section class="section" id="chip3d-sec">
     <div class="wrap">
-      <div class="section-head"><h2>3D: from the whole chip to one transistor</h2><span class="section-index">115 &micro;m &rarr; 6 nm</span></div>
+      <div class="section-head"><h2>3D: from the whole chip to one transistor</h2><span class="section-index">GDS &rarr; 3D</span></div>
       <p class="pd-lede"><code>ibex_npu_top</code> at true scale. Start on the whole die, then scroll toward any point, or use the buttons, to zoom about four orders of magnitude: the routed cell band, the rows and their buried power rails, a standard cell, and a single transistor with its three nanosheets.</p>
       <div class="k3d" id="chip3d">
         <div class="k3d-stage"><div class="k3d-tags"></div>
           <div class="k3d-levels" role="group" aria-label="Zoom level">
-            <button data-lv="chip" aria-pressed="true">Chip</button><button data-lv="band">Cell band</button><button data-lv="rows">Rows</button><button data-lv="cell">Cell</button><button data-lv="fet">Transistor</button>
+            <button data-lv="chip" aria-pressed="true">Chip</button><button data-lv="band">Cells</button><button data-lv="cell">Clock buffer</button><button data-lv="fet">Transistor</button>
           </div>
+          <div class="k3d-loadbox" id="k3d-loadbox"><div class="k3d-loadbar"><i id="k3d-load"></i></div><span id="k3d-load-txt">loading layout…</span></div>
           <div class="k3d-hud"><b id="k3d-level"></b><br><span id="k3d-scale"></span></div>
-          <div class="k3d-state" id="k3d-state" aria-live="polite"></div>
         </div>
         <div class="k3d-panel">
           <div class="c3d-ctl k3d-logic"><span>Clock</span><button id="k3d-pulse">Clock pulse</button><button id="k3d-auto" aria-pressed="false">Auto clock</button>
-            <span style="margin-top:12px;">Inputs</span><button id="k3d-a">a = 1</button><button id="k3d-b">b = 1</button></div>
-          <div class="c3d-ctl"><span>Layers</span><label><input type="checkbox" id="k3d-back" checked> Backside power (BSM1&ndash;3)</label><button id="k3d-tags-btn" aria-pressed="true" style="margin-top:6px;">Labels</button></div>
-          <div class="c3d-ctl"><span>Gate opacity <output id="k3d-gate-out">30%</output></span><input type="range" id="k3d-gate" min="0" max="100" value="30" aria-label="Gate opacity"></div>
+            <label style="margin-top:8px;"><input type="checkbox" id="k3d-clock" checked> Show clock tree</label><small id="k3d-clockinfo"></small></div>
+          <div class="c3d-ctl"><span>Layers</span><div class="k3d-layers">
+            <label><input type="checkbox" data-show="M5" checked> M5</label><label><input type="checkbox" data-show="M4" checked> M4</label><label><input type="checkbox" data-show="M3" checked> M3</label>
+            <label><input type="checkbox" data-show="M2" checked> M2</label><label><input type="checkbox" data-show="M1" checked> M1</label><label><input type="checkbox" data-show="M0" checked> M0</label>
+            <label><input type="checkbox" data-show="vias" checked> vias</label><label><input type="checkbox" data-show="cells" checked> cells</label><label><input type="checkbox" data-show="fill" checked> fillers</label>
+            <label><input type="checkbox" data-show="back" checked> backside</label></div><label style="margin-top:6px;"><input type="checkbox" id="k3d-upper"> keep upper metals when zoomed in</label><button id="k3d-tags-btn" aria-pressed="true" style="margin-top:6px;">Labels</button></div>
+          <div class="c3d-ctl"><span>Gate opacity <output id="k3d-gate-out">32%</output></span><input type="range" id="k3d-gate" min="0" max="100" value="32" aria-label="Gate opacity">
+            <small>Drag to rotate &middot; scroll or pinch to zoom toward the cursor &middot; right-drag or shift-drag to pan</small></div>
         </div>
-        <div class="k3d-wave" id="k3d-wave"></div>
       </div>
-      <p class="fig-note"><b>Clock demo.</b> Press <i>Clock pulse</i> (or <i>Auto clock</i>) and the view drops to the cells. NAND2 + INV form one AND gate, a&middot;b, the partial-product bit of a multiplier; the DFF stores it on the rising edge of CK. Every transistor is switched by a switch-level simulation of the cells&rsquo; own transistor netlists, read from the layout and checked against the PDK CDL. Gates and source/drain show the node voltage (red = 1, blue = 0). A nanosheet channel lights up when its transistor is on. Particles mark the current that charges or discharges a node, one transistor stage per step, slowed down by roughly ten billion times (a real stage takes tens of picoseconds). Go to <i>Transistor</i> to watch the DFF&rsquo;s clock-input nFET switch on every pulse. In the chip itself these three cells are not wired together in one spot: the AND is a logical hookup, shown for how the transistors work.</p>
-      <p class="fig-note"><b>What is exact.</b> Die, macros, cell band, regions, the 232 pins, rows, BPR rails and the BSM1&ndash;3 power stripes are generated from <code>pnr/ibex_npu_top_pnr.tcl</code>; heights come from the PDK ITF/ICT; cells and nanosheets come from the PDK GDS and device model. Not yet in 3D: the 30k+ placed cells and the signal wiring of the routed design. They need the routed DEF, which is not in the repository; the 2D renders of it are in the <a href="#floorplan">floorplan</a> section.</p>
+      <p class="fig-note"><b>This is the routed chip.</b> Every wire (2.23 million rectangles on M0&ndash;M5), every placed cell (441,214, coloured by block: Ibex core blue, lockstep shadow purple, <code>npu_dma</code> orange, CTS red, the macros&rsquo; cells green, fillers dark) and every via (853,576) of <code>ibex_npu_top</code>, the macros included, comes from the GDS, converted by <code>scripts/gds2web.py</code>. Zoom in and the cells turn into their real layouts from the same GDS, with both transistor tiers and three nanosheets per device; heights come from the PDK.</p>
+      <p class="fig-note"><b>The clock.</b> The clock network was extracted from the layout geometry (metal and vias joined into nets) and traced from the <code>clk_i</code> pin through 2,505 buffers, inverters and clock gates, across 14 stages and into all three macros, to all 28,425 flip-flop and latch clock pins. <i>Clock pulse</i> sends a rising edge down that tree, stage by stage and along each wire. That is the order the edge travels, not a timing analysis, and it is slowed down by about ten billion times. Zoom into any clock-tree cell (<i>Clock buffer</i>, then <i>Transistor</i>) and its transistors switch as the edge reaches it: a switch-level simulation of that cell&rsquo;s own transistor netlist, checked against the PDK. Nodes are red for 1, blue for 0 and grey where the value comes from data logic that is not simulated, and a channel lights up while it conducts. Cell geometry comes from the MATRIX-A5 PDK (MATRIX-PDK Academic and Non-Commercial License v1.0, &copy; Georgia Institute of Technology), as modified for this chip.</p>
     </div>
   </section>
 
@@ -400,6 +410,6 @@
 <script src="../js/main.js"></script>
 <script type="importmap">{"imports":{"three":"../assets/vendor/three/three.module.min.js","three/addons/":"../assets/vendor/three/addons/"}}</script>
 <script type="module" src="../assets/cfet/cfet-3d.js"></script>
-<script type="module" src="../assets/gaa/chip-3d.js"></script>
+<script type="module" src="../assets/gaa/chip3d/viewer.js"></script>
 </body>
 </html>
