@@ -140,68 +140,137 @@
       </div>
 
       <p class="label proj-group is-active" style="margin:0 0 12px;">In progress</p>
-      <div class="card-grid">
-        <a class="card" href="projects/gaa-sysarray.html">
-          <div class="card-media"><img src="assets/gaa/ibex_npu_top_routing.webp" alt="Routed layout of the CPU and accelerator chip" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
-          <div class="card-body">
-            <h3>RISC-V + INT8 Systolic Array on CFET</h3>
-            <p>Ibex core + 8&times;8 INT8 accelerator, RTL to GDS on a research CFET PDK with backside power. Interactive 3D chip.</p>
-            <span class="card-tags">CFET &middot; Genus &middot; Innovus &middot; ICV</span>
+      <div class="proj-list">
+        <!-- HIDDEN for now (7nm NVDLA); restore by removing this comment wrapper
+        <a class="proj" href="projects/nvdla-asap7.html">
+          <div class="proj-head">
+            <span class="proj-num">01</span>
+            <h3>NVIDIA NVDLA 7&nbsp;nm Full-Chip Implementation: Low-Power, PPA-Optimized, DFT</h3>
+            <span class="proj-cat">Synthesis &middot; Place-and-route &middot; Chip assembly &middot; In progress</span>
           </div>
+          <p class="proj-sum">NVDLA on the open ASAP7 7&nbsp;nm PDK at 1&nbsp;GHz, with the kit files left read-only: full scan checked by ATPG, memory BIST for the SRAM macros, and hard-macro partitions in a mirror-symmetric floorplan.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>ASAP7 7&nbsp;nm FinFET (predictive) &middot; 448 SRAM macros in the convolution buffer partition</dd></div>
+            <div><dt>Tools</dt><dd>Genus &middot; Conformal &middot; Xcelium</dd></div>
+            <div><dt>Key fix</dt><dd>Partition C: 1,019 violations &rarr; 0, no area increase</dd></div>
+            <div><dt>Results</dt><dd>3 of 5 partitions met at 1.0&nbsp;ns so far</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="card" href="projects/npu-tapeout.html">
-          <div class="card-media"><img src="assets/npu/iso3d.webp" alt="3D view of the NPU tile layout" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
-          <div class="card-body">
-            <h3>int4 NPU for Tiny Tapeout</h3>
-            <p>2&times;2 MAC array with clock gating and full scan in one SKY130 tile. DRC/LVS clean, 45&ndash;59% power saved.</p>
-            <span class="card-tags">SKY130 &middot; LibreLane &middot; cocotb</span>
+        -->
+
+        <a class="proj" href="projects/gaa-sysarray.html">
+          <div class="proj-head">
+            <span class="proj-num">01</span>
+            <h3>RISC-V + INT8 Systolic Array on a CFET PDK</h3>
+            <span class="proj-cat">RTL &middot; Synthesis &middot; Hierarchical P&amp;R &middot; Signoff &middot; In progress</span>
           </div>
+          <p class="proj-sum">Ibex RISC-V core + 8&times;8 INT8 systolic-array accelerator, RTL to GDS on a research CFET PDK with backside power. Interactive 3D chip view.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>MATRIX-A5 CFET (predictive) &middot; 0.7&nbsp;V &middot; backside power &middot; 3 V<sub>t</sub>s</dd></div>
+            <div><dt>Tools</dt><dd>Genus 25.1 &middot; Innovus 25.1 &middot; IC Validator &middot; Conformal &middot; Xcelium</dd></div>
+            <div><dt>Signoff</dt><dd>Accelerator and SRAM macros: LVS, DRC, LEC clean, 750&nbsp;ps &middot; CPU top: LVS and LEC pass, 1.0&nbsp;ns met</dd></div>
+            <div><dt>Status</dt><dd>CPU + accelerator top placed and routed &middot; its signoff next</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="card" href="projects/nvdla.html">
-          <div class="card-media"><img src="assets/thumbs/nvdla.webp" alt="Mirror-symmetric NVDLA floorplan" loading="lazy" decoding="async" style="object-fit:contain;" /></div>
-          <div class="card-body">
-            <h3>NVIDIA NVDLA, 12&nbsp;nm</h3>
-            <p>Deep-learning accelerator at 1.1&nbsp;GHz: multi-V<sub>t</sub>, clock gating, full scan, symmetric hard-macro floorplan.</p>
-            <span class="card-tags">12&nbsp;nm FinFET &middot; Genus &middot; Innovus &middot; Modus</span>
+
+        <a class="proj" href="projects/npu-tapeout.html">
+          <div class="proj-head">
+            <span class="proj-num">02</span>
+            <h3>One-Tile int4 NPU (2x2 MAC Array) for Tiny Tapeout</h3>
+            <span class="proj-cat">RTL &middot; Verification &middot; Place-and-route &middot; Tiny Tapeout &middot; In progress</span>
           </div>
+          <p class="proj-sum">2&times;2 int4 MAC array with per-row clock gating and full scan, signed off in one SKY130 Tiny Tapeout tile.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>SkyWater SKY130 130&nbsp;nm &middot; 1 tile, 161&nbsp;&times;&nbsp;112&nbsp;&micro;m &middot; 50&nbsp;MHz</dd></div>
+            <div><dt>Tools</dt><dd>LibreLane (Yosys, OpenROAD, Magic, KLayout) &middot; cocotb &middot; Icarus &middot; Verilator</dd></div>
+            <div><dt>Signoff</dt><dd>DRC and LVS clean &middot; timing met from &minus;40 to 100&nbsp;&deg;C &middot; TT precheck 15/15</dd></div>
+            <div><dt>Power</dt><dd>191&ndash;277&nbsp;&micro;W at 50&nbsp;MHz (typical corner) &middot; clock gating saves 45&ndash;59%</dd></div>
+            <div><dt>Status</dt><dd>Layout signed off &middot; Tiny Tapeout CI green (GDS, precheck, gate-level) &middot; TTSKY26d submission next</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="card" href="projects/glove.html">
-          <div class="card-media"><img src="assets/glove/01_glove_back.jpg" alt="Render of the sensor glove" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
-          <div class="card-body">
-            <h3>Tap-to-Click Glove</h3>
-            <p>Capstone: a glove mouse with silver and carbon sensors printed on stretchable TPU.</p>
-            <span class="card-tags">Printed electronics &middot; ESP32-S3</span>
+
+        <a class="proj" href="projects/nvdla.html">
+          <div class="proj-head">
+            <span class="proj-num">03</span>
+            <h3>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h3>
+            <span class="proj-cat">Synthesis &middot; Place-and-route &middot; Physical verification &middot; In progress</span>
           </div>
+          <p class="proj-sum">NVIDIA&rsquo;s open-source deep-learning accelerator, RTL to GDSII in 12&nbsp;nm FinFET at 1.1&nbsp;GHz.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 13-metal stack &middot; 128 dual-port SRAM macros</dd></div>
+            <div><dt>Tools</dt><dd>Genus 25.1 &middot; Innovus 25.1 &middot; Calibre &middot; Modus</dd></div>
+            <div><dt>Signoff</dt><dd>Foundry DRC and LVS on the merged GDS</dd></div>
+            <div><dt>Status</dt><dd>SRAMs generated &middot; synthesis running &middot; place-and-route scripted</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
         </a>
+
+        <a class="proj" href="projects/glove.html">
+          <div class="proj-head">
+            <span class="proj-num">04</span>
+            <h3>Tap-to-Click Glove, Printed Sensors</h3>
+            <span class="proj-cat">Printed electronics &middot; ECE 4600 capstone</span>
+          </div>
+          <p class="proj-sum">Capstone: a glove mouse with silver and carbon sensors printed on stretchable TPU.</p>
+          <dl class="proj-spec">
+            <div><dt>Materials</dt><dd>Silver and carbon inks &middot; stretchable TPU film</dd></div>
+            <div><dt>Tools</dt><dd>Voltera NOVA &middot; ESP32-S3 &middot; Blender</dd></div>
+            <div><dt>My role</dt><dd>Sensor fabrication and hardware design (team of 6)</dd></div>
+            <div><dt>Targets</dt><dd>&ge; 97% taps detected &middot; &le; 50&nbsp;ms tap-to-click</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
+        </a>
+
       </div>
 
       <p class="label proj-group is-done" style="margin:48px 0 12px;">Completed</p>
-      <div class="card-grid">
-        <a class="card" href="projects/mems-switch.html">
-          <div class="card-media"><img src="assets/mems/fig3-fabricated.webp" alt="Fabricated printed MEMS switch" loading="lazy" decoding="async" style="object-fit:cover;" /></div>
-          <div class="card-body">
-            <h3>Printed Flexible MEMS Switch</h3>
-            <p>Lorentz-force switch with electrostatic hold-down on polyimide. Published at EUROSENSORS 2026.</p>
-            <span class="card-tags">MEMS &middot; COMSOL &middot; Voltera NOVA</span>
+      <div class="proj-list">
+        <a class="proj" href="projects/mems-switch.html">
+          <div class="proj-head">
+            <span class="proj-num">05</span>
+            <h3>Printed Flexible Lorentz-Force MEMS Switch with Electrostatic Hold-Down</h3>
+            <span class="proj-cat">MEMS &middot; Printed electronics &middot; Published, EUROSENSORS 2026</span>
           </div>
+          <p class="proj-sum">Printed silver MEMS switch on polyimide: Lorentz-force actuation with electrostatic hold-down.</p>
+          <dl class="proj-spec">
+            <div><dt>Materials</dt><dd>15&nbsp;&micro;m printed silver &middot; 25&nbsp;&micro;m polyimide</dd></div>
+            <div><dt>Tools</dt><dd>COMSOL &middot; Voltera NOVA &middot; O<sub>2</sub> RIE</dd></div>
+            <div><dt>Simulated</dt><dd>120&nbsp;mA &rarr; ~110&nbsp;&micro;m &middot; 33&nbsp;Hz &middot; 0.018&nbsp;N/m</dd></div>
+            <div><dt>Measured</dt><dd>Repeatable switching &middot; hold-down releases at 28&nbsp;V</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="card" href="projects/riscv.html">
-          <div class="card-media"><span class="card-text">RV32IM</span></div>
-          <div class="card-body">
+        <a class="proj" href="projects/riscv.html">
+          <div class="proj-head">
+            <span class="proj-num">06</span>
             <h3>RISC-V Fault Detection</h3>
-            <p>Fault-detection hardware on an RV32IM core: coverage, timing, area and power.</p>
-            <span class="card-tags">DFT &middot; 12&nbsp;nm</span>
+            <span class="proj-cat">DFT &middot; Reliability &middot; Research</span>
           </div>
+          <p class="proj-sum">Fault-detection hardware on an RV32IM core: ATPG coverage, timing, area and power.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>RV32IM RISC-V &middot; 12&nbsp;nm FinFET</dd></div>
+            <div><dt>Flow</dt><dd>DFT instrumentation &middot; ATPG &middot; STA &middot; area/power analysis</dd></div>
+            <div><dt>Group</dt><dd>CMOS Design and Reliability Group, Waterloo</dd></div>
+            <div><dt>Results</dt><dd>Coverage, area and power figures held until publication</dd></div>
+          </dl>
+          <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="card" href="projects/dft.html">
-          <div class="card-media"><span class="card-text">DFT</span></div>
-          <div class="card-body">
+
+        <a class="proj" href="projects/dft.html">
+          <div class="proj-head">
+            <span class="proj-num">07</span>
             <h3>Error-Detection DFT Architectures</h3>
-            <p>Fault-detection schemes compared on 12&nbsp;nm benchmarks and RISC-V blocks.</p>
-            <span class="card-tags">Modus &middot; Genus &middot; Innovus</span>
+            <span class="proj-cat">DFT &middot; Verification &middot; Research</span>
           </div>
-        </a>
-      </div>
+          <p class="proj-sum">Fault-detection architectures compared on 12&nbsp;nm benchmarks and RISC-V blocks, RTL through layout.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; benchmark circuits &middot; RISC-V</dd></div>
+            <div><dt>Tools</dt><dd>Genus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Innovus</dd></div>
+            <div><dt>Flow</dt><dd>RTL &rarr; synthesis &rarr; DFT insertion &rarr; simulation &rarr; equivalence &rarr; STA &rarr; P&amp;R</dd></div>
+            <div><dt>Results</dt><dd>Per-scheme overhead held until publication</dd></div>
     </div>
     </div>
   </section>

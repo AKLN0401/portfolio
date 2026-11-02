@@ -149,34 +149,7 @@
         <p class="dek">A lowRISC Ibex core with an 8&times;8 INT8 systolic-array accelerator, RTL to GDS on MATRIX-A5, a research CFET PDK with backside power delivery.</p>
         <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a></p>
       </div>
-      <figure class="a7-plate"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="heroT"><title id="heroT">ibex_npu_top: the Ibex CPU drives a 16 KB window decoded by npu_dma, which connects to three hard macros: npu_acc and two lram_256x32 SRAM banks</title>
-        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L10 5L0 10z"/></marker></defs>
-        <rect class="box" x="10" y="50" width="140" height="200"/>
-        <text x="80" y="135" text-anchor="middle" font-size="18" font-weight="600">Ibex</text>
-        <text x="80" y="156" text-anchor="middle" font-size="11" class="t-muted">RV32IMCB</text>
-        <text x="80" y="172" text-anchor="middle" font-size="11" class="t-muted">lockstep</text>
-        <rect class="soft" x="200" y="110" width="110" height="80"/>
-        <text x="255" y="146" text-anchor="middle" font-size="13" font-weight="600" class="mono">npu_dma</text>
-        <text x="255" y="164" text-anchor="middle" font-size="10" class="t-muted">std cells</text>
-        <path class="wire" d="M150 150H198" marker-end="url(#ah)"/>
-        <text x="174" y="142" text-anchor="middle" font-size="9" class="t-muted">16 KB</text>
-        <rect class="wire-d" x="350" y="14" width="160" height="272"/>
-        <text x="430" y="296" text-anchor="middle" font-size="9" class="t-muted mono">HARD MACROS</text>
-        <rect class="macro" x="365" y="28" width="130" height="78"/>
-        <text x="430" y="62" text-anchor="middle" font-size="13" font-weight="600" class="mono">npu_acc</text>
-        <text x="430" y="80" text-anchor="middle" font-size="10" class="t-muted">8&#215;8 INT8 array</text>
-        <rect class="macro" x="365" y="124" width="130" height="62"/>
-        <text x="430" y="152" text-anchor="middle" font-size="12" font-weight="600" class="mono">SRAM0</text>
-        <text x="430" y="169" text-anchor="middle" font-size="10" class="t-muted">1 KB &#183; A, B</text>
-        <rect class="macro" x="365" y="204" width="130" height="62"/>
-        <text x="430" y="232" text-anchor="middle" font-size="12" font-weight="600" class="mono">SRAM1</text>
-        <text x="430" y="249" text-anchor="middle" font-size="10" class="t-muted">1 KB &#183; C</text>
-        <path class="wire" d="M310 130H330V67H363" marker-end="url(#ah)"/>
-        <path class="wire" d="M310 155H363" marker-end="url(#ah)"/>
-        <path class="wire" d="M310 170H330V235H363" marker-end="url(#ah)"/>
-        <path class="wire" d="M80 250V282" marker-end="url(#ah)"/>
-        <text x="90" y="278" font-size="9" class="t-muted">external instr / data bus</text>
-      </svg><figcaption>ibex_npu_top: CPU, DMA and three hard macros (block diagram, not to scale)</figcaption></figure>
+      <figure class="a7-plate"><img src="../assets/gaa/chip3d.webp" alt="ibex_npu_top rendered in 3D from the routed GDS: CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" width="1190" height="700"><figcaption>ibex_npu_top, rendered from the routed GDS</figcaption></figure>
     </div>
   </section>
 
