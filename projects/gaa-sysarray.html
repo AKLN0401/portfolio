@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>RISC-V + INT8 Systolic Array on a CFET PDK — Khoi Nguyen</title>
+<meta name="description" content="A lowRISC Ibex RISC-V core with a memory-mapped 8×8 INT8 systolic-array accelerator, taken from RTL to GDS on the MATRIX-A5 CFET PDK with backside power delivery, using Genus, Innovus, IC Validator and Conformal." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="canonical" href="https://akln0401.github.io/portfolio/projects/gaa-sysarray.html" />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#f4f2ed" />
+<meta name="author" content="Khoi Nguyen" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
+<meta property="og:title" content="RISC-V + INT8 Systolic Array on a CFET PDK — Khoi Nguyen" />
+<meta property="og:description" content="A lowRISC Ibex RISC-V core with a memory-mapped 8×8 INT8 systolic-array accelerator, taken from RTL to GDS on the MATRIX-A5 CFET PDK with backside power delivery." />
+<meta property="og:url" content="https://akln0401.github.io/portfolio/projects/gaa-sysarray.html" />
+<meta property="og:image" content="https://akln0401.github.io/portfolio/assets/og/gaa-sysarray.png?v=20261102" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="Khoi Nguyen — RISC-V and INT8 systolic array on a CFET PDK" />
+<meta property="og:locale" content="en_CA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RISC-V + INT8 Systolic Array on a CFET PDK — Khoi Nguyen" />
+<meta name="twitter:description" content="A lowRISC Ibex RISC-V core with a memory-mapped 8×8 INT8 systolic-array accelerator, taken from RTL to GDS on the MATRIX-A5 CFET PDK with backside power delivery." />
+<meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og/gaa-sysarray.png?v=20261102" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css?v=20261013c" />
+<style>
+.a7 { --a7-text: #17191c;  }
+
+.a7 h1 { margin: 6px 0 20px; font-size: clamp(2.1rem, 1.4rem + 3vw, 3.4rem); line-height: 1.04; letter-spacing: -0.025em; font-weight: 300; }
+.a7 h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); line-height: 1.15; letter-spacing: -0.015em; font-weight: 300; }
+.a7 h4 { font-size: 1.05rem; line-height: 1.3; font-weight: 600; margin: 0 0 4px; }
+.a7 .prose p, .a7 .pd-lede { line-height: 1.65; }
+.a7 .section-index { color: var(--a7-text); }
+.a7-plate { margin: 0; align-self: center; }
+.a7-plate svg, .a7-plate img { width: 100%; height: auto; display: block; }
+.a7-plate figcaption { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
+.a7-facts { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.6; color: var(--ink); max-width: 56ch; }
+.a7-fig { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; margin: 24px 0 8px; color: var(--ink); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.a7-fig svg { width: 100%; min-width: 640px; height: auto; display:block; }
+.a7-fig:focus-visible { outline: 2px solid var(--a7-text); outline-offset: 2px; }
+.a7-cap { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.a7-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 28px 32px; margin-top: 24px; }
+.a7-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+.a7-pnr th, .a7-pnr td { text-align: left; }
+.a7-pnr td.ok { color: #2e7d32; font-weight: 600; }
+.a7-pnr td.pend { color: var(--muted); }
+.a7-status { display:block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--a7-text); margin-bottom: 6px; }
+.a7 svg text { font-family: var(--font-body); fill: #17191c; }
+.a7 svg .t-muted { fill: #5e5d59; }
+.a7 svg .mono { font-family: "IBM Plex Mono", Consolas, monospace; }
+.a7 svg .box { fill: #fff; stroke: #17191c; stroke-width: 1.3; }
+.a7 svg .macro { fill: #fff; stroke: #17191c; stroke-width: 2.2; }
+.a7 svg .soft { fill: #f0eee6; stroke: #17191c; stroke-width: 1.3; }
+.a7 svg .wire { stroke: #17191c; fill: none; stroke-width: 1.3; }
+.a7 svg .wire-d { stroke: #17191c; fill: none; stroke-width: 1.3; stroke-dasharray: 6 4; }
+.a7 svg .arrow { fill: #17191c; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>Digital IC / ASIC · EE, U of Manitoba</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#fabrication">Fabrication</a></li>
+        <li><a href="../research.html">Research</a></li>
+        <li><a href="../index.html#publications">Publications</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a class="nav-cv" href="../assets/khoi-nguyen-cv.pdf">Résumé</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="a7">
+  <section class="page-hero">
+    <div class="wrap two-col">
+      <div>
+        <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
+        <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; Hierarchical P&amp;R &middot; in progress</p>
+        <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
+        <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
+        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 1.0&nbsp;ns (setup +8&nbsp;ps). The CPU+accelerator top is in place-and-route.</p>
+        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray">Source on GitHub</a> <a class="btn" href="#signoff">Signoff status</a></p>
+      </div>
+      <figure class="a7-plate"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="heroT"><title id="heroT">ibex_npu_top: the Ibex CPU drives a 16 KB window decoded by npu_dma, which connects to three hard macros: npu_acc and two lram_256x32 SRAM banks</title>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L10 5L0 10z"/></marker></defs>
+        <rect class="box" x="10" y="50" width="140" height="200"/>
+        <text x="80" y="135" text-anchor="middle" font-size="18" font-weight="600">Ibex</text>
+        <text x="80" y="156" text-anchor="middle" font-size="11" class="t-muted">RV32IMCB</text>
+        <text x="80" y="172" text-anchor="middle" font-size="11" class="t-muted">lockstep</text>
+        <rect class="soft" x="200" y="110" width="110" height="80"/>
+        <text x="255" y="146" text-anchor="middle" font-size="13" font-weight="600" class="mono">npu_dma</text>
+        <text x="255" y="164" text-anchor="middle" font-size="10" class="t-muted">std cells</text>
+        <path class="wire" d="M150 150H198" marker-end="url(#ah)"/>
+        <text x="174" y="142" text-anchor="middle" font-size="9" class="t-muted">16 KB</text>
+        <rect class="wire-d" x="350" y="14" width="160" height="272"/>
+        <text x="430" y="296" text-anchor="middle" font-size="9" class="t-muted mono">HARD MACROS</text>
+        <rect class="macro" x="365" y="28" width="130" height="78"/>
+        <text x="430" y="62" text-anchor="middle" font-size="13" font-weight="600" class="mono">npu_acc</text>
+        <text x="430" y="80" text-anchor="middle" font-size="10" class="t-muted">8&#215;8 INT8 array</text>
+        <rect class="macro" x="365" y="124" width="130" height="62"/>
+        <text x="430" y="152" text-anchor="middle" font-size="12" font-weight="600" class="mono">SRAM0</text>
+        <text x="430" y="169" text-anchor="middle" font-size="10" class="t-muted">1 KB &#183; A, B</text>
+        <rect class="macro" x="365" y="204" width="130" height="62"/>
+        <text x="430" y="232" text-anchor="middle" font-size="12" font-weight="600" class="mono">SRAM1</text>
+        <text x="430" y="249" text-anchor="middle" font-size="10" class="t-muted">1 KB &#183; C</text>
+        <path class="wire" d="M310 130H330V67H363" marker-end="url(#ah)"/>
+        <path class="wire" d="M310 155H363" marker-end="url(#ah)"/>
+        <path class="wire" d="M310 170H330V235H363" marker-end="url(#ah)"/>
+        <path class="wire" d="M80 250V282" marker-end="url(#ah)"/>
+        <text x="90" y="278" font-size="9" class="t-muted">external instr / data bus</text>
+      </svg><figcaption>ibex_npu_top: CPU, DMA and three hard macros (block diagram, not to scale)</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="section" id="specs" style="border-top:none;">
+    <div class="wrap">
+      <div class="section-head"><h2>Specs</h2><span class="section-index">OVERVIEW</span></div>
+      <div class="two-col">
+        <div><div class="table-scroll"><table class="data-table a7-pnr">
+          <thead><tr><th colspan="2">Design</th></tr></thead>
+          <tbody>
+            <tr><th>CPU</th><td>lowRISC Ibex <code>maxperf-pmp-bmfull</code>: RV32IMCB, 3-stage, single-cycle multiplier, 16-region PMP, flip-flop register file, SecureIbex dual-core lockstep</td></tr>
+            <tr><th>Accelerator</th><td><code>npu_acc</code>: 8&times;8 output-stationary INT8 systolic array, 32-bit accumulators, memory-mapped registers</td></tr>
+            <tr><th>Memory</th><td>2&times; <code>lram_256x32</code>: 1&nbsp;KB each (256&times;32, byte writes, 1-cycle read), built from standard-cell latches, hardened once and placed twice</td></tr>
+            <tr><th>DMA</th><td><code>npu_dma</code>: tiled GEMM engine with a cycle counter; the CPU stalls on SRAM/accelerator accesses while it runs</td></tr>
+            <tr><th>Chips</th><td><code>ibex_cfet_top</code> (baseline) &middot; <code>ibex_npu_top</code> (CPU + accelerator)</td></tr>
+          </tbody>
+        </table></div></div>
+        <div><div class="table-scroll"><table class="data-table a7-pnr">
+          <thead><tr><th colspan="2">Technology and flow</th></tr></thead>
+          <tbody>
+            <tr><th>PDK</th><td>MATRIX-A5 CFET, <code>base</code> variant, backside power delivery (research PDK)</td></tr>
+            <tr><th>Supply</th><td>0.7&nbsp;V</td></tr>
+            <tr><th>Cells</th><td>Site 0.039&nbsp;&times;&nbsp;0.072&nbsp;&micro;m &middot; NAND2&nbsp;x1 0.0084&nbsp;&micro;m&sup2; &middot; DFF&nbsp;x1 0.062&nbsp;&micro;m&sup2; &middot; 68 cells per V<sub>t</sub>, svt / lvt / ulvt</td></tr>
+            <tr><th>Corners</th><td>Setup SSG &minus;40&nbsp;&deg;C and 125&nbsp;&deg;C &middot; hold FFG &minus;40&nbsp;&deg;C and 125&nbsp;&deg;C &middot; power TT 25&nbsp;&deg;C</td></tr>
+            <tr><th>Clock</th><td>750&nbsp;ps (macros) &middot; 1.0&nbsp;ns (CPU top)</td></tr>
+            <tr><th>Tools</th><td>Genus 25.1 (iSpatial) &middot; Innovus 25.1 &middot; Quantus &middot; IC Validator V-2023.12 &middot; Conformal 22.2 &middot; Xcelium &middot; Verilator</td></tr>
+          </tbody>
+        </table></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cfet">
+    <div class="wrap">
+      <div class="section-head"><h2>The process: CFET with backside power</h2><span class="section-index">TECHNOLOGY</span></div>
+      <div class="two-col">
+        <div class="prose">
+          <p>A complementary FET stacks the nFET directly on top of the pFET instead of placing them side by side, shrinking the standard-cell footprint. MATRIX-A5 pairs this with backside power delivery: the supply comes up from the back of the wafer through a buried power rail (BPR) and backside metals BSM1&ndash;BSM3, and the front-side metals M0&ndash;M13 carry signals only.</p>
+          <p>The PDK is a research kit, not a production one. The cell library has only x1 flip-flops and no tie, tap, endcap, decap, clock-gating or scan cells, and several of its views needed work-arounds before signoff would run (<a href="#problems">below</a>). At 0.7&nbsp;V the slowest setup corner is the cold one: temperature inversion makes SSG &minus;40&nbsp;&deg;C the worst case.</p>
+        </div>
+        <figure class="a7-plate"><svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="stackT"><title id="stackT">Schematic cross-section: front-side signal metals M0 to M13 above the stacked nFET over pFET device layer, buried power rail below it, and backside metals BSM1 to BSM3 connected through TSVs</title>
+          <g font-size="11">
+            <rect class="box" x="20" y="14" width="260" height="20"/><text x="150" y="28" text-anchor="middle" class="mono">M5 &#8230; M13</text>
+            <rect class="box" x="20" y="38" width="260" height="20"/><text x="150" y="52" text-anchor="middle" class="mono">M4</text>
+            <rect class="box" x="20" y="62" width="260" height="20"/><text x="150" y="76" text-anchor="middle" class="mono">M0 &#8230; M3</text>
+            <rect class="soft" x="20" y="92" width="260" height="30"/><text x="150" y="111" text-anchor="middle" font-weight="600">nFET</text>
+            <rect class="soft" x="20" y="124" width="260" height="30"/><text x="150" y="143" text-anchor="middle" font-weight="600">pFET</text>
+            <rect class="macro" x="20" y="164" width="260" height="18"/><text x="150" y="177" text-anchor="middle" class="mono">BPR</text>
+            <rect class="box" x="60" y="186" width="14" height="30"/><rect class="box" x="226" y="186" width="14" height="30"/>
+            <text x="150" y="205" text-anchor="middle" class="mono t-muted">TSV / BSV1-2</text>
+            <rect class="macro" x="20" y="220" width="260" height="18"/><text x="150" y="233" text-anchor="middle" class="mono">BSM1</text>
+            <rect class="macro" x="20" y="242" width="260" height="18"/><text x="150" y="255" text-anchor="middle" class="mono">BSM2</text>
+            <rect class="macro" x="20" y="264" width="260" height="18"/><text x="150" y="277" text-anchor="middle" class="mono">BSM3</text>
+            <path class="wire" d="M292 14V82"/><text x="300" y="44">front side:</text><text x="300" y="58">signals only</text>
+            <path class="wire" d="M292 92V154"/><text x="300" y="120">stacked</text><text x="300" y="134">device layer</text>
+            <path class="wire" d="M292 164V282"/><text x="300" y="220">back side:</text><text x="300" y="234">VDD / VSS</text>
+          </g>
+        </svg><figcaption>Layer stack, schematic and not to scale</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="system">
+    <div class="wrap">
+      <div class="section-head"><h2>System</h2><span class="section-index">ARCHITECTURE</span></div>
+      <p class="pd-lede">Data accesses inside a 16&nbsp;KB window at <code>0x1000_0000</code> go to <code>npu_dma</code>; everything else, including instruction fetch, goes to the external memory port. The window is split four ways.</p>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Offset</th><th>Region</th><th>Contents</th></tr></thead>
+        <tbody>
+          <tr><th><code>0x0000</code></th><td><code>npu_acc</code></td><td>Accelerator registers</td></tr>
+          <tr><th><code>0x1000</code></th><td>SRAM0, 1&nbsp;KB</td><td>A and B, row-major INT8, four values per word</td></tr>
+          <tr><th><code>0x2000</code></th><td>SRAM1, 1&nbsp;KB</td><td>C, row-major INT32</td></tr>
+          <tr><th><code>0x3000</code></th><td>DMA</td><td><code>CTRL</code>, <code>STATUS</code>, <code>DIMS</code> (M/N/K in 8&times;8 tiles), <code>ABASE</code>, <code>BBASE</code>, <code>CBASE</code>, <code>CYCLES</code></td></tr>
+        </tbody>
+      </table></div>
+      <h3 style="margin-top:40px;">One GEMM, tile by tile</h3>
+      <ol class="process-list">
+        <li><div><h4>Load</h4><p>The CPU writes A and B into SRAM0, sets the tile counts and base addresses, and writes <code>CTRL</code>.</p></div></li>
+        <li><div><h4>Copy a tile</h4><p>For each tile (i,&nbsp;j,&nbsp;k) the DMA copies the 8&times;8 A and B tiles from SRAM0 into <code>npu_acc</code>.</p></div></li>
+        <li><div><h4>Compute</h4><p>The DMA starts the array and polls for done. Each processing element keeps its own 32-bit accumulator (output-stationary).</p></div></li>
+        <li><div><h4>Write or accumulate C</h4><p>The 64 results are written into SRAM1 for k&nbsp;=&nbsp;0 and added to what is there for k&nbsp;&gt;&nbsp;0, so K can span several tiles.</p></div></li>
+        <li><div><h4>Count</h4><p><code>CYCLES</code> holds the clock cycles of the last run. While the engine is busy, CPU accesses to the SRAMs and the array wait; the DMA registers and external memory stay reachable.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="wrap">
+      <div class="section-head"><h2>Flow</h2><span class="section-index">RTL &rarr; GDS</span></div>
+      <ol class="process-list">
+        <li><div><h4>Lint and RTL simulation</h4><p>Verilator lint; RTL testbenches for the array, the SRAM and the accelerator subsystem.</p></div></li>
+        <li><div><h4>Synthesis (Genus, iSpatial)</h4><p>One script per design. A post-synthesis script inserts tie-off generators, since the library has no tie cells.</p></div></li>
+        <li><div><h4>Macros (Innovus)</h4><p><code>lram_256x32</code> and <code>npu_acc</code> are placed, routed and exported as LEF and timing models, with M3 access stubs for their pins.</p></div></li>
+        <li><div><h4>Top level (Innovus)</h4><p>The top is synthesized with the macros as black boxes, then floorplanned, placed, clock-tree synthesized, routed and ECO&rsquo;d with the macros beside the CPU.</p></div></li>
+        <li><div><h4>Extraction and timing (Quantus)</h4><p>Setup and hold checked on all four corners.</p></div></li>
+        <li><div><h4>Physical verification (IC Validator)</h4><p>LVS with a deck extended for the backside layers.</p></div></li>
+        <li><div><h4>Equivalence (Conformal)</h4><p>RTL against the post-P&amp;R netlist for each design.</p></div></li>
+        <li><div><h4>Gate-level simulation (Xcelium)</h4><p>SDF-annotated smoke test of <code>ibex_npu_top</code>.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="problems">
+    <div class="wrap">
+      <div class="section-head"><h2>Signoff on an immature PDK</h2><span class="section-index">PROBLEMS SOLVED</span></div>
+      <p class="pd-lede">Most of the work was getting a research kit through an industrial signoff flow. Each fix below is scripted in the repository.</p>
+      <div class="a7-grid">
+        <div class="a7-card"><h4>No tie cells</h4><span class="a7-status">fix_ties*.py</span><p>Constant pins are driven from small reset-derived generators that a script inserts into the netlist after synthesis.</p></div>
+        <div class="a7-card"><h4>Abutted rows short</h4><span class="a7-status">alt_rows.tcl</span><p>The stock cell GDS shorts internal nets when rows abut, so standard cells are placed on alternate rows only.</p></div>
+        <div class="a7-card"><h4>LVS turns M4+ into ports</h4><span class="a7-status">M3 and below</span><p>Internal nets are routed on M3 and below; only chip-port nets use M4/M5. Macro pins are M3 access stubs with an internal stack.</p></div>
+        <div class="a7-card"><h4>LVS stops at BPR</h4><span class="a7-status">lvs_bsm.rs</span><p>The stock deck had no backside layers, so the supply network never joined. TSV, BSM1&ndash;3 and BSV1&ndash;2 were added to the deck.</p></div>
+        <div class="a7-card"><h4>svt-only GDS and CDL</h4><span class="a7-status">make_vt_alias.py</span><p>The PDK ships layout and netlist views for svt cells only; lvt and ulvt views are generated as aliases so all three V<sub>t</sub>s can be used and verified.</p></div>
+        <div class="a7-card"><h4>Hold with backside layers</h4><span class="a7-status">front-side clock</span><p>The router was assigning clock nets to backside layers. A front-side clock route type and a hold-specific uncertainty closed hold.</p></div>
+        <div class="a7-card"><h4>Eight ECO rounds on the CPU top</h4><span class="a7-status">pnr/eco/</span><p>Rerouting a patched design broke earlier patches, so later rounds used reroute-free M0 patches until the top was LVS-clean.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="signoff">
+    <div class="wrap">
+      <div class="section-head"><h2>Signoff status</h2><span class="section-index">RESULTS</span></div>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Design</th><th>P&amp;R</th><th>LVS</th><th>Innovus DRC</th><th>Timing</th><th>Post-P&amp;R LEC</th></tr></thead>
+        <tbody>
+          <tr><th><code>lram_256x32</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
+          <tr><th><code>npu_acc</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
+          <tr><th><code>ibex_cfet_top</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">1.0&nbsp;ns: setup +8&nbsp;ps, hold met, no max-tran/cap violations</td><td class="ok">PASS</td></tr>
+          <tr><th><code>ibex_npu_top</code></th><td class="pend">in progress</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">LVS uses the stock deck with the backside layers added. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
+
+      <h3 style="margin-top:40px;">Other measured points</h3>
+      <div class="a7-grid">
+        <div class="a7-card"><h4>npu_acc macro</h4><span class="a7-status">layout</span><p>18.72&nbsp;&times;&nbsp;18.72&nbsp;&micro;m die; timing-model cell area 350.4&nbsp;&micro;m&sup2;.</p></div>
+        <div class="a7-card"><h4>Accelerator subsystem</h4><span class="a7-status">RTL simulation &middot; pass</span><p>16&times;16&times;16 GEMM in 2,040 DMA cycles; 8&times;16&times;24 GEMM (three accumulated K tiles) in 1,530 DMA cycles.</p></div>
+        <div class="a7-card"><h4>ibex_cfet_top synthesis</h4><span class="a7-status">pre-P&amp;R estimate, 1.0&nbsp;ns</span><p>~32k cells, 2,628 flip-flops, ~521&nbsp;&micro;m&sup2; cell area, ~3.6&nbsp;mW.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Next</h2><span class="section-index">ROADMAP</span></div>
+      <ol class="process-list">
+        <li><div><h4>Macros and baseline</h4><p>Done: <code>lram_256x32</code>, <code>npu_acc</code> and <code>ibex_cfet_top</code> through P&amp;R, LVS, DRC, timing and equivalence.</p></div></li>
+        <li><div><h4>CPU + accelerator top</h4><p>In progress: place-and-route and signoff of <code>ibex_npu_top</code>.</p></div></li>
+        <li><div><h4>Foundry DRC</h4><p>Rerun IC Validator DRC on all final layouts.</p></div></li>
+        <li><div><h4>Compare the two chips</h4><p>Not measured yet: area overhead of the accelerator, GEMM speedup over software on the CPU, energy per matrix multiply, final post-route power, Fmax and CoreMark/MHz.</p></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
