@@ -100,6 +100,12 @@
 .fp-pair img, .fp-svg img { width: 100%; height: auto; display: block; border: 1px solid var(--line); }
 .fp-pair figcaption, .fp-svg figcaption { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
 .fp-svg { margin: 24px 0 8px; }
+.k3d-state { position: absolute; top: 46px; left: 10px; pointer-events: none; font: 12px/1.4 var(--font-mono); color: #c8ccd6; background: rgba(16,19,27,.82); border: 1px solid #343c50; border-radius: 6px; padding: 4px 8px; }
+.k3d-state b { font-weight: 600; } .k3d-state b.h { color: #ff8a66; } .k3d-state b.l { color: #7aa5ff; }
+.k3d-logic button { font: 14px var(--font-body); padding: 5px 10px; border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer; margin: 0 4px 4px 0; }
+.k3d-logic button[aria-pressed="true"] { background: #17191c; color: #fff; }
+.k3d-wave { border-top: 1px solid var(--line); background: var(--paper); padding: 10px 16px; }
+.k3d-wave svg { width: 100%; height: auto; display: block; max-height: 150px; }
 </style>
 </head>
 <body>
@@ -241,14 +247,18 @@
             <button data-lv="chip" aria-pressed="true">Chip</button><button data-lv="band">Cell band</button><button data-lv="rows">Rows</button><button data-lv="cell">Cell</button><button data-lv="fet">Transistor</button>
           </div>
           <div class="k3d-hud"><b id="k3d-level"></b><br><span id="k3d-scale"></span></div>
+          <div class="k3d-state" id="k3d-state" aria-live="polite"></div>
         </div>
         <div class="k3d-panel">
-          <div class="c3d-ctl"><span>Band surface</span><select id="k3d-band" aria-label="Band surface"><option value="routing">Routing (DEF)</option><option value="placement">Placement (DEF)</option></select></div>
+          <div class="c3d-ctl k3d-logic"><span>Clock</span><button id="k3d-pulse">Clock pulse</button><button id="k3d-auto" aria-pressed="false">Auto clock</button>
+            <span style="margin-top:12px;">Inputs</span><button id="k3d-a">a = 1</button><button id="k3d-b">b = 1</button></div>
           <div class="c3d-ctl"><span>Layers</span><label><input type="checkbox" id="k3d-back" checked> Backside power (BSM1&ndash;3)</label><button id="k3d-tags-btn" aria-pressed="true" style="margin-top:6px;">Labels</button></div>
           <div class="c3d-ctl"><span>Gate opacity <output id="k3d-gate-out">30%</output></span><input type="range" id="k3d-gate" min="0" max="100" value="30" aria-label="Gate opacity"></div>
         </div>
+        <div class="k3d-wave" id="k3d-wave"></div>
       </div>
-      <p class="fig-note">What is exact and what is not: die, macros, cell band, regions, pins, rows, BPR rails and the BSM1&ndash;3 power stripes are generated from <code>pnr/ibex_npu_top_pnr.tcl</code>. The band and macro surfaces are the routed DEFs rendered by <code>scripts/def2png.py</code>, real wiring drawn flat. Heights come from the PDK&rsquo;s ITF/ICT. The INV, NAND2 and DFF you reach when you zoom in are real library cells from the PDK GDS, placed on a legal (even) row of this floorplan <em>for scale</em>. They are not the routed design&rsquo;s cells at that spot, because the DEF&rsquo;s per-cell placement is not loaded into this view.</p>
+      <p class="fig-note"><b>Clock demo.</b> Press <i>Clock pulse</i> (or <i>Auto clock</i>) and the view drops to the cells. NAND2 + INV form one AND gate, a&middot;b, the partial-product bit of a multiplier; the DFF stores it on the rising edge of CK. Every transistor is switched by a switch-level simulation of the cells&rsquo; own transistor netlists, read from the layout and checked against the PDK CDL. Gates and source/drain show the node voltage (red = 1, blue = 0). A nanosheet channel lights up when its transistor is on. Particles mark the current that charges or discharges a node, one transistor stage per step, slowed down by roughly ten billion times (a real stage takes tens of picoseconds). Go to <i>Transistor</i> to watch the DFF&rsquo;s clock-input nFET switch on every pulse. In the chip itself these three cells are not wired together in one spot: the AND is a logical hookup, shown for how the transistors work.</p>
+      <p class="fig-note"><b>What is exact.</b> Die, macros, cell band, regions, the 232 pins, rows, BPR rails and the BSM1&ndash;3 power stripes are generated from <code>pnr/ibex_npu_top_pnr.tcl</code>; heights come from the PDK ITF/ICT; cells and nanosheets come from the PDK GDS and device model. Not yet in 3D: the 30k+ placed cells and the signal wiring of the routed design. They need the routed DEF, which is not in the repository; the 2D renders of it are in the <a href="#floorplan">floorplan</a> section.</p>
     </div>
   </section>
 
