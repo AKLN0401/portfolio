@@ -215,24 +215,7 @@
           <p>A complementary FET stacks the nFET directly on top of the pFET instead of placing them side by side, shrinking the standard-cell footprint. MATRIX-A5 pairs this with backside power delivery: the supply comes up from the back of the wafer through a buried power rail (BPR) and backside metals BSM1&ndash;BSM3, and the front-side metals M0&ndash;M13 carry signals only.</p>
           <p>The PDK is a research kit, not a production one. The cell library has only x1 flip-flops and no tie, tap, endcap, decap, clock-gating or scan cells, and several of its views needed work-arounds before signoff would run (<a href="#problems">below</a>). At 0.7&nbsp;V the slowest setup corner is the cold one: temperature inversion makes SSG &minus;40&nbsp;&deg;C the worst case.</p>
         </div>
-        <figure class="a7-plate"><svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="stackT"><title id="stackT">Schematic cross-section: front-side signal metals M0 to M13 above the stacked nFET over pFET device layer, buried power rail below it, and backside metals BSM1 to BSM3 connected through TSVs</title>
-          <g font-size="11">
-            <rect class="box" x="20" y="14" width="260" height="20"/><text x="150" y="28" text-anchor="middle" class="mono">M5 &#8230; M13</text>
-            <rect class="box" x="20" y="38" width="260" height="20"/><text x="150" y="52" text-anchor="middle" class="mono">M4</text>
-            <rect class="box" x="20" y="62" width="260" height="20"/><text x="150" y="76" text-anchor="middle" class="mono">M0 &#8230; M3</text>
-            <rect class="soft" x="20" y="92" width="260" height="30"/><text x="150" y="111" text-anchor="middle" font-weight="600">nFET</text>
-            <rect class="soft" x="20" y="124" width="260" height="30"/><text x="150" y="143" text-anchor="middle" font-weight="600">pFET</text>
-            <rect class="macro" x="20" y="164" width="260" height="18"/><text x="150" y="177" text-anchor="middle" class="mono">BPR</text>
-            <rect class="box" x="60" y="186" width="14" height="30"/><rect class="box" x="226" y="186" width="14" height="30"/>
-            <text x="150" y="205" text-anchor="middle" class="mono t-muted">TSV / BSV1-2</text>
-            <rect class="macro" x="20" y="220" width="260" height="18"/><text x="150" y="233" text-anchor="middle" class="mono">BSM1</text>
-            <rect class="macro" x="20" y="242" width="260" height="18"/><text x="150" y="255" text-anchor="middle" class="mono">BSM2</text>
-            <rect class="macro" x="20" y="264" width="260" height="18"/><text x="150" y="277" text-anchor="middle" class="mono">BSM3</text>
-            <path class="wire" d="M292 14V82"/><text x="300" y="44">front side:</text><text x="300" y="58">signals only</text>
-            <path class="wire" d="M292 92V154"/><text x="300" y="120">stacked</text><text x="300" y="134">device layer</text>
-            <path class="wire" d="M292 164V282"/><text x="300" y="220">back side:</text><text x="300" y="234">VDD / VSS</text>
-          </g>
-        </svg><figcaption>Layer stack, schematic and not to scale</figcaption></figure>
+        <figure class="a7-plate"><img src="../assets/cfet/cfet-cutaway.webp" alt="Cutaway of a MATRIX-A5 CFET NAND2 cell cut through the channel centre: an N-FET tier with three blue nanosheets stacked above a P-FET tier with three red nanosheets, gates wrapped around each sheet, an inter-tier gate via, M0 on top and buried power rails below" width="1800" height="2200" loading="lazy" style="border-radius:4px;"><figcaption>Rendered from the PDK cell GDS and device model, true scale (tools/cfet-figure)</figcaption></figure>
       </div>
     </div>
   </section>
