@@ -264,20 +264,6 @@
       </div>
       <p class="fig-note">True scale in all three axes. Drag to rotate, scroll to zoom, right-drag to pan.</p>
 
-      <h3 style="margin-top:40px;">Where each dimension comes from</h3>
-      <div class="table-scroll"><table class="data-table a7-pnr">
-        <thead><tr><th>What</th><th>Value</th><th>PDK source</th></tr></thead>
-        <tbody>
-          <tr><th>x, y of every shape</th><td>as drawn</td><td>Cell GDS <code>gtA5_cfet_stdcells.gds</code>; layer numbers from the LVS layer map</td></tr>
-          <tr><th>Which tier is which</th><td>ACT/GATE = pFET (bottom), ACT2/GATE2 = nFET (top)</td><td>LVS runset device definitions</td></tr>
-          <tr><th>Channel and source/drain</th><td>channel = ACT and GATE, not DUMMY, not GCUT; S/D = ACT not GATE</td><td>LVS runset (same derivations)</td></tr>
-          <tr><th>Sheets per device, thickness, gap</th><td>3 &times; 6&nbsp;nm, 10&nbsp;nm apart</td><td>BSIM-CMG card <code>ngaa</code>, <code>tgaa</code>, <code>tsus</code></td></tr>
-          <tr><th>Sheet width, gate length</th><td>11&nbsp;nm, 12&nbsp;nm</td><td>Drawn ACT and GATE widths (match <code>WGAA</code>, <code>L</code> in the CDL)</td></tr>
-          <tr><th>Heights: BPR, both device tiers, contacts, vias, M0&ndash;M13</th><td>BPR 5&ndash;37&nbsp;nm, pFET slab 128&ndash;163&nbsp;nm, nFET slab 246&ndash;281&nbsp;nm, M0 324&ndash;348&nbsp;nm</td><td>StarRC ITF, parsed layer by layer</td></tr>
-          <tr><th>Backside metals BSM1&ndash;3 and their vias</th><td>not drawn in cells</td><td>QRC ICT (used when rendering chip-level GDS)</td></tr>
-        </tbody>
-      </table></div>
-      <p class="fig-note">The PDK is not fully self-consistent here: the model card&rsquo;s sheet stack (3&times;6 + 2&times;10 = 38&nbsp;nm) is 3&nbsp;nm taller than the ITF&rsquo;s 35&nbsp;nm ACT slab, so the outer sheets extend 1.5&nbsp;nm past the source/drain block. Both are shown as the PDK gives them. Shapes are taken unclipped from the GDS, so the active strips stick out past the cell boundary (dashed) where they overlap the next cell. Geometry from the MATRIX-A5 PDK (M. Shon et al., IEEE JXCDC 2026, <a href="https://doi.org/10.1109/JXCDC.2026.3744406">doi:10.1109/JXCDC.2026.3744406</a>), MATRIX-PDK Academic and Non-Commercial License v1.0, &copy; Georgia Institute of Technology.</p>
     </div>
   </section>
 
