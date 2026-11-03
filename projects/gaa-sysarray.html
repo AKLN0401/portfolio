@@ -146,7 +146,7 @@
         <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; Hierarchical P&amp;R &middot; in progress</p>
         <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
         <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
-        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 1.0&nbsp;ns (setup +8&nbsp;ps). The CPU+accelerator top is placed and routed; its signoff is not done yet.</p>
+        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 750&nbsp;ps (setup +8&nbsp;ps). The CPU+accelerator top is placed and routed; its signoff is not done yet.</p>
         <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray_CFET">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a></p>
       </div>
       <figure class="a7-plate"><img src="../assets/gaa/chip3d.webp" alt="ibex_npu_top rendered in 3D from the routed GDS: CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" width="1190" height="700"><figcaption>ibex_npu_top, rendered from the routed GDS</figcaption></figure>
@@ -174,7 +174,7 @@
             <tr><th>Supply</th><td>0.7&nbsp;V</td></tr>
             <tr><th>Cells</th><td>Site 0.039&nbsp;&times;&nbsp;0.072&nbsp;&micro;m &middot; NAND2&nbsp;x1 0.0084&nbsp;&micro;m&sup2; &middot; DFF&nbsp;x1 0.062&nbsp;&micro;m&sup2; &middot; 68 cells per V<sub>t</sub>, svt / lvt / ulvt</td></tr>
             <tr><th>Corners</th><td>Setup SSG &minus;40&nbsp;&deg;C and 125&nbsp;&deg;C &middot; hold FFG &minus;40&nbsp;&deg;C and 125&nbsp;&deg;C &middot; power TT 25&nbsp;&deg;C</td></tr>
-            <tr><th>Clock</th><td>750&nbsp;ps (macros) &middot; 1.0&nbsp;ns (CPU top)</td></tr>
+            <tr><th>Clock</th><td>750&nbsp;ps (1.33&nbsp;GHz) for all blocks and the CPU top</td></tr>
             <tr><th>Tools</th><td>Genus 25.1 (iSpatial) &middot; Innovus 25.1 &middot; Quantus &middot; IC Validator V-2023.12 &middot; Conformal 22.2 &middot; Xcelium &middot; Verilator</td></tr>
           </tbody>
         </table></div></div>
@@ -341,7 +341,7 @@
         <tbody>
           <tr><th><code>lram_256x32</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>npu_acc</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
-          <tr><th><code>ibex_cfet_top</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">1.0&nbsp;ns: setup +8&nbsp;ps, hold met, no max-tran/cap violations</td><td class="ok">PASS</td></tr>
+          <tr><th><code>ibex_cfet_top</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps: setup +8&nbsp;ps, hold met, no max-tran/cap violations</td><td class="ok">PASS</td></tr>
           <tr><th><code>ibex_npu_top</code></th><td class="ok">routed</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
         </tbody>
       </table></div>
@@ -351,7 +351,7 @@
       <div class="a7-grid">
         <div class="a7-card"><h4>Die sizes</h4><span class="a7-status">from the DEFs</span><p><code>ibex_npu_top</code> 115.75&nbsp;&times;&nbsp;100.37&nbsp;&micro;m &middot; <code>ibex_cfet_top</code> 70.04&nbsp;&times;&nbsp;70.13 &middot; <code>npu_acc</code> 49.14&nbsp;&times;&nbsp;49.97 &middot; <code>lram_256x32</code> 30.03&nbsp;&times;&nbsp;49.97.</p></div>
         <div class="a7-card"><h4>Accelerator subsystem</h4><span class="a7-status">RTL simulation &middot; pass</span><p>16&times;16&times;16 GEMM in 2,040 DMA cycles; 8&times;16&times;24 GEMM (three accumulated K tiles) in 1,530 DMA cycles.</p></div>
-        <div class="a7-card"><h4>ibex_cfet_top synthesis</h4><span class="a7-status">pre-P&amp;R estimate, 1.0&nbsp;ns</span><p>~32k cells, 2,628 flip-flops, ~521&nbsp;&micro;m&sup2; cell area, ~3.6&nbsp;mW.</p></div>
+        <div class="a7-card"><h4>ibex_cfet_top synthesis</h4><span class="a7-status">Genus iSpatial, 750&nbsp;ps, lockstep included</span><p>62,848 cells, 5,617 sequential, 1,040&nbsp;&micro;m&sup2; cell area; post-route 9.75&nbsp;mW at TT 25&nbsp;&deg;C (vectorless, default activity).</p></div>
       </div>
     </div>
   </section>
