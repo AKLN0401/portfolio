@@ -152,7 +152,7 @@
           <div class="stat-tile"><span class="stat-num">750&nbsp;ps</span><span class="stat-lab">Clock, 1.33&nbsp;GHz</span></div>
           <div class="stat-tile"><span class="stat-num">115.8&nbsp;&times;&nbsp;100.4&nbsp;<small style="font-size:.5em;">&micro;m</small></span><span class="stat-lab">Die size</span></div>
         </div>
-        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray_CFET">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a></p>
+        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray_CFET">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a> <a class="btn" href="#gls">Gate-level sim</a></p>
       </div>
       <figure class="a7-plate"><img src="../assets/gaa/chip3d.webp" alt="ibex_npu_top rendered in 3D from the routed GDS: CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" width="1190" height="700"><figcaption>ibex_npu_top, rendered from the routed GDS</figcaption></figure>
     </div>
@@ -355,10 +355,70 @@
       <h3 style="margin-top:40px;">Other measured points</h3>
       <div class="a7-grid">
         <div class="a7-card"><h4>Die sizes</h4><span class="a7-status">from the DEFs</span><p><code>ibex_npu_top</code> 115.75&nbsp;&times;&nbsp;100.37&nbsp;&micro;m &middot; <code>ibex_cfet_top</code> 70.04&nbsp;&times;&nbsp;70.13 &middot; <code>npu_acc</code> 49.14&nbsp;&times;&nbsp;49.97 &middot; <code>lram_256x32</code> 30.03&nbsp;&times;&nbsp;49.97.</p></div>
-        <div class="a7-card"><h4>ibex_npu_top gate-level simulation</h4><span class="a7-status">Xcelium &middot; 750&nbsp;ps &middot; pass, 3 runs</span><p>Routed netlist of the whole chip, with the three macro netlists, run with zero delay and with the extracted SDF delays at the slow (SSG &minus;40&nbsp;&deg;C, max) and fast (FFG &minus;40&nbsp;&deg;C, min) corners. Ibex boots from its reset vector, writes and reads back a word in SRAM0, reads the accelerator&rsquo;s INFO register and stores both results to external memory; both values match, with no lockstep alert.</p></div>
+        <div class="a7-card"><h4>ibex_npu_top gate-level simulation</h4><span class="a7-status">Xcelium &middot; 750&nbsp;ps &middot; pass, 3 runs</span><p>Routed netlist with zero delay and with SDF at the slow and fast corners. Details in <a href="#gls">Gate-level simulation</a>.</p></div>
         <div class="a7-card"><h4>Accelerator subsystem</h4><span class="a7-status">RTL simulation &middot; pass</span><p>16&times;16&times;16 GEMM in 2,040 DMA cycles; 8&times;16&times;24 GEMM (three accumulated K tiles) in 1,530 DMA cycles.</p></div>
         <div class="a7-card"><h4>ibex_cfet_top synthesis</h4><span class="a7-status">Genus iSpatial, 750&nbsp;ps, lockstep included</span><p>62,848 cells, 5,617 sequential, 1,040&nbsp;&micro;m&sup2; cell area; post-route 9.75&nbsp;mW at TT 25&nbsp;&deg;C (vectorless, default activity).</p></div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="gls">
+    <div class="wrap">
+      <div class="section-head"><h2>Gate-level simulation</h2><span class="section-index">VERIFICATION</span></div>
+      <p class="pd-lede">The routed <code>ibex_npu_top</code> netlist, not the RTL, runs a short program at 750&nbsp;ps: the CPU boots, writes and reads the SRAM, reads the accelerator&rsquo;s INFO register through its bus interface, and the lockstep shadow core is checked on every cycle. It runs once with zero delay and once at each SDF corner, with the post-route delays of the top level and of all three macros. All three runs pass.</p>
+
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Run</th><th>Delays</th><th>Input delay</th><th>Stored to 0x2000_0000</th><th>Stored to 0x2000_0004</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><th>Zero delay</th><td>none</td><td>75&nbsp;ps</td><td><code>0x000005A5</code></td><td><code>0x00200808</code></td><td class="ok">PASS</td></tr>
+          <tr><th>SSG &minus;40&nbsp;&deg;C</th><td>SDF, max</td><td>200&nbsp;ps</td><td><code>0x000005A5</code></td><td><code>0x00200808</code></td><td class="ok">PASS</td></tr>
+          <tr><th>FFG &minus;40&nbsp;&deg;C</th><td>SDF, min</td><td>130&nbsp;ps</td><td><code>0x000005A5</code></td><td><code>0x00200808</code></td><td class="ok">PASS</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">Inputs change 10% of the cycle after the edge, as in the I/O constraints; the SDF runs add the clock insertion delay of that corner. In both SDF runs every path delay is annotated: 984,794 of 984,794.</p>
+
+      <div class="two-col" style="margin-top:40px;">
+        <div>
+          <h3>Setup</h3>
+          <div class="table-scroll"><table class="data-table a7-pnr">
+            <tbody>
+              <tr><th>Simulator</th><td>Xcelium 23.09</td></tr>
+              <tr><th>Design</th><td>Innovus netlists of <code>ibex_npu_top</code>, <code>npu_acc</code> and <code>lram_256x32</code> (placed twice), on Verilog models of the CFET cells</td></tr>
+              <tr><th>Delays</th><td>Post-route SDF per block, annotated into the top and into <code>u_acc</code>, <code>u_sram0</code>, <code>u_sram1</code></td></tr>
+              <tr><th>Clock</th><td>750&nbsp;ps (1.33&nbsp;GHz)</td></tr>
+              <tr><th>Bus model</th><td>Testbench instruction ROM and external data port; grant in the same cycle, response one cycle later</td></tr>
+              <tr><th>Timeout</th><td>2,000 cycles</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div>
+          <h3>The program</h3>
+          <div class="table-scroll"><table class="data-table a7-pnr">
+            <thead><tr><th>Address</th><th>Instruction</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><th><code>0x80</code></th><td><code>lui x1, 0x10001</code></td><td>SRAM0 base</td></tr>
+              <tr><th><code>0x84</code></th><td><code>addi x2, x0, 0x5A5</code></td><td>test value</td></tr>
+              <tr><th><code>0x88</code></th><td><code>sw x2, 0(x1)</code></td><td>write SRAM0</td></tr>
+              <tr><th><code>0x8C</code></th><td><code>lw x3, 0(x1)</code></td><td>read it back</td></tr>
+              <tr><th><code>0x90</code></th><td><code>lui x4, 0x10000</code></td><td>accelerator base</td></tr>
+              <tr><th><code>0x94</code></th><td><code>lw x5, 8(x4)</code></td><td>read INFO</td></tr>
+              <tr><th><code>0x98</code></th><td><code>lui x6, 0x20000</code></td><td>external memory</td></tr>
+              <tr><th><code>0x9C</code></th><td><code>sw x3, 0(x6)</code></td><td>report SRAM0 value</td></tr>
+              <tr><th><code>0xA0</code></th><td><code>sw x5, 4(x6)</code></td><td>report INFO</td></tr>
+              <tr><th><code>0xA4</code></th><td><code>jal x0, 0</code></td><td>stop</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:40px;">What each check proves</h3>
+      <ol class="process-list">
+        <li><div><h4>Boot and fetch</h4><p>Ibex leaves reset, fetches from the reset vector <code>0x80</code> and executes the program in the routed netlist.</p></div></li>
+        <li><div><h4>SRAM0 write and read</h4><p>The value read back and stored to <code>0x2000_0000</code> must be <code>0x5A5</code>: CPU data bus, address decode, the latch SRAM macro and the read path back into the core.</p></div></li>
+        <li><div><h4>Accelerator register read</h4><p>INFO must read <code>0x200808</code>: an 8&times;8 array (N&nbsp;=&nbsp;8), 8-bit operands (AW&nbsp;=&nbsp;8) and 32-bit accumulators (ACCW&nbsp;=&nbsp;32), returned by the <code>npu_acc</code> macro over the bus.</p></div></li>
+        <li><div><h4>Lockstep</h4><p>Neither major alert may rise on any cycle after fetch starts: the shadow core in its own fence agrees with the main core throughout.</p></div></li>
+      </ol>
+      <p class="fig-note">This is a connectivity smoke test of the whole chip after routing. The GEMM datapath and the DMA are covered by the RTL subsystem test (16&times;16&times;16 and 8&times;16&times;24 GEMMs).</p>
     </div>
   </section>
 
