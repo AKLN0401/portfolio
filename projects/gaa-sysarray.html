@@ -146,7 +146,12 @@
         <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; Hierarchical P&amp;R &middot; in progress</p>
         <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
         <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
-        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 750&nbsp;ps (setup +8&nbsp;ps). The CPU+accelerator top is placed and routed; its signoff is not done yet.</p>
+        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 750&nbsp;ps (setup +8&nbsp;ps). The CPU+accelerator top is placed, routed and passes LVS; its timing, DRC and equivalence signoff are next.</p>
+        <div class="stat-row" style="margin-top:24px;">
+          <div class="stat-tile"><span class="stat-num">1.50&nbsp;M</span><span class="stat-lab">Transistors, LVS matched</span></div>
+          <div class="stat-tile"><span class="stat-num">750&nbsp;ps</span><span class="stat-lab">Clock, 1.33&nbsp;GHz</span></div>
+          <div class="stat-tile"><span class="stat-num">115.8&nbsp;&times;&nbsp;100.4&nbsp;<small style="font-size:.5em;">&micro;m</small></span><span class="stat-lab">Die size</span></div>
+        </div>
         <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray_CFET">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a></p>
       </div>
       <figure class="a7-plate"><img src="../assets/gaa/chip3d.webp" alt="ibex_npu_top rendered in 3D from the routed GDS: CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" width="1190" height="700"><figcaption>ibex_npu_top, rendered from the routed GDS</figcaption></figure>
@@ -342,7 +347,7 @@
           <tr><th><code>lram_256x32</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>npu_acc</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>ibex_cfet_top</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps: setup +8&nbsp;ps, hold met, no max-tran/cap violations</td><td class="ok">PASS</td></tr>
-          <tr><th><code>ibex_npu_top</code></th><td class="ok">routed</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
+          <tr><th><code>ibex_npu_top</code></th><td class="ok">routed</td><td class="ok">PASS (1.50&nbsp;M transistors)</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
         </tbody>
       </table></div>
       <p class="fig-note">LVS uses the stock deck with the backside layers added. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
