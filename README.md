@@ -7,7 +7,7 @@ Source for **[akln0401.github.io/portfolio](https://akln0401.github.io/portfolio
 | Project | Summary | Code |
 |---|---|---|
 | [NVIDIA NVDLA 12 nm](https://akln0401.github.io/portfolio/projects/nvdla.html) | Open-source deep-learning accelerator in a 12 nm FinFET flow at 1.1 GHz: multi-Vt, clock gating, full scan, hard-macro partitions in a mirror-symmetric floorplan, foundry DRC/LVS signoff | — |
-| [RISC-V + INT8 Systolic Array on CFET](https://akln0401.github.io/portfolio/projects/gaa-sysarray.html) | lowRISC Ibex core with a memory-mapped 8×8 INT8 systolic array, RTL to GDS on the MATRIX-A5 CFET PDK with backside power delivery | [GAA_SysArray](https://github.com/AKLN0401/GAA_SysArray) |
+| [RISC-V + INT8 Systolic Array on CFET](https://akln0401.github.io/portfolio/projects/gaa-sysarray.html) | lowRISC Ibex core with a memory-mapped 8×8 INT8 systolic array, RTL to GDS on the MATRIX-A5 CFET PDK with backside power delivery | [GAA_SysArray_CFET](https://github.com/AKLN0401/GAA_SysArray_CFET) |
 | [One-Tile int4 NPU for Tiny Tapeout](https://akln0401.github.io/portfolio/projects/npu-tapeout.html) | 2×2 int4 MAC array with per-row clock gating and full scan, signed off in one SKY130 Tiny Tapeout tile | [npu-2x2-int4-16bit](https://github.com/AKLN0401/npu-2x2-int4-16bit) |
 | [Printed Flexible MEMS Switch](https://akln0401.github.io/portfolio/projects/mems-switch.html) | Lorentz-force MEMS switch on polyimide with electrostatic hold-down (EUROSENSORS 2026) | — |
 | [Tap-to-Click Glove](https://akln0401.github.io/portfolio/projects/glove.html) | Capstone: glove mouse using silver/carbon sensors printed on stretchable TPU | — |
