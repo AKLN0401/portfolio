@@ -15,7 +15,7 @@ function init(root) {
   const tags = root.querySelector('.c3d-tags');
   const $ = s => root.querySelector(s);
   let renderer;
-  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, preserveDrawingBuffer: true }); }
+  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false }); }
   catch (e) { root.classList.add('c3d-nogl'); return; }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -33,6 +33,9 @@ function init(root) {
   camera.up.set(0, 0, 1);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
+  controls.addEventListener('change', () => clipRange());
+  let dirty = true;                                   // render only when something changed
+  const kick = () => { dirty = true; };
 
   const clip = new THREE.Plane(new THREE.Vector3(0, 1, 0), 1e6);
   const group = new THREE.Group(); scene.add(group);
@@ -60,27 +63,29 @@ function init(root) {
     center.set((px0 + px1) / 2, (py0 + py1) / 2, 160);
     for (const l of cell.layers) {
       const m = mat(l);
-      const add = geo => {
-        const mesh = new THREE.Mesh(geo, m);
-        mesh.userData = { layer: l };
-        mesh.renderOrder = / gate$/.test(l.name) ? 2 : 1;
-        group.add(mesh); meshes.push(mesh);
-        if (!/ gate$/.test(l.name)) {
-          const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), edgeMat);
-          e.userData = { layer: l }; group.add(e); meshes.push(e);
-        }
-      };
+      // one mesh and one edge set per layer (instead of one per rectangle): far fewer draw calls
+      const geos = [];
       for (let i = 0; i < l.rects.length; i += 4) {
         const [x0, y0, x1, y1] = l.rects.slice(i, i + 4);
         const g = new THREE.BoxGeometry(x1 - x0, y1 - y0, l.z1 - l.z0);
         g.translate((x0 + x1) / 2, (y0 + y1) / 2, (l.z0 + l.z1) / 2);
-        add(g);
+        geos.push(g);
       }
       for (const p of l.polys) {
         const s = new THREE.Shape(p.map(([x, y]) => new THREE.Vector2(x, y)));
         const g = new THREE.ExtrudeGeometry(s, { depth: l.z1 - l.z0, bevelEnabled: false });
-        g.translate(0, 0, l.z0); add(g);
+        g.translate(0, 0, l.z0); geos.push(g);
       }
+      if (!geos.length) continue;
+      const mesh = new THREE.Mesh(merge(geos, ['position', 'normal']), m);
+      mesh.userData = { layer: l };
+      mesh.renderOrder = / gate$/.test(l.name) ? 2 : 1;
+      group.add(mesh); meshes.push(mesh);
+      if (!/ gate$/.test(l.name)) {
+        const e = new THREE.LineSegments(merge(geos.map(g => new THREE.EdgesGeometry(g)), ['position']), edgeMat);
+        e.userData = { layer: l }; group.add(e); meshes.push(e);
+      }
+      geos.forEach(g => g.dispose());
     }
     // cell outline (prBoundary) on the BPR bottom face
     const ob = new THREE.BufferGeometry().setFromPoints([[px0, py0], [px1, py0], [px1, py1], [px0, py1], [px0, py0]]
@@ -90,8 +95,23 @@ function init(root) {
     applyVis(); setSection(); info(); placeTags();
   }
 
+  // concatenate geometries (non-indexed) into one
+  function merge(list, attrs) {
+    list = list.map(g => g.index ? g.toNonIndexed() : g);
+    const out = new THREE.BufferGeometry();
+    for (const a of attrs) {
+      const n = list.reduce((k, g) => k + g.attributes[a].array.length, 0);
+      const arr = new Float32Array(n); let o = 0;
+      for (const g of list) { arr.set(g.attributes[a].array, o); o += g.attributes[a].array.length; }
+      out.setAttribute(a, new THREE.BufferAttribute(arr, 3));
+    }
+    out.computeBoundingSphere();
+    return out;
+  }
+
   function applyVis() {
     for (const m of meshes) m.visible = on[m.userData.layer.group];
+    kick();
   }
 
   // ---- section plane
@@ -104,6 +124,7 @@ function init(root) {
     else { const x = px0 + f * (px1 - px0); clip.set(new THREE.Vector3(1, 0, 0), -x); $('#c3d-cut-out').textContent = `x = ${x.toFixed(1)} nm`; }
     if (secAxis.value === 'none') $('#c3d-cut-out').textContent = 'off';
     secPos.disabled = secAxis.value === 'none';
+    kick();
   }
 
   function info() {
@@ -132,7 +153,7 @@ function init(root) {
   function placeTags() {
     if (!cell) return;
     const [px0, py0] = cell.pr_nm;
-    const r = renderer.domElement.getBoundingClientRect();
+    const r = size;
     TAGS.forEach((d, i) => {
       const v = new THREE.Vector3(px0 - 30, py0, d.z).project(camera);
       const e = tagEls[i];
@@ -154,12 +175,62 @@ function init(root) {
     const dir = kind === 'iso' ? new THREE.Vector3(-0.5, -0.75, 0.43)
               : kind === 'section' ? new THREE.Vector3(0, -1, 0.001) : new THREE.Vector3(0, -0.001, 1);
     camera.position.copy(c).addScaledVector(dir.normalize(), d);
-    controls.target.copy(c); controls.update();
+    controls.target.copy(c); zoom = null; fitD = d; clipRange(); controls.update(); kick();
   }
 
+  // ---- zoom: eased, log-scale, toward the point under the cursor (replaces OrbitControls' fixed 5% steps)
+  let zoom = null, fitD = 1000;
+  const MIN_D = 12;                                   // nm from the target: close enough to see single sheets
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  function clipRange() {
+    const d = camera.position.distanceTo(controls.target);
+    camera.near = Math.max(0.05, d / 200); camera.far = d * 40 + 5000; camera.updateProjectionMatrix();
+  }
+  function pointUnder(e) {
+    const r = renderer.domElement.getBoundingClientRect();
+    ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const cut = secAxis.value !== 'none';
+    const solid = m => m.isMesh && m.visible && !(/ gate$/.test(m.userData.layer.name) && gateOpacity < 0.5);   // look through see-through gates
+    const hit = ray.intersectObjects(meshes.filter(solid), false)
+      .find(h => !cut || clip.distanceToPoint(h.point) >= 0);
+    if (hit) return hit.point;
+    // nothing under the cursor: use the plane through the target, facing the camera
+    const n = camera.getWorldDirection(new THREE.Vector3());
+    return ray.ray.intersectPlane(new THREE.Plane().setFromNormalAndCoplanarPoint(n, controls.target), new THREE.Vector3());
+  }
+  function onWheel(e) {
+    e.preventDefault(); e.stopPropagation();          // keep OrbitControls' stepped dolly out of it
+    const dy = e.deltaY * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
+    const k = Math.exp(THREE.MathUtils.clamp(dy, -150, 150) * 0.0024);
+    const cur = zoom || { d: camera.position.distanceTo(controls.target), t: controls.target.clone() };
+    const d1 = THREE.MathUtils.clamp(cur.d * k, MIN_D, fitD * 4);
+    const p = pointUnder(e), t1 = cur.t.clone();
+    if (p) t1.lerp(p, 1 - d1 / cur.d);                // the point under the cursor stays put
+    if (k < 1 && cur.d * k < MIN_D) {                 // at the closest distance: keep flying forward toward the cursor
+      t1.addScaledVector(ray.ray.direction, MIN_D * (1 - k));
+    }
+    zoom = { d: d1, t: t1 }; kick();
+  }
+  stage.addEventListener('wheel', onWheel, { passive: false, capture: true });
+  renderer.domElement.addEventListener('pointerdown', () => { zoom = null; });
+  function stepZoom(dt) {
+    if (!zoom) return;
+    const f = 1 - Math.exp(-dt * 14);
+    const off = camera.position.clone().sub(controls.target);
+    const d0 = off.length();
+    const d = Math.exp(Math.log(d0) + (Math.log(zoom.d) - Math.log(d0)) * f);
+    controls.target.lerp(zoom.t, f);
+    camera.position.copy(controls.target).addScaledVector(off.normalize(), d);
+    if (Math.abs(Math.log(d / zoom.d)) < 1e-3 && controls.target.distanceTo(zoom.t) < d * 1e-4) zoom = null;
+    clipRange(); dirty = true;
+  }
+
+  const size = { width: 1, height: 1 };
   function resize() {
     const w = stage.clientWidth, h = stage.clientHeight;
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    size.width = w; size.height = h;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); kick();
   }
   new ResizeObserver(resize).observe(stage);
 
@@ -178,12 +249,29 @@ function init(root) {
   $('#c3d-gate').oninput = e => {
     gateOpacity = +e.target.value / 100; $('#c3d-gate-out').textContent = `${e.target.value}%`;
     for (const m of meshes) if (/ gate$/.test(m.userData.layer.name)) m.material.opacity = gateOpacity;
+    kick();
   };
   secAxis.onchange = () => { setSection(); if (secAxis.value === 'y') view('section'); };
   secPos.oninput = setSection;
   root.querySelectorAll('[data-view]').forEach(b => b.onclick = () => view(b.dataset.view));
-  $('#c3d-tags-btn').onclick = e => { tagsOn = !tagsOn; e.target.setAttribute('aria-pressed', tagsOn); };
+  $('#c3d-tags-btn').onclick = e => { tagsOn = !tagsOn; e.target.setAttribute('aria-pressed', tagsOn); kick(); };
 
   resize(); build(sel.value); view("iso");
-  renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); placeTags(); });
+  // render on demand, and not at all while the viewer is off screen or the tab is hidden
+  let onScreen = true, last = performance.now();
+  const lastPos = new THREE.Vector3(), lastQ = new THREE.Quaternion();
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { onScreen = es[es.length - 1].isIntersecting; if (onScreen) kick(); }).observe(stage);
+  renderer.setAnimationLoop(now => {
+    const dt = Math.min(0.1, (now - last) / 1000); last = now;
+    if (!onScreen || document.hidden) return;
+    stepZoom(dt);
+    controls.update();
+    // redraw only for visible camera motion: OrbitControls' own threshold is absolute and, in nm units,
+    // keeps reporting sub-pixel damping for hundreds of frames
+    const d = camera.position.distanceTo(controls.target), tol = 3e-4;      // ~1/3 pixel at 30 deg fov
+    if (camera.position.distanceToSquared(lastPos) > (d * tol) ** 2 || 8 * (1 - Math.abs(lastQ.dot(camera.quaternion))) > tol * tol) dirty = true;
+    if (!dirty) return;
+    dirty = false; lastPos.copy(camera.position); lastQ.copy(camera.quaternion);
+    renderer.render(scene, camera); placeTags();
+  });
 }

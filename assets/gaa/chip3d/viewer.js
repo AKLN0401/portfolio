@@ -447,8 +447,11 @@ function init(root) {
   groups.clock.visible = true;
 
   let last = performance.now();
+  // stop rendering while the viewer is off screen or the tab is hidden, so the rest of the page stays smooth
+  let onScreen = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { onScreen = es[es.length - 1].isIntersecting; }).observe(stage);
   renderer.setAnimationLoop(now => {
-    if (paused) return;
+    if (paused || !onScreen || document.hidden) { last = now; return; }
     const dt = Math.min(0.1, (now - last) / 1000); last = now;
     stepCamera(now); placeCamera();
     if (clockRun) {
