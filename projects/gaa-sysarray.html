@@ -411,14 +411,22 @@
         </div>
       </div>
 
-      <h3 style="margin-top:40px;">What each check proves</h3>
-      <ol class="process-list">
-        <li><div><h4>Boot and fetch</h4><p>Ibex leaves reset, fetches from the reset vector <code>0x80</code> and executes the program in the routed netlist.</p></div></li>
-        <li><div><h4>SRAM0 write and read</h4><p>The value read back and stored to <code>0x2000_0000</code> must be <code>0x5A5</code>: CPU data bus, address decode, the latch SRAM macro and the read path back into the core.</p></div></li>
-        <li><div><h4>Accelerator register read</h4><p>INFO must read <code>0x200808</code>: an 8&times;8 array (N&nbsp;=&nbsp;8), 8-bit operands (AW&nbsp;=&nbsp;8) and 32-bit accumulators (ACCW&nbsp;=&nbsp;32), returned by the <code>npu_acc</code> macro over the bus.</p></div></li>
-        <li><div><h4>Lockstep</h4><p>Neither major alert may rise on any cycle after fetch starts: the shadow core in its own fence agrees with the main core throughout.</p></div></li>
-      </ol>
-      <p class="fig-note">This is a connectivity smoke test of the whole chip after routing. The GEMM datapath and the DMA are covered by the RTL subsystem test (16&times;16&times;16 and 8&times;16&times;24 GEMMs).</p>
+      <h3 style="margin-top:40px;">What is tested</h3>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Function</th><th>Block</th><th>Check</th><th>Zero delay</th><th>SSG &minus;40&nbsp;&deg;C</th><th>FFG &minus;40&nbsp;&deg;C</th></tr></thead>
+        <tbody>
+          <tr><th>Reset and boot</th><td><code>u_cpu</code></td><td>leaves reset, fetches from <code>0x80</code></td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>Instruction execution</th><td><code>u_cpu</code></td><td><code>lui</code>, <code>addi</code>, <code>lw</code>, <code>sw</code>, <code>jal</code> run in order</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>SRAM0 write and read</th><td><code>u_sram0</code></td><td><code>0x5A5</code> written and read back</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>Accelerator register read</th><td><code>u_acc</code></td><td>INFO = <code>0x200808</code> (N&nbsp;=&nbsp;8, AW&nbsp;=&nbsp;8, ACCW&nbsp;=&nbsp;32)</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>External data bus</th><td>top-level ports</td><td>both results stored to <code>0x2000_0000</code> / <code>0x2000_0004</code></td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>Lockstep</th><td>shadow core</td><td>no major alert on any cycle after fetch</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>SRAM1</th><td><code>u_sram1</code></td><td>RTL test only (pass)</td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
+          <tr><th>Tiled GEMM on the systolic array</th><td><code>u_acc</code>, <code>npu_dma</code></td><td>RTL test only (pass): 16&times;16&times;16 and 8&times;16&times;24</td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
+          <tr><th>Interrupts, debug</th><td><code>u_cpu</code></td><td>tied off in this test</td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">A connectivity smoke test of the whole routed chip. &ldquo;Not tested&rdquo; = not exercised by this gate-level program; the RTL test is <code>tb/tb_npu_sys.sv</code>.</p>
     </div>
   </section>
 
