@@ -109,6 +109,10 @@
 .k3d-loadbar i { display: block; height: 100%; width: 0; background: #e8a33d; transition: width .2s; }
 .k3d-layers { display: grid; grid-template-columns: repeat(3, auto); gap: 0 12px; }
 .k3d-layers label { font-size: 13px !important; }
+.wave-fig { margin: 24px 0 8px; }
+.wave-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); background: #000; }
+.wave-scroll img { display: block; width: 100%; min-width: 960px; height: auto; }
+.wave-fig figcaption { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
 .c3d-ctl small { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; line-height: 1.45; }
 </style>
 </head>
@@ -496,14 +500,34 @@
         <thead><tr><th>Fault</th><th>Detected by</th><th>Latency</th><th>Result</th></tr></thead>
         <tbody>
           <tr><th>None (control)</th><td>&ndash;</td><td>&ndash;</td><td class="ok">correct, no alert</td></tr>
-          <tr><th>Main core <code>pc_id</code> bit</th><td>main core&rsquo;s own PC check</td><td>same cycle</td><td class="ok">correct, alert</td></tr>
+          <tr><th>Main core <code>pc_id</code> bit</th><td>main core&rsquo;s own PC check, then the lockstep comparator (<a href="#fault-wave">waveform</a>)</td><td>same cycle; comparator &asymp;1.5 cycles</td><td class="ok">correct, alert</td></tr>
           <tr><th>Shadow core <code>pc_id</code> bit</th><td>shadow core internal alert</td><td>same cycle</td><td class="ok">correct, alert</td></tr>
           <tr><th>Register file <code>x10</code> bit</th><td>shadow core internal alert (lockstep register-read check)</td><td>3 cycles</td><td class="ok">228 wrong outputs, flagged</td></tr>
           <tr><th>Lockstep comparator register</th><td>output mismatch</td><td>same cycle</td><td class="ok">correct, alert</td></tr>
           <tr><th>NPU array PE accumulator bit</th><td class="warn">nothing</td><td>&ndash;</td><td class="warn">1 wrong output, silent</td></tr>
         </tbody>
       </table></div>
-      <p class="fig-note">Every upset in the CPU raises <code>alert_major_internal</code>; an upset in the accelerator corrupts the result silently. The alerts are one-cycle pulses and the core keeps running, so a system needs an alert handler that latches them. Parity or a checksum on the array, or ECC on the accumulators, would close the accelerator gap.</p>
+      <p class="fig-note">Every upset in the CPU raises <code>alert_major_internal</code>; an upset in the accelerator corrupts the result silently. The alerts are pulses of one cycle or less and the core keeps running, so a system needs an alert handler that latches them. Parity or a checksum on the array, or ECC on the accumulators, would close the accelerator gap.</p>
+
+      <h3 style="margin-top:40px;" id="fault-wave">One upset in the waveform: main core <code>pc_id</code></h3>
+      <p class="pd-lede">Fault 1 in SimVision: the software GEMM on <code>ibex_npu_top</code>, RTL, 750&nbsp;ps clock. At the falling clock edge of cycle 2012 the testbench flips bit 2 of the main core&rsquo;s <code>pc_id_o</code>. The force is released 10&nbsp;ps later, so the register keeps the wrong value until its next write, as a real upset would. The view groups the testbench alerts, the main core, the shadow core, the lockstep comparator, the register-file word of <code>x10</code> and the accelerator.</p>
+      <figure class="wave-fig">
+        <div class="wave-scroll" tabindex="0" aria-label="Waveform, scroll sideways on small screens"><a href="../assets/gaa/fault1_lockstep_wave.webp"><img src="../assets/gaa/fault1_lockstep_wave.webp" alt="SimVision waveform of fault 1: the main core pc_id value changes at cycle 2012, core_alert_major_internal pulses for about half a cycle, and about 1.5 cycles later outputs_mismatch and the lockstep alert pulse for one cycle while both cores keep running" loading="lazy" width="1781" height="778"></a></div>
+        <figcaption>Fault 1 &middot; main core pc_id_o bit 2 &middot; Xcelium RTL &middot; times read from the waveform</figcaption>
+      </figure>
+
+      <div class="table-scroll" style="margin-top:24px;"><table class="data-table a7-pnr">
+        <thead><tr><th>Time</th><th>Signals</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr><th>&asymp;1512.7&nbsp;ns, cycle 2012</th><td><code>Main_core.pc_id_o</code></td><td>Bit 2 flips. The main core now holds a PC that the shadow core will not compute.</td></tr>
+          <tr><th>same time</th><td><code>core_alert_major_internal</code>, <code>a_int</code></td><td>The main core&rsquo;s own PC check fires at once. The pulse lasts about half a cycle: from the falling edge where the fault lands to the next rising edge, when <code>pc_id_o</code> is written again.</td></tr>
+          <tr><th>&asymp;1513.9&ndash;1514.7&nbsp;ns</th><td><code>outputs_mismatch</code>, <code>alert_major_internal_o</code>, <code>lockstep_alert_major_internal</code>, second <code>a_int</code> pulse</td><td>The lockstep comparator sees a main-core output that differs from the shadow&rsquo;s and raises its alert for exactly one cycle, about 1.5 cycles after the fault. The delay comes from the design: the shadow runs one cycle behind, and the comparator checks registered copies of the main core&rsquo;s outputs against it.</td></tr>
+          <tr><th>afterwards</th><td><code>Main_core</code>, <code>Shadow_core_1cyc_behind</code></td><td>Both cores keep running. The shadow&rsquo;s <code>data_req_o</code>, <code>data_addr_o</code> and <code>data_wdata_o</code> repeat the main core&rsquo;s one cycle later. Nothing stops the core or holds the alert.</td></tr>
+          <tr><th>whole window</th><td><code>a_bus</code></td><td>Stays 0: no bus-integrity alert.</td></tr>
+          <tr><th>whole window</th><td><code>RegFile_x10_ECC</code>, <code>NPU_not_covered</code></td><td><code>x10</code> is unchanged (<code>0x20000010</code>). The DMA and the array are idle (<code>D_IDLE</code>, <code>S_IDLE</code>) because this run is the software GEMM. The accelerator is in the view because the lockstep does not cover it.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">Two independent checks catch this upset: the core&rsquo;s own check in the same cycle, and the lockstep comparator about 1.5 cycles later. Both alerts are short pulses, half a cycle and one cycle, which is why a system needs a handler that latches them. The waveform does not show which compared output differed.</p>
     </div>
   </section>
 
