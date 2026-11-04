@@ -51,6 +51,8 @@
 .a7-pnr th, .a7-pnr td { text-align: left; }
 .a7-pnr td.ok { color: #2e7d32; font-weight: 600; }
 .a7-pnr td.pend { color: var(--muted); }
+.a7-pnr td.warn { color: #9a5b00; font-weight: 600; }
+.a7-pnr td.num, .a7-pnr th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .a7-status { display:block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--a7-text); margin-bottom: 6px; }
 .a7 svg text { font-family: var(--font-body); fill: #17191c; }
 .a7 svg .t-muted { fill: #5e5d59; }
@@ -146,13 +148,13 @@
         <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; Hierarchical P&amp;R &middot; in progress</p>
         <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
         <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
-        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. The CPU-only top passes LVS and equivalence and meets 750&nbsp;ps (setup +8&nbsp;ps). The CPU+accelerator top is placed, routed and passes LVS; its timing, DRC and equivalence signoff are next.</p>
+        <p class="a7-facts">Two chips from the same CPU: Ibex alone as the accelerator-off baseline, and Ibex with the accelerator. The accelerator and its two 1&nbsp;KB SRAMs are hardened as macros first: both pass LVS, Innovus DRC and post-P&amp;R equivalence, and meet timing at 750&nbsp;ps. Both tops then pass LVS, Innovus DRC and post-P&amp;R equivalence at 750&nbsp;ps (setup +8&nbsp;ps CPU-only, +1&nbsp;ps with the accelerator). On a 16&times;16&times;16 INT8 GEMM run on the routed netlists, the accelerator chip is 3.8&times; faster and uses 2.5&times; less energy than the CPU-only chip, at 2.4&times; the die area.</p>
         <div class="stat-row" style="margin-top:24px;">
+          <div class="stat-tile"><span class="stat-num">3.8&times;</span><span class="stat-lab">GEMM speedup over the CPU-only chip</span></div>
+          <div class="stat-tile"><span class="stat-num">2.5&times;</span><span class="stat-lab">Less energy per GEMM</span></div>
           <div class="stat-tile"><span class="stat-num">1.50&nbsp;M</span><span class="stat-lab">Transistors, LVS matched</span></div>
-          <div class="stat-tile"><span class="stat-num">750&nbsp;ps</span><span class="stat-lab">Clock, 1.33&nbsp;GHz</span></div>
-          <div class="stat-tile"><span class="stat-num">115.8&nbsp;&times;&nbsp;100.4&nbsp;<small style="font-size:.5em;">&micro;m</small></span><span class="stat-lab">Die size</span></div>
         </div>
-        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray_CFET">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a> <a class="btn" href="#gls">Gate-level sim</a></p>
+        <p style="margin-top:24px;"><a class="btn btn-primary" href="https://github.com/AKLN0401/GAA_SysArray_CFET">Source on GitHub</a> <a class="btn" href="#chip3d-sec">3D chip view</a> <a class="btn" href="#floorplan">Floorplan</a> <a class="btn" href="#signoff">Signoff status</a> <a class="btn" href="#ppa">CPU vs NPU</a> <a class="btn" href="#gls">Gate-level sim</a> <a class="btn" href="#fault">Fault injection</a></p>
       </div>
       <figure class="a7-plate"><img src="../assets/gaa/chip3d.webp" alt="ibex_npu_top rendered in 3D from the routed GDS: CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" width="1190" height="700"><figcaption>ibex_npu_top, rendered from the routed GDS</figcaption></figure>
     </div>
@@ -179,7 +181,7 @@
             <tr><th>Supply</th><td>0.7&nbsp;V</td></tr>
             <tr><th>Cells</th><td>Site 0.039&nbsp;&times;&nbsp;0.072&nbsp;&micro;m &middot; NAND2&nbsp;x1 0.0084&nbsp;&micro;m&sup2; &middot; DFF&nbsp;x1 0.062&nbsp;&micro;m&sup2; &middot; 68 cells per V<sub>t</sub>, svt / lvt / ulvt</td></tr>
             <tr><th>Corners</th><td>Setup SSG &minus;40&nbsp;&deg;C and 125&nbsp;&deg;C &middot; hold FFG &minus;40&nbsp;&deg;C and 125&nbsp;&deg;C &middot; power TT 25&nbsp;&deg;C</td></tr>
-            <tr><th>Clock</th><td>750&nbsp;ps (1.33&nbsp;GHz) for all blocks and the CPU top</td></tr>
+            <tr><th>Clock</th><td>750&nbsp;ps (1.33&nbsp;GHz) for all four designs</td></tr>
             <tr><th>Tools</th><td>Genus 25.1 (iSpatial) &middot; Innovus 25.1 &middot; Quantus &middot; IC Validator V-2023.12 &middot; Conformal 22.2 &middot; Xcelium &middot; Verilator</td></tr>
           </tbody>
         </table></div></div>
@@ -302,7 +304,8 @@
         <li><div><h4>Extraction and timing (Quantus)</h4><p>Setup and hold checked on all four corners.</p></div></li>
         <li><div><h4>Physical verification (IC Validator)</h4><p>LVS with a deck extended for the backside layers.</p></div></li>
         <li><div><h4>Equivalence (Conformal)</h4><p>RTL against the post-P&amp;R netlist for each design.</p></div></li>
-        <li><div><h4>Gate-level simulation (Xcelium)</h4><p>SDF-annotated smoke test of <code>ibex_npu_top</code>.</p></div></li>
+        <li><div><h4>Gate-level simulation (Xcelium)</h4><p>SDF-annotated smoke test of <code>ibex_npu_top</code>, and a GEMM benchmark on both tops at zero delay and with SDF.</p></div></li>
+        <li><div><h4>Power (Innovus)</h4><p><code>report_power</code> at TT 25&nbsp;&deg;C with switching activity (SAIF) recorded during the gate-level benchmark.</p></div></li>
       </ol>
     </div>
   </section>
@@ -319,6 +322,7 @@
         <div class="a7-card"><h4>svt-only GDS and CDL</h4><span class="a7-status">make_vt_alias.py</span><p>The PDK ships layout and netlist views for svt cells only; lvt and ulvt views are generated as aliases so all three V<sub>t</sub>s can be used and verified.</p></div>
         <div class="a7-card"><h4>Hold with backside layers</h4><span class="a7-status">front-side clock</span><p>The router was assigning clock nets to backside layers. A front-side clock route type and a hold-specific uncertainty closed hold.</p></div>
         <div class="a7-card"><h4>Eight ECO rounds on the CPU top</h4><span class="a7-status">pnr/eco/</span><p>Rerouting a patched design broke earlier patches, so later rounds used reroute-free M0 patches until the top was LVS-clean.</p></div>
+        <div class="a7-card"><h4>Nine ECO rounds on the CPU + accelerator top</h4><span class="a7-status">pnr/eco/ibex_npu_top/</span><p>M0 pin patches, clock delay, hold buffers and V<sub>t</sub> swaps, one scripted round at a time, until <code>ibex_npu_top</code> was LVS- and DRC-clean with setup +1&nbsp;ps at 750&nbsp;ps.</p></div>
       </div>
     </div>
   </section>
@@ -332,17 +336,72 @@
           <tr><th><code>lram_256x32</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>npu_acc</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>ibex_cfet_top</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps: setup +8&nbsp;ps, hold met, no max-tran/cap violations</td><td class="ok">PASS</td></tr>
-          <tr><th><code>ibex_npu_top</code></th><td class="ok">routed</td><td class="ok">PASS (1.50&nbsp;M transistors)</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td><td class="pend">&ndash;</td></tr>
+          <tr><th><code>ibex_npu_top</code></th><td class="ok">done, 9 post-route ECO rounds</td><td class="ok">PASS (1.50&nbsp;M transistors)</td><td class="ok">clean</td><td class="warn">750&nbsp;ps: setup +1&nbsp;ps; hold &minus;3&nbsp;ps on one path (<code>u_acc/req_i</code>, fast corner), accepted and checked in fast-corner GLS</td><td class="ok">PASS (synthesis &rarr; P&amp;R and RTL &rarr; P&amp;R)</td></tr>
         </tbody>
       </table></div>
-      <p class="fig-note">LVS uses the stock deck with the backside layers added. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
+      <p class="fig-note">LVS uses the stock deck with the backside layers added. In the <code>ibex_npu_top</code> LEC the three macros are black boxes; each has its own PASS. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
 
       <h3 style="margin-top:40px;">Other measured points</h3>
       <div class="a7-grid">
         <div class="a7-card"><h4>Die sizes</h4><span class="a7-status">from the DEFs</span><p><code>ibex_npu_top</code> 115.75&nbsp;&times;&nbsp;100.37&nbsp;&micro;m &middot; <code>ibex_cfet_top</code> 70.04&nbsp;&times;&nbsp;70.13 &middot; <code>npu_acc</code> 49.14&nbsp;&times;&nbsp;49.97 &middot; <code>lram_256x32</code> 30.03&nbsp;&times;&nbsp;49.97.</p></div>
-        <div class="a7-card"><h4>ibex_npu_top gate-level simulation</h4><span class="a7-status">Xcelium &middot; 750&nbsp;ps &middot; pass, 3 runs</span><p>Routed netlist with zero delay and with SDF at the slow and fast corners. Details in <a href="#gls">Gate-level simulation</a>.</p></div>
+        <div class="a7-card"><h4>ibex_npu_top gate-level simulation</h4><span class="a7-status">Xcelium &middot; 750&nbsp;ps</span><p>Smoke test passes with zero delay and at both SDF corners; the GEMM benchmark passes with zero delay and at the fast corner, the slow corner is open. Details in <a href="#gls">Gate-level simulation</a>.</p></div>
         <div class="a7-card"><h4>Accelerator subsystem</h4><span class="a7-status">RTL simulation &middot; pass</span><p>16&times;16&times;16 GEMM in 2,040 DMA cycles; 8&times;16&times;24 GEMM (three accumulated K tiles) in 1,530 DMA cycles.</p></div>
         <div class="a7-card"><h4>ibex_cfet_top synthesis</h4><span class="a7-status">Genus iSpatial, 750&nbsp;ps, lockstep included</span><p>62,848 cells, 5,617 sequential, 1,040&nbsp;&micro;m&sup2; cell area; post-route 9.75&nbsp;mW at TT 25&nbsp;&deg;C (vectorless, default activity).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ppa">
+    <div class="wrap">
+      <div class="section-head"><h2>CPU vs CPU + NPU: performance, power, area</h2><span class="section-index">BENCHMARK</span></div>
+      <p class="pd-lede">A 16&times;16&times;16 INT8 GEMM (4,096 MACs, INT32 results) on the post-P&amp;R gate-level netlists of both chips at 750&nbsp;ps. The CPU-only chip runs it in software, with the k loop unrolled and the loads scheduled ahead of the multiply. The accelerator chip copies A and B into SRAM0, starts the tiled-GEMM DMA, and copies C back. Power is Innovus <code>report_power</code> at TT 25&nbsp;&deg;C with switching activity from the fast-corner SDF simulation over the benchmark window (99.5&ndash;100&nbsp;% of nets annotated); the macros are reported from their own databases and added. Area is the die area.</p>
+
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Configuration</th><th class="num">Cycles</th><th class="num">Latency</th><th class="num">Power</th><th class="num">GOPS</th><th class="num">GOPS/W</th><th class="num">GOPS/mm&sup2;</th><th class="num">Energy</th><th class="num">pJ/MAC</th><th class="num">Speedup</th><th class="num">Energy gain</th></tr></thead>
+        <tbody>
+          <tr><th>CPU only (<code>ibex_cfet_top</code>), software</th><td class="num">18,000</td><td class="num">13.50&nbsp;&micro;s</td><td class="num">8.80&nbsp;mW</td><td class="num">0.61</td><td class="num">69</td><td class="num">124</td><td class="num">118.8&nbsp;nJ</td><td class="num">29.0</td><td class="num">1.00&times;</td><td class="num">1.00&times;</td></tr>
+          <tr><th>CPU + NPU (<code>ibex_npu_top</code>), end to end</th><td class="num">4,750</td><td class="num">3.56&nbsp;&micro;s</td><td class="num">13.33&nbsp;mW</td><td class="num">2.30</td><td class="num">173</td><td class="num">198</td><td class="num">47.5&nbsp;nJ</td><td class="num">11.6</td><td class="num ok">3.79&times;</td><td class="num ok">2.50&times;</td></tr>
+          <tr><th>CPU + NPU, DMA kernel only&sup1;</th><td class="num">2,040</td><td class="num">1.53&nbsp;&micro;s</td><td class="num">13.33&nbsp;mW</td><td class="num">5.35</td><td class="num">402</td><td class="num">461</td><td class="num">20.4&nbsp;nJ</td><td class="num">5.0</td><td class="num">8.82&times;</td><td class="num">5.83&times;</td></tr>
+          <tr><th>CPU + NPU, software (NPU idle)</th><td class="num">18,000</td><td class="num">13.50&nbsp;&micro;s</td><td class="num">14.33&nbsp;mW</td><td class="num">0.61</td><td class="num">42</td><td class="num">52</td><td class="num">193.4&nbsp;nJ</td><td class="num">47.2</td><td class="num">1.00&times;</td><td class="num">0.61&times;</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">&sup1; A and B already in SRAM0; whole-run average power. Die areas: <code>ibex_cfet_top</code> 0.0049&nbsp;mm&sup2;, <code>ibex_npu_top</code> 0.0116&nbsp;mm&sup2; (2.4&times;). Programs: <code>scripts/gen_gemm_prog.py</code>; testbench: <code>tb/bench/tb_gemm.sv</code>; table and JSON: <code>docs/ppa_comparison.md</code>, generated by <code>scripts/ppa_compare.py</code>.</p>
+
+      <div class="two-col" style="margin-top:40px;">
+        <div>
+          <h3>Where the cycles go (NPU run)</h3>
+          <div class="table-scroll"><table class="data-table a7-pnr">
+            <thead><tr><th>Phase</th><th class="num">Cycles</th></tr></thead>
+            <tbody>
+              <tr><th>CPU copies A and B into SRAM0</th><td class="num">899</td></tr>
+              <tr><th>DMA tiled GEMM (CPU polling)</th><td class="num">2,053</td></tr>
+              <tr><th>CPU copies C out of SRAM1</th><td class="num">1,798</td></tr>
+              <tr><th>Total</th><td class="num">4,750</td></tr>
+            </tbody>
+          </table></div>
+          <p class="fig-note">The DMA&rsquo;s own cycle counter reads 2,040.</p>
+        </div>
+        <div>
+          <h3>Power by block</h3>
+          <div class="table-scroll"><table class="data-table a7-pnr">
+            <thead><tr><th>Block</th><th class="num">NPU GEMM</th><th class="num">Software GEMM</th></tr></thead>
+            <tbody>
+              <tr><th>Top level (CPU, DMA, clock tree)</th><td class="num">8.68&nbsp;mW</td><td class="num">10.00&nbsp;mW</td></tr>
+              <tr><th><code>u_acc</code></th><td class="num">2.73&nbsp;mW</td><td class="num">2.53&nbsp;mW</td></tr>
+              <tr><th><code>u_sram0</code></th><td class="num">0.93&nbsp;mW</td><td class="num">0.90&nbsp;mW</td></tr>
+              <tr><th><code>u_sram1</code></th><td class="num">0.99&nbsp;mW</td><td class="num">0.90&nbsp;mW</td></tr>
+              <tr><th><code>ibex_npu_top</code> total</th><td class="num">13.33&nbsp;mW</td><td class="num">14.33&nbsp;mW</td></tr>
+            </tbody>
+          </table></div>
+          <p class="fig-note">Both runs on <code>ibex_npu_top</code>. The CPU-only chip draws 8.80&nbsp;mW on the software GEMM.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:40px;">What the numbers show</h3>
+      <div class="a7-grid">
+        <div class="a7-card"><h4>Better on every efficiency metric</h4><span class="a7-status">despite 2.4&times; the area</span><p>3.8&times; faster, 2.5&times; less energy per GEMM, 1.6&times; more GOPS/mm&sup2; and 9.5&times; better energy-delay product, end to end.</p></div>
+        <div class="a7-card"><h4>Bound by data movement</h4><span class="a7-status">3&nbsp;% of array peak</span><p>The 8&times;8 array can do 64 MACs per cycle (171 GOPS) but averages 2 inside the DMA kernel. Each 8&times;8&times;8 tile spends ~96 cycles loading A and B a 32-bit word at a time and ~128 reading the 64 results back, for 8&ndash;16 cycles of compute. The CPU copy loops cost more than the GEMM itself.</p></div>
+        <div class="a7-card"><h4>An idle accelerator is not free</h4><span class="a7-status">+61&nbsp;% energy</span><p>The software GEMM costs 61&nbsp;% more energy on the accelerator chip than on the CPU-only chip: 2.5&nbsp;mW in the idle array and 1.8&nbsp;mW in the two SRAMs. The library has no clock-gating cell, so the macro clock trees toggle all the time.</p></div>
       </div>
     </div>
   </section>
@@ -406,12 +465,45 @@
           <tr><th>Accelerator register read</th><td><code>u_acc</code></td><td>INFO = <code>0x200808</code> (N&nbsp;=&nbsp;8, AW&nbsp;=&nbsp;8, ACCW&nbsp;=&nbsp;32)</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
           <tr><th>External data bus</th><td>top-level ports</td><td>both results stored to <code>0x2000_0000</code> / <code>0x2000_0004</code></td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
           <tr><th>Lockstep</th><td>shadow core</td><td>no major alert on any cycle after fetch</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
-          <tr><th>SRAM1</th><td><code>u_sram1</code></td><td>RTL test only (pass)</td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
-          <tr><th>Tiled GEMM on the systolic array</th><td><code>u_acc</code>, <code>npu_dma</code></td><td>RTL test only (pass): 16&times;16&times;16 and 8&times;16&times;24</td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
+          <tr><th>SRAM1</th><td><code>u_sram1</code></td><td>not in this program; exercised by the <a href="#gls-gemm">GEMM benchmark</a></td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
+          <tr><th>Tiled GEMM on the systolic array</th><td><code>u_acc</code>, <code>npu_dma</code></td><td>not in this program; covered by the <a href="#gls-gemm">GEMM benchmark</a></td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
           <tr><th>Interrupts, debug</th><td><code>u_cpu</code></td><td>tied off in this test</td><td class="pend">not tested</td><td class="pend">not tested</td><td class="pend">not tested</td></tr>
         </tbody>
       </table></div>
       <p class="fig-note">A connectivity smoke test of the whole routed chip. &ldquo;Not tested&rdquo; = not exercised by this gate-level program; the RTL test is <code>tb/tb_npu_sys.sv</code>.</p>
+      <h3 style="margin-top:40px;" id="gls-gemm">Both chips: signoff checks and the GEMM benchmark</h3>
+      <p class="pd-lede">The <a href="#ppa">GEMM benchmark</a> runs on both routed netlists, with zero delay and at both SDF corners. A run passes when every result matches the reference.</p>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Check</th><th><code>ibex_cfet_top</code></th><th><code>ibex_npu_top</code></th></tr></thead>
+        <tbody>
+          <tr><th>LVS (IC Validator, backside layers added)</th><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>LEC (Conformal): synthesis &rarr; P&amp;R, RTL &rarr; P&amp;R</th><td class="ok">PASS, PASS</td><td class="ok">PASS, PASS</td></tr>
+          <tr><th>GEMM, RTL (Verilator)</th><td class="ok">PASS, 18,000 cycles</td><td class="ok">PASS: software 18,000, NPU 4,750 cycles</td></tr>
+          <tr><th>GEMM, gate level, zero delay</th><td class="warn">see note&sup2;</td><td class="ok">PASS (software and NPU)</td></tr>
+          <tr><th>GEMM, gate level, FFG &minus;40&nbsp;&deg;C (SDF, min)</th><td class="ok">PASS&sup3;, 0 timing violations</td><td class="ok">PASS, violations only before reset release</td></tr>
+          <tr><th>GEMM, gate level, SSG &minus;40&nbsp;&deg;C (SDF, max)</th><td class="ok">PASS&sup3;; setup/hold warnings only on the flops that capture chip inputs</td><td class="warn">open&#8308;</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">&sup2; The CPU-only netlist reaches an X state shortly after reset unless registers are initialised at time 0 (<code>-xminitialize 0</code>); the same core inside <code>ibex_npu_top</code> does not. Not yet root-caused. &sup3; With <code>-xminitialize 0</code>. &#8308; At the slow corner the lockstep alert fires as soon as instruction fetch starts, with no timing-check violation after reset; releasing reset and fetch-enable with the clock stopped does not change it. Internal register-to-register timing is signed off by STA (setup met at both slow corners); the testbench input timing (one delay for all inputs) is the suspected cause. Under investigation.</p>
+    </div>
+  </section>
+
+  <section class="section" id="fault">
+    <div class="wrap">
+      <div class="section-head"><h2>Fault injection: does the lockstep catch upsets?</h2><span class="section-index">SAFETY</span></div>
+      <p class="pd-lede">Single-bit upsets injected into flip-flops during the GEMM, in RTL simulation; Xcelium and Verilator agree. Each fault also generates a SimVision view with named signal groups (<code>tb/bench/fault_inj.svh</code>, <code>sim/fault/run_fault.csh</code>).</p>
+      <div class="table-scroll"><table class="data-table a7-pnr">
+        <thead><tr><th>Fault</th><th>Detected by</th><th>Latency</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><th>None (control)</th><td>&ndash;</td><td>&ndash;</td><td class="ok">correct, no alert</td></tr>
+          <tr><th>Main core <code>pc_id</code> bit</th><td>main core&rsquo;s own PC check</td><td>same cycle</td><td class="ok">correct, alert</td></tr>
+          <tr><th>Shadow core <code>pc_id</code> bit</th><td>shadow core internal alert</td><td>same cycle</td><td class="ok">correct, alert</td></tr>
+          <tr><th>Register file <code>x10</code> bit</th><td>shadow core internal alert (lockstep register-read check)</td><td>3 cycles</td><td class="ok">228 wrong outputs, flagged</td></tr>
+          <tr><th>Lockstep comparator register</th><td>output mismatch</td><td>same cycle</td><td class="ok">correct, alert</td></tr>
+          <tr><th>NPU array PE accumulator bit</th><td class="warn">nothing</td><td>&ndash;</td><td class="warn">1 wrong output, silent</td></tr>
+        </tbody>
+      </table></div>
+      <p class="fig-note">Every upset in the CPU raises <code>alert_major_internal</code>; an upset in the accelerator corrupts the result silently. The alerts are one-cycle pulses and the core keeps running, so a system needs an alert handler that latches them. Parity or a checksum on the array, or ECC on the accumulators, would close the accelerator gap.</p>
     </div>
   </section>
 
@@ -420,9 +512,12 @@
       <div class="section-head"><h2>Next</h2><span class="section-index">ROADMAP</span></div>
       <ol class="process-list">
         <li><div><h4>Macros and baseline</h4><p>Done: <code>lram_256x32</code>, <code>npu_acc</code> and <code>ibex_cfet_top</code> through P&amp;R, LVS, DRC, timing and equivalence.</p></div></li>
-        <li><div><h4>CPU + accelerator top</h4><p>Done: placed and routed. Next: LVS, DRC, timing and equivalence on <code>ibex_npu_top</code>.</p></div></li>
+        <li><div><h4>CPU + accelerator top</h4><p>Done: <code>ibex_npu_top</code> through P&amp;R, LVS, Innovus DRC, timing at 750&nbsp;ps and equivalence, with one accepted 3&nbsp;ps hold violation at the fast corner.</p></div></li>
+        <li><div><h4>Compare the two chips</h4><p>Done for a 16&times;16&times;16 INT8 GEMM: 3.8&times; faster and 2.5&times; less energy at 2.4&times; the area. Not measured yet: Fmax and CoreMark/MHz.</p></div></li>
+        <li><div><h4>Slow-corner gate-level simulation</h4><p>Root-cause the lockstep alert in the slow-corner GEMM run of <code>ibex_npu_top</code>, and the X state in the CPU-only netlist without register initialisation.</p></div></li>
         <li><div><h4>Foundry DRC</h4><p>Rerun IC Validator DRC on all final layouts.</p></div></li>
-        <li><div><h4>Compare the two chips</h4><p>Not measured yet: area overhead of the accelerator, GEMM speedup over software on the CPU, energy per matrix multiply, final post-route power, Fmax and CoreMark/MHz.</p></div></li>
+        <li><div><h4>Accelerator efficiency</h4><p>Wide (64&ndash;128-bit) array load and drain ports, accumulation across k tiles inside the array, double-buffered tiles, a bus-master DMA instead of CPU copies, and latch-based clock gating of idle macros.</p></div></li>
+        <li><div><h4>Accelerator fault detection</h4><p>Parity or a checksum on the array, and an alert handler that latches the lockstep alerts.</p></div></li>
       </ol>
     </div>
   </section>
