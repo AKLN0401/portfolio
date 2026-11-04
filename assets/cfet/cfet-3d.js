@@ -1,5 +1,5 @@
 // Interactive 3D view of MATRIX-A5 CFET standard cells, including the GAA nanosheets.
-// Geometry: assets/cfet/cells.js, generated from the PDK cell GDS by GAA_SysArray scripts/gds3d.py.
+// Geometry: assets/cfet/cells.js, from the PDK cell GDS.
 // All x/y come from the GDS; all z come from the PDK's StarRC ITF and QRC ICT; sheet count, thickness and
 // gap come from the PDK's BSIM-CMG card. True scale in all three axes (nm).
 import * as THREE from 'three';

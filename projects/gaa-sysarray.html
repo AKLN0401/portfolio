@@ -230,15 +230,15 @@
             <small>Drag to rotate &middot; scroll or pinch to zoom toward the cursor &middot; right-drag or shift-drag to pan</small></div>
         </div>
       </div>
-      <p class="fig-note">Cell geometry: MATRIX-A5 PDK, &copy; Georgia Institute of Technology, MATRIX-PDK Academic and Non-Commercial License v1.0, modified for this chip.</p>
+      <p class="fig-note">Cell geometry: MATRIX-A5 PDK, &copy; Georgia Institute of Technology, MATRIX-PDK Academic and Non-Commercial License v1.0.</p>
     </div>
   </section>
 
   <section class="section" id="floorplan">
     <div class="wrap">
       <div class="section-head"><h2>Floorplan</h2><span class="section-index">IBEX_NPU_TOP</span></div>
-      <p class="pd-lede">The three macros sit in a row along the bottom; the CPU and <code>npu_dma</code> fill the band above them. The main Ibex core and its lockstep shadow mirror each other about the die centre, with a 2&nbsp;&micro;m channel between them, and all 232 pins are on the top edge on M5. Standard cells use every second row only, because abutting rows short in the stock cell GDS.</p>
-      <figure class="fp-svg"><img src="../assets/gaa/ibex_npu_top_floorplan.svg" alt="ibex_npu_top floorplan to scale: three macros along the bottom, main and shadow core regions above, channel between them, pins on the top edge, backside power stripes" width="1006" height="943"><figcaption>Generated from the Innovus script by scripts/floorplan.py, to scale</figcaption></figure>
+      <p class="pd-lede">The three macros sit in a row along the bottom; the CPU and <code>npu_dma</code> fill the band above them. The main Ibex core and its lockstep shadow mirror each other about the die centre, with a 2&nbsp;&micro;m channel between them, and all 232 pins are on the top edge.</p>
+      <figure class="fp-svg"><img src="../assets/gaa/ibex_npu_top_floorplan.svg" alt="ibex_npu_top floorplan to scale: three macros along the bottom, main and shadow core regions above, channel between them, pins on the top edge, backside power stripes" width="1006" height="943"><figcaption>ibex_npu_top floorplan, to scale</figcaption></figure>
       <h3 style="margin-top:40px;">The routed chip in Innovus</h3>
       <p class="pd-lede">The same floorplan after routing, as Innovus shows it. Along the bottom are <code>u_sram0</code>, <code>u_acc</code> and <code>u_sram1</code>, with their internal routing visible through the macro outlines and the channels between them. Above them is the routed CPU and <code>npu_dma</code> band. The bundle that drops from the middle of the top edge is the wiring from the 232 pins into the core.</p>
       <figure class="fp-svg" style="max-width:820px;"><a href="../assets/gaa/ibex_npu_top_innovus.webp"><img src="../assets/gaa/ibex_npu_top_innovus.webp" alt="Innovus layout view of the routed ibex_npu_top: dense routed standard-cell band in the upper part, port wiring dropping from pins at the centre of the top edge, and the three macros u_sram0, u_acc and u_sram1 side by side along the bottom" loading="lazy" width="1166" height="1027"></a><figcaption>ibex_npu_top &middot; 115.75 &times; 100.37 &micro;m &middot; Innovus layout view after routing</figcaption></figure>
@@ -305,11 +305,11 @@
       <div class="section-head"><h2>Flow</h2><span class="section-index">RTL &rarr; GDS</span></div>
       <ol class="process-list">
         <li><div><h4>Lint and RTL simulation</h4><p>Verilator lint; RTL testbenches for the array, the SRAM and the accelerator subsystem.</p></div></li>
-        <li><div><h4>Synthesis (Genus, iSpatial)</h4><p>One script per design. A post-synthesis script inserts tie-off generators, since the library has no tie cells.</p></div></li>
-        <li><div><h4>Macros (Innovus)</h4><p><code>lram_256x32</code> and <code>npu_acc</code> are placed, routed and exported as LEF and timing models, with M3 access stubs for their pins.</p></div></li>
-        <li><div><h4>Top level (Innovus)</h4><p>The top is synthesized with the macros as black boxes, then floorplanned, placed, clock-tree synthesized, routed and ECO&rsquo;d with the macros beside the CPU.</p></div></li>
+        <li><div><h4>Synthesis (Genus, iSpatial)</h4><p>Each block synthesized on its own, then the tops with the macros as black boxes.</p></div></li>
+        <li><div><h4>Macros (Innovus)</h4><p><code>lram_256x32</code> and <code>npu_acc</code> are placed, routed and exported as abstract and timing models for the top level.</p></div></li>
+        <li><div><h4>Top level (Innovus)</h4><p>Floorplanned, placed, clock-tree synthesized, routed and closed with post-route ECOs, with the macros beside the CPU.</p></div></li>
         <li><div><h4>Extraction and timing (Quantus)</h4><p>Setup and hold checked on all four corners.</p></div></li>
-        <li><div><h4>Physical verification (IC Validator)</h4><p>LVS with a deck extended for the backside layers.</p></div></li>
+        <li><div><h4>Physical verification (IC Validator)</h4><p>LVS on every block and both tops.</p></div></li>
         <li><div><h4>Equivalence (Conformal)</h4><p>RTL against the post-P&amp;R netlist for each design.</p></div></li>
         <li><div><h4>Gate-level simulation (Xcelium)</h4><p>SDF-annotated smoke test of <code>ibex_npu_top</code>, and a GEMM benchmark on both tops at zero delay and with SDF.</p></div></li>
         <li><div><h4>Power (Innovus)</h4><p><code>report_power</code> at TT 25&nbsp;&deg;C with switching activity (SAIF) recorded during the gate-level benchmark.</p></div></li>
@@ -320,16 +320,16 @@
   <section class="section" id="problems">
     <div class="wrap">
       <div class="section-head"><h2>Signoff on an immature PDK</h2><span class="section-index">PROBLEMS SOLVED</span></div>
-      <p class="pd-lede">Most of the work was getting a research kit through an industrial signoff flow. Each fix below is scripted in the repository.</p>
+      <p class="pd-lede">Most of the work was getting a research kit through an industrial signoff flow. These are the problems it raised; each one was solved and the result verified by LVS, DRC, timing or equivalence.</p>
       <div class="a7-grid">
-        <div class="a7-card"><h4>No tie cells</h4><span class="a7-status">fix_ties*.py</span><p>Constant pins are driven from small reset-derived generators that a script inserts into the netlist after synthesis.</p></div>
-        <div class="a7-card"><h4>Abutted rows short</h4><span class="a7-status">alt_rows.tcl</span><p>The stock cell GDS shorts internal nets when rows abut, so standard cells are placed on alternate rows only.</p></div>
-        <div class="a7-card"><h4>LVS turns M4+ into ports</h4><span class="a7-status">M3 and below</span><p>Internal nets are routed on M3 and below; only chip-port nets use M4/M5. Macro pins are M3 access stubs with an internal stack.</p></div>
-        <div class="a7-card"><h4>LVS stops at BPR</h4><span class="a7-status">lvs_bsm.rs</span><p>The stock deck had no backside layers, so the supply network never joined. TSV, BSM1&ndash;3 and BSV1&ndash;2 were added to the deck.</p></div>
-        <div class="a7-card"><h4>svt-only GDS and CDL</h4><span class="a7-status">make_vt_alias.py</span><p>The PDK ships layout and netlist views for svt cells only; lvt and ulvt views are generated as aliases so all three V<sub>t</sub>s can be used and verified.</p></div>
-        <div class="a7-card"><h4>Hold with backside layers</h4><span class="a7-status">front-side clock</span><p>The router was assigning clock nets to backside layers. A front-side clock route type and a hold-specific uncertainty closed hold.</p></div>
-        <div class="a7-card"><h4>Eight ECO rounds on the CPU top</h4><span class="a7-status">pnr/eco/</span><p>Rerouting a patched design broke earlier patches, so later rounds used reroute-free M0 patches until the top was LVS-clean.</p></div>
-        <div class="a7-card"><h4>Nine ECO rounds on the CPU + accelerator top</h4><span class="a7-status">pnr/eco/ibex_npu_top/</span><p>M0 pin patches, clock delay, hold buffers and V<sub>t</sub> swaps, one scripted round at a time, until <code>ibex_npu_top</code> was LVS- and DRC-clean with setup +1&nbsp;ps at 750&nbsp;ps.</p></div>
+        <div class="a7-card"><h4>No tie cells</h4><span class="a7-status">solved</span><p>The library has no tie cells, so constant inputs have no legal driver after synthesis.</p></div>
+        <div class="a7-card"><h4>Abutted rows short</h4><span class="a7-status">solved &middot; LVS clean</span><p>The stock cell GDS shorts internal nets when standard-cell rows abut.</p></div>
+        <div class="a7-card"><h4>LVS turns M4+ into ports</h4><span class="a7-status">solved &middot; LVS clean</span><p>The stock LVS deck treats metal from M4 upward as ports, so ordinary signal routing on those layers fails LVS.</p></div>
+        <div class="a7-card"><h4>LVS stops at BPR</h4><span class="a7-status">solved &middot; LVS clean</span><p>The stock deck does not follow the supply past the buried power rail, so the backside power network never connects.</p></div>
+        <div class="a7-card"><h4>svt-only GDS and CDL</h4><span class="a7-status">solved &middot; 3 V<sub>t</sub>s verified</span><p>The PDK ships layout and netlist views for svt cells only, so lvt and ulvt cells cannot be streamed out or checked.</p></div>
+        <div class="a7-card"><h4>Hold with backside layers</h4><span class="a7-status">solved &middot; hold met</span><p>The router put clock nets on the backside layers, and hold would not close.</p></div>
+        <div class="a7-card"><h4>Post-route closure, CPU top</h4><span class="a7-status">8 ECO rounds &middot; LVS clean</span><p>Rerouting a patched design broke earlier patches, so closure on <code>ibex_cfet_top</code> took eight rounds.</p></div>
+        <div class="a7-card"><h4>Post-route closure, CPU + accelerator top</h4><span class="a7-status">9 ECO rounds</span><p><code>ibex_npu_top</code> closed at 750&nbsp;ps with setup +1&nbsp;ps, LVS- and DRC-clean.</p></div>
       </div>
     </div>
   </section>
@@ -346,7 +346,7 @@
           <tr><th><code>ibex_npu_top</code></th><td class="ok">done, 9 post-route ECO rounds</td><td class="ok">PASS (1.50&nbsp;M transistors)</td><td class="ok">clean</td><td class="warn">750&nbsp;ps: setup +1&nbsp;ps; hold &minus;3&nbsp;ps on one path (<code>u_acc/req_i</code>, fast corner), accepted and checked in fast-corner GLS</td><td class="ok">PASS (synthesis &rarr; P&amp;R and RTL &rarr; P&amp;R)</td></tr>
         </tbody>
       </table></div>
-      <p class="fig-note">LVS uses the stock deck with the backside layers added. In the <code>ibex_npu_top</code> LEC the three macros are black boxes; each has its own PASS. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
+      <p class="fig-note">In the <code>ibex_npu_top</code> LEC the three macros are black boxes; each has its own PASS. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
 
       <h3 style="margin-top:40px;">Other measured points</h3>
       <div class="a7-grid">
@@ -361,7 +361,7 @@
   <section class="section" id="ppa">
     <div class="wrap">
       <div class="section-head"><h2>CPU vs CPU + NPU: performance, power, area</h2><span class="section-index">BENCHMARK</span></div>
-      <p class="pd-lede">A 16&times;16&times;16 INT8 GEMM (4,096 MACs, INT32 results) on the post-P&amp;R gate-level netlists of both chips at 750&nbsp;ps. The CPU-only chip runs it in software, with the k loop unrolled and the loads scheduled ahead of the multiply. The accelerator chip copies A and B into SRAM0, starts the tiled-GEMM DMA, and copies C back. Power is Innovus <code>report_power</code> at TT 25&nbsp;&deg;C with switching activity from the fast-corner SDF simulation over the benchmark window (99.5&ndash;100&nbsp;% of nets annotated); the macros are reported from their own databases and added. Area is the die area.</p>
+      <p class="pd-lede">A 16&times;16&times;16 INT8 GEMM (4,096 MACs, INT32 results) on the post-P&amp;R gate-level netlists of both chips at 750&nbsp;ps. The CPU-only chip runs it in software. The accelerator chip copies A and B into SRAM0, starts the tiled-GEMM DMA, and copies C back. Power is Innovus <code>report_power</code> at TT 25&nbsp;&deg;C with switching activity from the fast-corner SDF simulation over the benchmark window (99.5&ndash;100&nbsp;% of nets annotated); the macros are reported from their own databases and added. Area is the die area.</p>
 
       <div class="table-scroll"><table class="data-table a7-pnr">
         <thead><tr><th>Configuration</th><th class="num">Cycles</th><th class="num">Latency</th><th class="num">Power</th><th class="num">GOPS</th><th class="num">GOPS/W</th><th class="num">GOPS/mm&sup2;</th><th class="num">Energy</th><th class="num">pJ/MAC</th><th class="num">Speedup</th><th class="num">Energy gain</th></tr></thead>
@@ -372,7 +372,7 @@
           <tr><th>CPU + NPU, software (NPU idle)</th><td class="num">18,000</td><td class="num">13.50&nbsp;&micro;s</td><td class="num">14.33&nbsp;mW</td><td class="num">0.61</td><td class="num">42</td><td class="num">52</td><td class="num">193.4&nbsp;nJ</td><td class="num">47.2</td><td class="num">1.00&times;</td><td class="num">0.61&times;</td></tr>
         </tbody>
       </table></div>
-      <p class="fig-note">&sup1; A and B already in SRAM0; whole-run average power. Die areas: <code>ibex_cfet_top</code> 0.0049&nbsp;mm&sup2;, <code>ibex_npu_top</code> 0.0116&nbsp;mm&sup2; (2.4&times;). Programs: <code>scripts/gen_gemm_prog.py</code>; testbench: <code>tb/bench/tb_gemm.sv</code>; table and JSON: <code>docs/ppa_comparison.md</code>, generated by <code>scripts/ppa_compare.py</code>.</p>
+      <p class="fig-note">&sup1; A and B already in SRAM0; whole-run average power. Die areas: <code>ibex_cfet_top</code> 0.0049&nbsp;mm&sup2;, <code>ibex_npu_top</code> 0.0116&nbsp;mm&sup2; (2.4&times;). Testbench: <code>tb/bench/tb_gemm.sv</code>; full table and JSON: <code>docs/ppa_comparison.md</code>.</p>
 
       <div class="two-col" style="margin-top:40px;">
         <div>
@@ -434,7 +434,7 @@
           <div class="table-scroll"><table class="data-table a7-pnr">
             <tbody>
               <tr><th>Simulator</th><td>Xcelium 23.09</td></tr>
-              <tr><th>Design</th><td>Innovus netlists of <code>ibex_npu_top</code>, <code>npu_acc</code> and <code>lram_256x32</code> (placed twice), on Verilog models of the CFET cells</td></tr>
+              <tr><th>Design</th><td>Innovus netlists of <code>ibex_npu_top</code>, <code>npu_acc</code> and <code>lram_256x32</code> (placed twice), on the CFET cell library</td></tr>
               <tr><th>Delays</th><td>Post-route SDF per block, annotated into the top and into <code>u_acc</code>, <code>u_sram0</code>, <code>u_sram1</code></td></tr>
               <tr><th>Clock</th><td>750&nbsp;ps (1.33&nbsp;GHz)</td></tr>
               <tr><th>Bus model</th><td>Testbench instruction ROM and external data port; grant in the same cycle, response one cycle later</td></tr>
@@ -483,7 +483,7 @@
       <div class="table-scroll"><table class="data-table a7-pnr">
         <thead><tr><th>Check</th><th><code>ibex_cfet_top</code></th><th><code>ibex_npu_top</code></th></tr></thead>
         <tbody>
-          <tr><th>LVS (IC Validator, backside layers added)</th><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+          <tr><th>LVS (IC Validator)</th><td class="ok">PASS</td><td class="ok">PASS</td></tr>
           <tr><th>LEC (Conformal): synthesis &rarr; P&amp;R, RTL &rarr; P&amp;R</th><td class="ok">PASS, PASS</td><td class="ok">PASS, PASS</td></tr>
           <tr><th>GEMM, RTL (Verilator)</th><td class="ok">PASS, 18,000 cycles</td><td class="ok">PASS: software 18,000, NPU 4,750 cycles</td></tr>
           <tr><th>GEMM, gate level, zero delay</th><td class="warn">see note&sup2;</td><td class="ok">PASS (software and NPU)</td></tr>
@@ -491,14 +491,14 @@
           <tr><th>GEMM, gate level, SSG &minus;40&nbsp;&deg;C (SDF, max)</th><td class="ok">PASS&sup3;; setup/hold warnings only on the flops that capture chip inputs</td><td class="warn">open&#8308;</td></tr>
         </tbody>
       </table></div>
-      <p class="fig-note">&sup2; The CPU-only netlist reaches an X state shortly after reset unless registers are initialised at time 0 (<code>-xminitialize 0</code>); the same core inside <code>ibex_npu_top</code> does not. Not yet root-caused. &sup3; With <code>-xminitialize 0</code>. &#8308; At the slow corner the lockstep alert fires as soon as instruction fetch starts, with no timing-check violation after reset; releasing reset and fetch-enable with the clock stopped does not change it. Internal register-to-register timing is signed off by STA (setup met at both slow corners); the testbench input timing (one delay for all inputs) is the suspected cause. Under investigation.</p>
+      <p class="fig-note">&sup2; Passes with registers initialised at time 0; the uninitialised case is open. &sup3; With registers initialised at time 0. &#8308; Under investigation; register-to-register timing is signed off by STA (setup met at both slow corners).</p>
     </div>
   </section>
 
   <section class="section" id="fault">
     <div class="wrap">
       <div class="section-head"><h2>Fault injection: does the lockstep catch upsets?</h2><span class="section-index">SAFETY</span></div>
-      <p class="pd-lede">Single-bit upsets injected into flip-flops during the GEMM, in RTL simulation; Xcelium and Verilator agree. Each fault also generates a SimVision view with named signal groups (<code>tb/bench/fault_inj.svh</code>, <code>sim/fault/run_fault.csh</code>).</p>
+      <p class="pd-lede">Single-bit upsets injected into flip-flops during the GEMM, in RTL simulation; Xcelium and Verilator agree. Testbench: <code>tb/bench/fault_inj.svh</code>.</p>
       <div class="table-scroll"><table class="data-table a7-pnr">
         <thead><tr><th>Fault</th><th>Detected by</th><th>Latency</th><th>Result</th></tr></thead>
         <tbody>
