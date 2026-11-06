@@ -329,7 +329,7 @@
         <div class="a7-card"><h4>svt-only GDS and CDL</h4><span class="a7-status">solved &middot; 3 V<sub>t</sub>s verified</span><p>The PDK ships layout and netlist views for svt cells only, so lvt and ulvt cells cannot be streamed out or checked.</p></div>
         <div class="a7-card"><h4>Hold with backside layers</h4><span class="a7-status">solved &middot; hold met</span><p>The router put clock nets on the backside layers, and hold would not close.</p></div>
         <div class="a7-card"><h4>Post-route closure, CPU top</h4><span class="a7-status">8 ECO rounds &middot; LVS clean</span><p>Rerouting a patched design broke earlier patches, so closure on <code>ibex_cfet_top</code> took eight rounds.</p></div>
-        <div class="a7-card"><h4>Post-route closure, CPU + accelerator top</h4><span class="a7-status">9 ECO rounds</span><p><code>ibex_npu_top</code> closed at 750&nbsp;ps with setup +1&nbsp;ps, LVS- and DRC-clean.</p></div>
+        <div class="a7-card"><h4>Post-route closure, CPU + accelerator top</h4><span class="a7-status">9 ECO rounds</span><p><code>ibex_npu_top</code> closed at 750&nbsp;ps with setup +1&nbsp;ps, LVS-clean and Innovus DRC-clean.</p></div>
       </div>
     </div>
   </section>
@@ -407,7 +407,7 @@
       <h3 style="margin-top:40px;">What the numbers show</h3>
       <div class="a7-grid">
         <div class="a7-card"><h4>Better on every efficiency metric</h4><span class="a7-status">despite 2.4&times; the area</span><p>3.8&times; faster, 2.5&times; less energy per GEMM, 1.6&times; more GOPS/mm&sup2; and 9.5&times; better energy-delay product, end to end.</p></div>
-        <div class="a7-card"><h4>Bound by data movement</h4><span class="a7-status">3&nbsp;% of array peak</span><p>The 8&times;8 array can do 64 MACs per cycle (171 GOPS) but averages 2 inside the DMA kernel. Each 8&times;8&times;8 tile spends ~96 cycles loading A and B a 32-bit word at a time and ~128 reading the 64 results back, for 8&ndash;16 cycles of compute. The CPU copy loops cost more than the GEMM itself.</p></div>
+        <div class="a7-card"><h4>Bound by data movement</h4><span class="a7-status">3&nbsp;% of array peak</span><p>The 8&times;8 array can do 64 MACs per cycle (171 GOPS) but averages 2 inside the DMA kernel. Each 8&times;8&times;8 tile spends 35 cycles loading A and B a 32-bit word at a time and 192 reading the 64 results back, for 22 cycles of compute. The CPU copy loops cost more than the GEMM itself.</p></div>
         <div class="a7-card"><h4>An idle accelerator is not free</h4><span class="a7-status">+61&nbsp;% energy</span><p>The software GEMM costs 61&nbsp;% more energy on the accelerator chip than on the CPU-only chip: 2.5&nbsp;mW in the idle array and 1.8&nbsp;mW in the two SRAMs. The library has no clock-gating cell, so the macro clock trees toggle all the time.</p></div>
       </div>
     </div>
