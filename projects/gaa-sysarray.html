@@ -196,13 +196,11 @@
   <section class="section" id="cfet">
     <div class="wrap">
       <div class="section-head"><h2>The process: CFET with backside power</h2><span class="section-index">TECHNOLOGY</span></div>
-      <div class="two-col">
-        <div class="prose">
-          <p>A complementary FET stacks the nFET directly on top of the pFET instead of placing them side by side, shrinking the standard-cell footprint. MATRIX-A5 pairs this with backside power delivery: the supply comes up from the back of the wafer through a buried power rail (BPR) and backside metals BSM1&ndash;BSM3, and the front-side metals M0&ndash;M13 carry signals only.</p>
-          <p>The PDK is a research kit, not a production one. The cell library has only x1 flip-flops and no tie, tap, endcap, decap, clock-gating or scan cells, and several of its views needed work-arounds before signoff would run (<a href="#problems">below</a>). At 0.7&nbsp;V the slowest setup corner is the cold one: temperature inversion makes SSG &minus;40&nbsp;&deg;C the worst case.</p>
-        </div>
-        <figure class="a7-plate"><img src="../assets/cfet/cfet-cutaway.webp" alt="Cutaway of a MATRIX-A5 CFET NAND2 cell cut through the channel centre: an N-FET tier with three blue nanosheets stacked above a P-FET tier with three red nanosheets, gates wrapped around each sheet, an inter-tier gate via, M0 on top and buried power rails below" width="1800" height="2200" loading="lazy" style="border-radius:4px;"><figcaption>Rendered from the PDK cell GDS and device model, true scale (tools/cfet-figure)</figcaption></figure>
+      <div class="prose">
+        <p>A complementary FET stacks the nFET directly on top of the pFET instead of placing them side by side, shrinking the standard-cell footprint. MATRIX-A5 pairs this with backside power delivery: the supply comes up from the back of the wafer through a buried power rail (BPR) and backside metals BSM1&ndash;BSM3, and the front-side metals M0&ndash;M13 carry signals only.</p>
+        <p>The PDK is a research kit, not a production one. The cell library has only x1 flip-flops and no tie, tap, endcap, decap, clock-gating or scan cells, and several of its views needed work-arounds before signoff would run (<a href="#problems">below</a>). At 0.7&nbsp;V the slowest setup corner is the cold one: temperature inversion makes SSG &minus;40&nbsp;&deg;C the worst case.</p>
       </div>
+      <figure class="a7-plate" style="margin-top:32px;"><a href="../assets/cfet/cfet-inv-x1.webp"><img src="../assets/cfet/cfet-inv-x1.webp" alt="MATRIX-A5 CFET inverter cell at true scale. a: 3D view with an nFET tier of three nanosheets above a pFET tier of three nanosheets, separate top and bottom gates joined by an inter-tier gate via, M0 on top, and VDD and VSS buried power rails below in the backside dielectric, with backside contacts to both tiers. b: cross-section along the channel. c: cross-section across the gate" width="2400" height="1277" loading="lazy" style="border-radius:4px;"></a><figcaption>gtA5_cfet_11_inv_x1_svt at true scale: layout from the PDK cell GDS, heights from the StarRC ITF, nanosheets from the device models (tools/cfet-figure). a 3D view; b cut along the channel (y&nbsp;=&nbsp;36&nbsp;nm); c cut across the gate (x&nbsp;=&nbsp;39&nbsp;nm)</figcaption></figure>
     </div>
   </section>
 

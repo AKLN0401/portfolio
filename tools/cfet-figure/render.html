@@ -1,92 +1,118 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
-<!-- Renders assets/cfet/cfet-cutaway.webp: a cutaway of the MATRIX-A5 NAND2 x1 cell from the PDK GDS
-     (assets/cfet/cells.js), cut at the channel centre (y = 36 nm) so the nanosheets show. True scale.
-     Serve the portfolio root over http and screenshot #fig at 2x (see make.js). -->
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-html,body{margin:0;background:#0b2240}
-#fig{position:relative;width:900px;height:1100px;background:radial-gradient(120% 90% at 40% 35%,#1b4a7a 0%,#0f3157 45%,#0a2140 100%);overflow:hidden;font-family:"Inter Tight",Helvetica,Arial,sans-serif}
-canvas{position:absolute;inset:0}
-svg{position:absolute;inset:0}
-.t{fill:#fff;font-size:20px;font-weight:600;letter-spacing:.02em}
-.s{fill:#cfe0f2;font-size:15px;font-weight:400}
-.ttl{fill:#fff;font-size:30px;font-weight:400;letter-spacing:.01em}
-</style>
-<script type="importmap">{"imports":{"three":"../../assets/vendor/three/three.module.min.js","three/addons/":"../../assets/vendor/three/addons/"}}</script>
-</head><body><div id="fig"><svg id="ov" width="900" height="1100"></svg></div>
+<!-- Panel a of assets/cfet/cfet-inv-x1.webp: the MATRIX-A5 inv_x1 cell in 3D at true scale.
+     Geometry comes from boxes.json (export_boxes.py). Serve the portfolio root over http and run make.js. -->
+<style>html,body{margin:0;background:#fff}canvas{display:block}#ov{position:absolute;left:0;top:0}</style>
+<script type="importmap">{"imports":{"three":"../../assets/vendor/three/three.module.min.js"}}</script>
+</head><body>
+<div id="wrap" style="position:relative"></div>
 <script type="module">
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { CELLS } from '../../assets/cfet/cells.js';
-const W = 900, H = 1100, c = CELLS.nand2_x1;
-const r = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
-r.setPixelRatio(2); r.setSize(W, H); r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.05;
-document.getElementById('fig').prepend(r.domElement);
-const scene = new THREE.Scene();
-scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.02).texture;
-const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-1, -1.4, 2); scene.add(key);
-const rim = new THREE.DirectionalLight(0x9cc8ff, 0.8); rim.position.set(1.5, 1, 0.6); scene.add(rim);
-scene.add(new THREE.AmbientLight(0x9fb8d8, 0.35));
+const W = 2400, H = 2000;
+const boxes = await (await fetch('boxes.json')).json();
 
-const CUT = 36, X0 = -6, X1 = 123;          // cut at the channel centre; crop to the cell incl. its dummy gates
-const M = (color, o = {}) => new THREE.MeshPhysicalMaterial({ color, metalness: 0.25, roughness: 0.35, clearcoat: 0.6, clearcoatRoughness: 0.25, ...o });
-const mat = {
-  gate: M(0xeaf2fb, { metalness: 0.15, roughness: 0.3, transparent: true, opacity: 0.82 }), dummy: M(0x9fb2c8, { metalness: 0.1, roughness: 0.5 }),
-  nSheet: M(0x34b6ff, { emissive: 0x0b5fa0, emissiveIntensity: 0.6, roughness: 0.25 }),
-  pSheet: M(0xff4d5e, { emissive: 0x8a0f1c, emissiveIntensity: 0.6, roughness: 0.25 }),
-  nSD: M(0x9fd2f5, { roughness: 0.45 }), pSD: M(0xf3a6ae, { roughness: 0.45 }),
-  con: M(0xf4f7fb, { metalness: 0.2, roughness: 0.3 }), via: M(0xd8e1ea, { metalness: 0.2, roughness: 0.3 }),
-  bpr: M(0xe08a4a, { metalness: 0.85, roughness: 0.28 }), m0: M(0xe6a15c, { metalness: 0.85, roughness: 0.3 }),
+const COL = {
+  BPR: 0xb8622e, VBPR: 0xe8954f, VBPR2: 0xe8954f, VSD12: 0xe8954f, VSD: 0xe8954f, VG2: 0xe8954f,
+  ACT: 0xd2d5db, ACT2: 0xd2d5db,
+  GATE: 0x7b80b0, GATE2: 0x7b80b0, VG12: 0x5d6296,
+  SDCON: 0xf4a08f, SDCON2: 0x8fb8f5, M0: 0xf0a35e,
+  INTERTIER: 0xb8eef3, BACKDIEL: 0xdfe3ea,
 };
-const pick = n => n === 'pFET gate' || n === 'nFET gate' ? mat.gate : /dummy/.test(n) ? mat.dummy
-  : n.startsWith('nFET nanosheet') ? mat.nSheet : n.startsWith('pFET nanosheet') ? mat.pSheet
-  : n === 'nFET S/D' ? mat.nSD : n === 'pFET S/D' ? mat.pSD : /contact/.test(n) ? mat.con
-  : n === 'BPR' ? mat.bpr : n === 'M0' ? mat.m0 : mat.via;
-const edges = new THREE.LineBasicMaterial({ color: 0x0b2240, transparent: true, opacity: 0.35 });
-for (const l of c.layers) {
-  const sheet = /nanosheet/.test(l.name);
-  for (let i = 0; i < l.rects.length; i += 4) {
-    let [x0, y0, x1, y1] = l.rects.slice(i, i + 4);
-    x0 = Math.max(x0, X0); x1 = Math.min(x1, X1);
-    // front half of gates, S/D, contacts and M0 removed at the channel centre; sheets, vias and rails left whole.
-    // Small offsets keep coincident cut faces from z-fighting.
-    const cut = / gate$/.test(l.name) ? CUT + 0.3 : /S\/D contact/.test(l.name) ? CUT + 0.8 : /S\/D$/.test(l.name) ? CUT : l.name === 'M0' ? CUT : null;
-    if (cut !== null) y0 = Math.max(y0, cut);
-    if (x1 - x0 < 0.5 || y1 - y0 < 0.5) continue;
-    const g = new THREE.BoxGeometry(x1 - x0, y1 - y0, l.z1 - l.z0); g.translate((x0 + x1) / 2, (y0 + y1) / 2, (l.z0 + l.z1) / 2);
-    const m = new THREE.Mesh(g, pick(l.name)); scene.add(m);
-    m.add(new THREE.LineSegments(new THREE.EdgesGeometry(g), edges));
+const TRANSP = { GATE: 0.5, GATE2: 0.5, INTERTIER: 0.55, BACKDIEL: 0.32 };
+// dielectric slabs from GTA5cfet.itf: bottom_diel + BPR_diel + BOX_diel = 0..118 nm, INTERTIER_diel = 206..236 nm
+boxes.push({ L: 'BACKDIEL', x0: -22.8, y0: -12.3, x1: 100.8, y1: 84.3, z0: 0, z1: 118 });
+boxes.push({ L: 'INTERTIER', x0: -22.5, y0: -2, x1: 100.5, y1: 72, z0: 206, z1: 236 });
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); renderer.setClearColor(0xffffff);
+document.getElementById('wrap').appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const cx = 39, cy = 36, cz = 174;
+const cam = new THREE.OrthographicCamera(-W / 2, W / 2, H / 2, -H / 2, -5000, 5000);
+cam.up.set(0, 0, 1);
+const dir = new THREE.Vector3(-1.0, -1.55, 0.85).normalize();
+cam.position.set(cx + dir.x * 1000, cy + dir.y * 1000, cz + dir.z * 1000);
+cam.lookAt(cx, cy, cz);
+cam.zoom = 4.3; cam.updateProjectionMatrix();
+scene.add(new THREE.AmbientLight(0xffffff, 1.35));
+const d1 = new THREE.DirectionalLight(0xffffff, 1.5); d1.position.set(-300, -500, 800); scene.add(d1);
+const d2 = new THREE.DirectionalLight(0xffffff, 0.5); d2.position.set(400, 200, 300); scene.add(d2);
+for (const b of boxes) {
+  const g = new THREE.BoxGeometry(b.x1 - b.x0, b.y1 - b.y0, b.z1 - b.z0);
+  const t = TRANSP[b.L];
+  const m = new THREE.MeshLambertMaterial({ color: COL[b.L], transparent: !!t, opacity: t || 1, depthWrite: !t });
+  const mesh = new THREE.Mesh(g, m); b.mesh = mesh;
+  mesh.position.set((b.x0 + b.x1) / 2, (b.y0 + b.y1) / 2, (b.z0 + b.z1) / 2);
+  if (t) mesh.renderOrder = (b.L === 'BACKDIEL' || b.L === 'INTERTIER') ? 4 : 2;
+  scene.add(mesh);
+  const e = new THREE.LineSegments(new THREE.EdgesGeometry(g), new THREE.LineBasicMaterial({ color: 0x3a3d48, transparent: true, opacity: t ? 0.3 : 0.45 }));
+  e.position.copy(mesh.position); e.renderOrder = 5; scene.add(e);
+}
+renderer.render(scene, cam);
+
+// labels: [text, box, preferred anchor, side]; each dot moves to the nearest point of that box the camera actually sees
+const proj = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(cam); return [(v.x + 1) / 2 * W, (1 - v.y) / 2 * H]; };
+const find = (L, f = () => true) => boxes.find(b => b.L === L && f(b));
+const L = [
+  ['Front-side M0', find('M0', b => b.y0 > 20), b => [b.x1 - 4, (b.y0 + b.y1) / 2, b.z1], 'R'],
+  ['Gate contact (VG2)', find('VG2'), b => [b.x1, (b.y0 + b.y1) / 2, (b.z0 + b.z1) / 2], 'R'],
+  ['Top gate (GATE2)', find('GATE2', b => b.x0 > 30 && b.x0 < 40), b => [39, b.y0, b.z1 - 6], 'R'],
+  ['nFET nanosheets, top tier (ACT2)', find('ACT2'), b => [-14, b.y0, (b.z0 + b.z1) / 2], 'L'],
+  ['n\u207a S/D contact (SDCON2)', find('SDCON2', b => b.x0 > 40), b => [b.x1, b.y0 + 8, b.z1 - 12], 'R'],
+  ['Inter-tier dielectric', find('INTERTIER'), b => [b.x1 - 3, b.y0, (b.z0 + b.z1) / 2], 'R'],
+  ['Bottom gate (GATE)', find('GATE', b => b.x0 > 30 && b.x0 < 40), b => [39, b.y0, b.z1 - 6], 'R'],
+  ['pFET nanosheets, bottom tier (ACT)', find('ACT'), b => [-14, b.y0, (b.z0 + b.z1) / 2], 'L'],
+  ['p\u207a S/D contact (SDCON)', find('SDCON', b => b.x0 > 40), b => [b.x1, b.y0 + 8, b.z0 + 12], 'R'],
+  ['Backside contact to VDD (VBPR)', find('VBPR'), b => [b.x1, b.y0, (b.z0 + b.z1) / 2], 'R'],
+  ['Backside dielectric', find('BACKDIEL'), b => [b.x1 - 3, b.y0, 70], 'R'],
+  ['Output via to M0 (VSD)', find('VSD'), b => [b.x0, b.y0, b.z1 - 10], 'L'],
+  ['Gate-to-gate via (VG12)', find('VG12'), b => [b.x0, b.y0, b.z0 + 30], 'L'],
+  ['Drain-to-drain via (VSD12)', find('VSD12'), b => [b.x0, b.y0, b.z0 + 40], 'L'],
+  ['Backside contact to VSS (VBPR2)', find('VBPR2'), b => [b.x0, b.y0, b.z0 + 60], 'L'],
+  ['Backside power rail, VDD (BPR)', find('BPR', b => b.y0 > 30), b => [b.x0 + 6, (b.y0 + b.y1) / 2, b.z1], 'L'],
+  ['Backside power rail, VSS (BPR)', find('BPR', b => b.y0 < 0), b => [b.x0 + 8, b.y0, (b.z0 + b.z1) / 2], 'L'],
+];
+
+const rc = new THREE.Raycaster();
+const solid = boxes.filter(b => b.L !== 'BACKDIEL' && b.L !== 'INTERTIER').map(b => b.mesh);
+const slabs = { BACKDIEL: 1, INTERTIER: 1 };
+function firstHit(sx, sy) {
+  rc.setFromCamera(new THREE.Vector2(sx / W * 2 - 1, 1 - sy / H * 2), cam);
+  const h = rc.intersectObjects(solid, false);
+  return h.length ? h[0].object : null;
+}
+function visAnchor(b, pref, name) {
+  if (slabs[b.L]) return proj(...pref);
+  const cands = [];
+  const N = 8;
+  for (let i = 1; i < N; i++) for (let j = 1; j < N; j++) {
+    const u = i / N, v = j / N;
+    cands.push([b.x0, b.y0 + u * (b.y1 - b.y0), b.z0 + v * (b.z1 - b.z0)]);   // -x face
+    cands.push([b.x0 + u * (b.x1 - b.x0), b.y0, b.z0 + v * (b.z1 - b.z0)]);   // -y face
+    cands.push([b.x0 + u * (b.x1 - b.x0), b.y0 + v * (b.y1 - b.y0), b.z1]);   // top face
+  }
+  const d2 = q => (q[0] - pref[0]) ** 2 + (q[1] - pref[1]) ** 2 + (q[2] - pref[2]) ** 2;
+  cands.sort((a, c) => d2(a) - d2(c));
+  for (const q of cands) { const p = proj(...q); if (firstHit(p[0], p[1]) === b.mesh) return p; }
+  console.log('NO VISIBLE ANCHOR for', name); return proj(...pref);
+}
+const ov = document.createElement('canvas'); ov.id = 'ov'; ov.width = W; ov.height = H;
+document.getElementById('wrap').appendChild(ov);
+const c = ov.getContext('2d');
+c.font = '400 34px Inter, "Helvetica Neue", Arial, sans-serif'; c.textBaseline = 'middle';
+for (const side of ['L', 'R']) {
+  const items = L.filter(l => l[3] === side).map(([t, b, a]) => { const p = visAnchor(b, a(b), t); return { t, p, y: p[1] }; });
+  items.sort((a, b) => a.y - b.y);
+  for (let i = 1; i < items.length; i++) items[i].y = Math.max(items[i].y, items[i - 1].y + 56);
+  const xs = items.map(i => i.p[0]);
+  const colX = side === 'R' ? Math.max(...xs) + 120 : Math.min(...xs) - 120;
+  for (const it of items) {
+    c.strokeStyle = '#222'; c.lineWidth = 2.2;
+    c.beginPath(); c.moveTo(it.p[0], it.p[1]); c.lineTo(colX, it.y); c.lineTo(colX + (side === 'R' ? 24 : -24), it.y); c.stroke();
+    c.fillStyle = '#222'; c.beginPath(); c.arc(it.p[0], it.p[1], 5.5, 0, 7); c.fill();
+    c.textAlign = side === 'R' ? 'left' : 'right';
+    c.fillText(it.t, colX + (side === 'R' ? 34 : -34), it.y);
   }
 }
-const cam = new THREE.PerspectiveCamera(20, W / H, 1, 5000); cam.up.set(0, 0, 1);
-const tgt = new THREE.Vector3(58, 46, 180);
-const tgt2 = new THREE.Vector3(58, 40, 170);
-cam.position.copy(tgt2).add(new THREE.Vector3(-300, -880, 360).multiplyScalar(1.32)); cam.lookAt(tgt2);
-cam.setViewOffset(W, H, -10, -55, W, H);
-r.render(scene, cam);
-
-// ---- labels with leader lines (points in nm, projected)
-const P = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(cam); return [(v.x + 1) / 2 * W, (1 - v.y) / 2 * H]; };
-const ov = document.getElementById('ov'); let s = '';
-const lab = (pt, side, ty, t, sub) => {
-  const [px, py] = pt, lx = side === 'L' ? 60 : 610, ex = side === 'L' ? 215 : 600;
-  s += `<line x1="${px}" y1="${py}" x2="${side === 'L' ? ex : ex + 10}" y2="${ty}" stroke="#fff" stroke-width="1.2"/>`;
-  s += `<line x1="${side === 'L' ? ex : ex + 10}" y1="${ty}" x2="${side === 'L' ? lx : lx + 220}" y2="${ty}" stroke="#fff" stroke-width="1.2"/>`;
-  s += `<text class="t" x="${side === 'L' ? lx : lx + 12}" y="${ty - 8}">${t}</text>`;
-  if (sub) s += `<text class="s" x="${side === 'L' ? lx : lx + 12}" y="${ty + 20}">${sub}</text>`;
-};
-const ns = c.layers.find(l => l.name === 'nFET nanosheet 2'), ps = c.layers.find(l => l.name === 'pFET nanosheet 2');
-lab(P(33, 31, (ns.z0 + ns.z1) / 2), 'L', 400, 'N-FET', 'top tier');
-lab(P(33, 31, (ps.z0 + ps.z1) / 2), 'L', 650, 'P-FET', 'bottom tier');
-lab(P(-10, 0, 21), 'L', 880, 'Buried power rails', 'VDD / VSS from the backside');
-lab(P(84, 50, 301), 'R', 330, 'Gate all around', '3 sheets per device');
-lab(P(44, 19, 210), 'R', 520, 'Inter-tier gate via', 'VG12 ties the two gates');
-lab(P(64, 64, 348), 'R', 190, 'M0', 'front side: signals only');
-lab(P(98, 7, 150), 'R', 740, 'Backside power via', 'rail up to the top-tier contact');
-s += `<text class="ttl" x="450" y="62" text-anchor="middle">Complementary FET (CFET), MATRIX-A5</text>`;
-s += `<text class="s" x="450" y="92" text-anchor="middle">NAND2 x1 from the PDK GDS, cut through the channel centre · true scale</text>`;
-s += `<text class="s" x="450" y="1072" text-anchor="middle" style="font-size:13px;fill:#9fb8d8">Sheets 6 nm thick, 10 nm apart, 11 nm wide · gate length 12 nm · cell 117 &#215; 72 nm</text>`;
-ov.innerHTML = s;
 window.done = true;
 </script></body></html>
