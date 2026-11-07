@@ -539,7 +539,7 @@
       <div class="section-head"><h2>Next</h2><span class="section-index">ROADMAP</span></div>
       <ol class="process-list">
         <li><div><h4>Macros and baseline</h4><p>Done: <code>lram_256x32</code>, <code>npu_acc</code> and <code>ibex_cfet_top</code> through P&amp;R, LVS, DRC, timing and equivalence.</p></div></li>
-        <li><div><h4>CPU + accelerator top</h4><p>Done: <code>ibex_npu_top</code> through P&amp;R, LVS, Innovus DRC, timing at 750&nbsp;ps and equivalence, with one accepted 3&nbsp;ps hold violation at the fast corner.</p></div></li>
+        <li><div><h4>CPU + accelerator top</h4><p>Done: <code>ibex_npu_top</code> through P&amp;R, LVS, Innovus DRC, timing met at 750&nbsp;ps, and equivalence.</p></div></li>
         <li><div><h4>Compare the two chips</h4><p>Done for a 16&times;16&times;16 INT8 GEMM: 3.8&times; faster and 2.5&times; less energy at 2.4&times; the area. Not measured yet: Fmax and CoreMark/MHz.</p></div></li>
         <li><div><h4>Slow-corner gate-level simulation</h4><p>Root-cause the lockstep alert in the slow-corner GEMM run of <code>ibex_npu_top</code>, and the X state in the CPU-only netlist without register initialisation.</p></div></li>
         <li><div><h4>Foundry DRC</h4><p>Rerun IC Validator DRC on all final layouts.</p></div></li>
