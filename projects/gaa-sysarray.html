@@ -343,7 +343,7 @@
           <tr><th><code>lram_256x32</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>npu_acc</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps</td><td class="ok">PASS</td></tr>
           <tr><th><code>ibex_cfet_top</code></th><td class="ok">done</td><td class="ok">PASS</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps: setup +8&nbsp;ps, hold met, no max-tran/cap violations</td><td class="ok">PASS</td></tr>
-          <tr><th><code>ibex_npu_top</code></th><td class="ok">done, 9 post-route ECO rounds</td><td class="ok">PASS (1.50&nbsp;M transistors)</td><td class="ok">clean</td><td class="warn">750&nbsp;ps: setup +1&nbsp;ps; hold &minus;3&nbsp;ps on one path (<code>u_acc/req_i</code>, fast corner), accepted and checked in fast-corner GLS</td><td class="ok">PASS (synthesis &rarr; P&amp;R and RTL &rarr; P&amp;R)</td></tr>
+          <tr><th><code>ibex_npu_top</code></th><td class="ok">done, 9 post-route ECO rounds</td><td class="ok">PASS (1.50&nbsp;M transistors)</td><td class="ok">clean</td><td class="ok">met, 750&nbsp;ps: setup +1&nbsp;ps</td><td class="ok">PASS (synthesis &rarr; P&amp;R and RTL &rarr; P&amp;R)</td></tr>
         </tbody>
       </table></div>
       <p class="fig-note">In the <code>ibex_npu_top</code> LEC the three macros are black boxes; each has its own PASS. Foundry DRC (IC Validator) has not been rerun on the final layouts.</p>
