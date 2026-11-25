@@ -50,6 +50,7 @@ def footer(pre):
       <li><a href="https://github.com/AKLN0401" target="_blank" rel="noopener"><span>GitHub</span><span>AKLN0401</span></a></li>
       <li><a href="{pre}assets/khoi-nguyen-cv.pdf"><span>R&eacute;sum&eacute;</span><span>PDF</span></a></li>
     </ul>
+    <p class="footer-copy"><button type="button" class="copy-email" data-email="anhkhoi_2005@icloud.com">Copy email address</button> <span class="copy-status" role="status" aria-live="polite"></span></p>
     <div class="footer-base">
       <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
       <span>Winnipeg, Manitoba</span>

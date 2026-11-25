@@ -80,6 +80,7 @@
           <a class="btn btn-primary" href="#work">Selected work</a>
           <a class="btn" href="assets/khoi-nguyen-cv.pdf">R&eacute;sum&eacute; (PDF)</a>
         </div>
+        <p class="home-start">Short on time? Start with the <a href="projects/gaa-sysarray.html">RISC-V accelerator on CFET</a>, then the <a href="research.html#delay-fault">12&nbsp;nm test chip</a>.</p>
       </div>
     </div>
   </section>
@@ -88,18 +89,20 @@
     <div class="wrap">
       <div class="work-head">
         <h2 id="work-title">Selected work</h2>
-        <span class="label">Seven projects &middot; 2025&ndash;2026</span>
+        <span class="label">2025&ndash;2026</span>
       </div>
 
-      <div class="work-grid">
+      <p class="work-jump">Jump to <a href="#asic">ASIC &amp; physical design <span>(4)</span></a> <a href="#fab">Fabrication &amp; printed devices <span>(3)</span></a></p>
 
+      <h3 class="work-group" id="asic">ASIC &amp; physical design</h3>
+      <div class="work-grid">
         <a class="card card--l" href="projects/gaa-sysarray.html">
           <figure class="card-media card-media--plate">
             <img src="assets/gaa/chip3d.webp" width="1190" height="700" loading="lazy" decoding="async"
                  alt="ibex_npu_top rendered in 3D from the routed GDS: the CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" />
           </figure>
+          <h4><span>RISC-V + INT8 systolic array on a CFET PDK</span></h4>
           <p class="card-meta"><span>MATRIX-A5 CFET &middot; RTL &rarr; GDS</span><span class="status is-live">In progress</span></p>
-          <h3><span>RISC-V + INT8 systolic array on a CFET PDK</span></h3>
           <p class="card-sum">A lowRISC Ibex core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on a research complementary-FET kit with backside power delivery. Built twice, with and without the accelerator.</p>
           <ul class="card-facts">
             <li>LVS, Innovus DRC, LEC pass at 750&nbsp;ps</li>
@@ -107,38 +110,26 @@
             <li>GEMM 3.8&times; faster, 2.5&times; less energy</li>
           </ul>
         </a>
-
-        <a class="card card--s" href="research.html#fabrication">
-          <figure class="card-media">
-            <img src="assets/lab-litho-bay.webp" width="1000" height="1333" loading="lazy" decoding="async"
-                 alt="The photolithography bay under yellow filtered light, with process benches along both walls" />
+        <a class="card card--s" href="research.html#delay-fault">
+          <figure class="card-media card-media--plate">
+            <img src="assets/riscv/core-routed.webp" width="666" height="651" loading="lazy" decoding="async"
+                 alt="Innovus view of the routed RISC-V core block from the 12 nm test chip" />
           </figure>
-          <p class="card-meta"><span>Class 10 cleanroom</span><span class="status">2025&ndash;2026</span></p>
-          <h3><span>Cleanroom fabrication</span></h3>
-          <p class="card-sum">A year at the Nano-Systems Fabrication Laboratory running CMOS and MEMS process steps on 6-inch wafers: DUV lithography, ion implantation, ICP-RIE, PVD and CVD.</p>
-        </a>
-
-        <a class="card card--m" href="research.html#delay-fault">
-          <figure class="card-media card-media--sheet">
-            <img src="assets/cards/dft.webp" width="1400" height="916" loading="lazy" decoding="async"
-                 alt="Timing diagram: the same test vectors run twice; with extra launch delay a healthy path still meets setup while a path with a delay fault crosses into the setup window and captures a different value" />
-          </figure>
+          <h4><span>Delay-fault detection on a 12&nbsp;nm RISC-V test chip</span></h4>
           <p class="card-meta"><span>GF 12LP+ &middot; DFT</span><span class="status is-live">Submitted for fab</span></p>
-          <h3><span>Delay-fault detection on a 12&nbsp;nm RISC-V test chip</span></h3>
           <p class="card-sum">University of Waterloo, CMOS Design and Reliability Group. Variable D-Q delay flip-flops for transition-fault testing on an RV32IM core; I owned my CPU block&rsquo;s RTL-to-GDSII flow and its DFT.</p>
           <ul class="card-facts">
             <li>97.5% stuck-at coverage</li>
             <li>0 TNS at 1&nbsp;GHz</li>
           </ul>
         </a>
-
         <a class="card card--m" href="projects/npu-tapeout.html">
           <figure class="card-media card-media--plate">
             <img src="assets/npu/close3d.webp" width="1400" height="900" loading="lazy" decoding="async"
                  alt="Close 3D view of the routed NPU tile in the SkyWater SKY130 layer stack" />
           </figure>
+          <h4><span>One-tile int4 NPU for Tiny Tapeout</span></h4>
           <p class="card-meta"><span>SKY130 &middot; Tiny Tapeout</span><span class="status is-live">Signed off</span></p>
-          <h3><span>One-tile int4 NPU for Tiny Tapeout</span></h3>
           <p class="card-sum">A 2&times;2 int4 MAC array with per-row clock gating and a 96-flop scan chain, from RTL to a signed-off layout in one 161&nbsp;&times;&nbsp;112&nbsp;&micro;m tile with an open-source flow. Target shuttle TTSKY26d.</p>
           <ul class="card-facts">
             <li>DRC, LVS clean</li>
@@ -146,42 +137,51 @@
             <li>Clock gating saves 45&ndash;59%</li>
           </ul>
         </a>
-
-        <a class="card card--t" href="projects/nvdla.html">
+        <a class="card card--m" href="projects/nvdla.html">
           <figure class="card-media card-media--sheet">
             <img src="assets/cards/nvdla.webp" width="1400" height="1237" loading="lazy" decoding="async"
                  alt="Planned NVDLA floorplan drawn to scale: partition C with two mirrored SRAM banks on top, partition O in the middle, P and A below, and the two mirrored CMAC partitions MA and MB along the sides" />
           </figure>
+          <h4><span>NVIDIA NVDLA in 12&nbsp;nm FinFET</span></h4>
           <p class="card-meta"><span>12&nbsp;nm FinFET &middot; 1.1&nbsp;GHz</span><span class="status">In progress</span></p>
-          <h3><span>NVIDIA NVDLA in 12&nbsp;nm FinFET</span></h3>
           <p class="card-sum">NVIDIA&rsquo;s open-source deep-learning accelerator, cut into five hard-macro partitions in a mirror-symmetric floorplan, with three threshold-voltage flavours, clock gating and full scan.</p>
           <ul class="card-facts">
             <li>All 5 partitions synthesized at 0.909&nbsp;ns</li>
             <li>Block place-and-route under way</li>
           </ul>
         </a>
+      </div>
 
+      <h3 class="work-group" id="fab">Fabrication &amp; printed devices</h3>
+      <div class="work-grid">
         <a class="card card--t" href="projects/mems-switch.html">
           <figure class="card-media card-media--sheet">
             <img src="assets/mems/fig3-fabricated.webp" width="438" height="341" loading="lazy" decoding="async"
                  alt="Photograph of the fabricated printed switch on polyimide, with the switch at the centre and printed contact pads, 5 mm scale bar" />
           </figure>
+          <h4><span>Printed Lorentz-force MEMS switch</span></h4>
           <p class="card-meta"><span>Ag on polyimide</span><span class="status is-live">EUROSENSORS 2026</span></p>
-          <h3><span>Printed Lorentz-force MEMS switch</span></h3>
           <p class="card-sum">Printed in silver on flexible polyimide and released by O<sub>2</sub> plasma etch. An electrostatic hold-down keeps it closed after the drive current turns off.</p>
         </a>
-
+        <a class="card card--t" href="research.html#fabrication">
+          <figure class="card-media">
+            <img src="assets/lab-litho-bay.webp" width="1000" height="1333" loading="lazy" decoding="async"
+                 alt="The photolithography bay under yellow filtered light, with process benches along both walls" />
+          </figure>
+          <h4><span>Cleanroom fabrication</span></h4>
+          <p class="card-meta"><span>Class 10 cleanroom</span><span class="status">2025&ndash;2026</span></p>
+          <p class="card-sum">A year at the Nano-Systems Fabrication Laboratory running CMOS and MEMS process steps on 6-inch wafers: DUV lithography, ion implantation, ICP-RIE, PVD and CVD.</p>
+        </a>
         <a class="card card--t" href="projects/glove.html">
           <figure class="card-media">
-            <img src="assets/glove/01_glove_back.jpg" width="775" height="1400" loading="lazy" decoding="async"
-                 style="object-position:50% 30%"
-                 alt="Render of the glove, back of hand, with printed sensors over the knuckles and a wrist module" />
+            <img src="assets/glove/09_printing_photo.webp" width="933" height="1400" loading="lazy" decoding="async"
+                 style="object-position:50% 62%"
+                 alt="The Voltera NOVA printing serpentine sensor traces onto film" />
           </figure>
-          <p class="card-meta"><span>Printed electronics &middot; render</span><span class="status">In progress</span></p>
-          <h3><span>Tap-to-click glove</span></h3>
+          <h4><span>Tap-to-click glove</span></h4>
+          <p class="card-meta"><span>Printed electronics &middot; capstone</span><span class="status">In progress</span></p>
           <p class="card-sum">Silver and carbon sensors printed on stretchable TPU turn thumb taps into mouse clicks. ECE 4600 capstone; my part is sensor fabrication and hardware design.</p>
         </a>
-
       </div>
     </div>
   </section>
@@ -200,6 +200,7 @@
       <li><a href="https://github.com/AKLN0401" target="_blank" rel="noopener"><span>GitHub</span><span>AKLN0401</span></a></li>
       <li><a href="assets/khoi-nguyen-cv.pdf"><span>R&eacute;sum&eacute;</span><span>PDF</span></a></li>
     </ul>
+    <p class="footer-copy"><button type="button" class="copy-email" data-email="anhkhoi_2005@icloud.com">Copy email address</button> <span class="copy-status" role="status" aria-live="polite"></span></p>
     <div class="footer-base">
       <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
       <span>Winnipeg, Manitoba</span>

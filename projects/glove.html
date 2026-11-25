@@ -102,7 +102,7 @@
       </div>
       <div>
         <div class="viewer">
-          <model-viewer id="glove-viewer" src="../assets/glove/glove.glb" poster="../assets/glove/01_glove_back.jpg" alt="3D model of the glove, back of hand, with printed sensors over the knuckles and a wrist module" camera-controls touch-action="pan-y" auto-rotate auto-rotate-delay="1500" rotation-per-second="18deg" shadow-intensity="0.6" exposure="1" interaction-prompt="auto" loading="eager"></model-viewer>
+          <model-viewer id="glove-viewer" src="../assets/glove/glove.glb" poster="../assets/glove/01_glove_back.jpg" alt="3D model of the glove, back of hand, with printed sensors over the knuckles and a wrist module" camera-controls touch-action="pan-y" rotation-per-second="18deg" shadow-intensity="0.6" exposure="1" interaction-prompt="auto" loading="eager"></model-viewer>
           <div class="viewer-bar" role="group" aria-label="Choose 3D model">
             <button type="button" aria-pressed="true" data-src="../assets/glove/glove.glb" data-alt="3D model of the glove, back of hand, with printed sensors over the knuckles and a wrist module">Glove</button>
             <button type="button" aria-pressed="false" data-src="../assets/glove/exploded.glb" data-alt="Exploded 3D model of one printed strain sensor, layer by layer">Sensor layers</button>
@@ -114,7 +114,7 @@
     </div>
   </section>
 
-  <section class="section" style="border-top:none; padding-top:0;">
+  <section id="from-a-finger-tap-to-a-click" class="section" style="border-top:none; padding-top:0;">
     <div class="wrap">
       <div class="section-head"><h2>From a finger tap to a click</h2><span class="section-index">SIGNAL PATH</span></div>
       <ol class="gl-steps">
@@ -129,7 +129,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section id="gestures" class="section">
     <div class="wrap two-col">
       <div>
         <div class="section-head"><h2>Gestures</h2><span class="section-index">INPUT MAP</span></div>
@@ -163,7 +163,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section id="the-printed-sensor" class="section">
     <div class="wrap two-col">
       <div class="prose">
         <div class="section-head"><h2>The printed sensor</h2><span class="section-index">MATERIALS</span></div>
@@ -186,11 +186,15 @@
           <figure><img src="../assets/glove/06_printing_on_voltera.jpg" alt="Render of the Voltera NOVA dispenser printing a silver trace on film" loading="lazy" decoding="async" /><figcaption>Printing a silver trace on the Voltera NOVA</figcaption></figure>
                   <figure><img src="../assets/glove/05_sensor_layers_exploded.jpg" alt="Render of one printed strain sensor exploded layer by layer" loading="lazy" decoding="async" /><figcaption>Sensor layers, exploded (render)</figcaption></figure>
         </div>
+        <div class="cs-gallery" style="margin-top:32px;">
+          <figure class="cs-figure"><img src="../assets/glove/09_printing_photo.webp" width="933" height="1400" loading="lazy" decoding="async" alt="Photograph of the Voltera NOVA dispensing head printing serpentine sensor traces with square contact pads onto a white film" /><figcaption><span>Printing serpentine sensors on the Voltera NOVA</span><span>Photo</span></figcaption></figure>
+          <figure class="cs-figure"><img src="../assets/glove/10_ink_prep_photo.webp" width="933" height="1400" loading="lazy" decoding="async" alt="Photograph of a gloved hand preparing conductive ink at a lab bench, with an ink jar, wipes and wash bottles" /><figcaption><span>Preparing conductive ink at the bench</span><span>Photo</span></figcaption></figure>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section id="animation" class="section">
     <div class="wrap two-col">
       <div>
         <div class="section-head"><h2>Animation</h2><span class="section-index">BLENDER</span></div>
@@ -231,6 +235,7 @@
       <li><a href="https://github.com/AKLN0401" target="_blank" rel="noopener"><span>GitHub</span><span>AKLN0401</span></a></li>
       <li><a href="../assets/khoi-nguyen-cv.pdf"><span>R&eacute;sum&eacute;</span><span>PDF</span></a></li>
     </ul>
+    <p class="footer-copy"><button type="button" class="copy-email" data-email="anhkhoi_2005@icloud.com">Copy email address</button> <span class="copy-status" role="status" aria-live="polite"></span></p>
     <div class="footer-base">
       <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
       <span>Winnipeg, Manitoba</span>
