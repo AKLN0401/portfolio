@@ -32,7 +32,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20261125" />
+<link rel="stylesheet" href="css/style.css?v=20261125b" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -160,7 +160,8 @@
         </a>
         -->
 
-        <a class="proj" href="projects/gaa-sysarray.html">
+        <a class="proj has-media" href="projects/gaa-sysarray.html">
+          <figure class="proj-media is-plate"><img src="assets/gaa/chip3d.webp" width="1190" height="700" loading="lazy" decoding="async" alt="ibex_npu_top rendered in 3D from the routed GDS: the CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" /></figure>
           <div class="proj-head">
             <span class="proj-num">01</span>
             <h3>RISC-V + INT8 Systolic Array on a CFET PDK</h3>
@@ -176,7 +177,8 @@
           <span class="proj-go">Case study &rarr;</span>
         </a>
 
-        <a class="proj" href="projects/nvdla.html">
+        <a class="proj has-media" href="projects/nvdla.html">
+          <figure class="proj-media is-sheet"><img src="assets/cards/nvdla.webp" width="1400" height="1237" loading="lazy" decoding="async" alt="Planned NVDLA floorplan drawn to scale: partition C with two mirrored SRAM banks on top, partition O in the middle, P and A below, and the two mirrored CMAC partitions along the sides" /></figure>
           <div class="proj-head">
             <span class="proj-num">02</span>
             <h3>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h3>
@@ -192,7 +194,8 @@
           <span class="proj-go">Case study &rarr;</span>
         </a>
 
-        <a class="proj" href="projects/glove.html">
+        <a class="proj has-media" href="projects/glove.html">
+          <figure class="proj-media"><img src="assets/glove/09_printing_photo.webp" width="933" height="1400" loading="lazy" decoding="async" style="object-position:50% 62%" alt="The Voltera NOVA printing serpentine sensor traces onto film" /></figure>
           <div class="proj-head">
             <span class="proj-num">03</span>
             <h3>Tap-to-Click Glove, Printed Sensors</h3>
@@ -212,7 +215,8 @@
 
       <p class="label proj-group is-done" style="margin:48px 0 12px;">Completed</p>
       <div class="proj-list">
-        <a class="proj" href="projects/npu-tapeout.html">
+        <a class="proj has-media" href="projects/npu-tapeout.html">
+          <figure class="proj-media is-sheet"><img src="assets/npu/gds.webp" width="1400" height="968" loading="lazy" decoding="async" alt="Top-down KLayout view of the final NPU tile GDS, all layers in SKY130 colours" /></figure>
           <div class="proj-head">
             <span class="proj-num">04</span>
             <h3>One-Tile int4 NPU (2x2 MAC Array) for Tiny Tapeout</h3>
@@ -228,7 +232,8 @@
           </dl>
           <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="proj" href="projects/mems-switch.html">
+        <a class="proj has-media" href="projects/mems-switch.html">
+          <figure class="proj-media is-sheet"><img src="assets/mems/fig3-fabricated.webp" width="438" height="341" loading="lazy" decoding="async" alt="Photograph of the fabricated printed switch on polyimide, with the switch at the centre and printed contact pads, 5 mm scale bar" /></figure>
           <div class="proj-head">
             <span class="proj-num">05</span>
             <h3>Printed Flexible Lorentz-Force MEMS Switch with Electrostatic Hold-Down</h3>
@@ -243,36 +248,21 @@
           </dl>
           <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="proj" href="projects/riscv.html">
+        <a class="proj has-media" href="research.html#delay-fault">
+          <figure class="proj-media is-plate"><img src="assets/riscv/chip-layout.webp" width="880" height="1090" loading="lazy" decoding="async" alt="Full layout of the 12 nm RISC-V test chip, with the core region in the centre and the I/O ring around the edge" /></figure>
           <div class="proj-head">
             <span class="proj-num">06</span>
-            <h3>RISC-V Fault Detection</h3>
-            <span class="proj-cat">DFT &middot; Reliability &middot; Research</span>
+            <h3>Delay-Fault Detection on a 12&nbsp;nm RISC-V Test Chip</h3>
+            <span class="proj-cat">DFT &middot; Reliability &middot; Research &middot; Submitted for fabrication</span>
           </div>
-          <p class="proj-sum">Evaluated hardware fault-detection approaches on an RV32IM processor: DFT instrumentation, ATPG coverage, timing closure, and the area and power cost against the un-instrumented core.</p>
+          <p class="proj-sum">With the CMOS Design and Reliability Group at the University of Waterloo: variable D-Q delay flip-flop fault-detection architectures for transition-fault testing on an RV32IM core, compared with established schemes on 12&nbsp;nm benchmark circuits and RISC-V blocks under identical synthesis, timing and operating conditions. On the 2-core test chip I owned my CPU block&rsquo;s RTL-to-GDSII flow and its DFT.</p>
           <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>RV32IM RISC-V &middot; 12&nbsp;nm FinFET</dd></div>
-            <div><dt>Flow</dt><dd>DFT instrumentation &middot; ATPG &middot; STA &middot; area/power analysis</dd></div>
-            <div><dt>Group</dt><dd>CMOS Design and Reliability Group, Waterloo</dd></div>
-            <div><dt>Results</dt><dd>Coverage, area and power figures held until publication</dd></div>
+            <div><dt>Technology</dt><dd>GF 12LP+ (12&nbsp;nm FinFET) &middot; 2-core RV32IM test chip</dd></div>
+            <div><dt>Tools</dt><dd>Genus &middot; Innovus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Calibre</dd></div>
+            <div><dt>Results</dt><dd>97.5% stuck-at &middot; 97.8&ndash;97.9% transition-fault coverage &middot; 0 TNS at 1&nbsp;GHz</dd></div>
+            <div><dt>Status</dt><dd>Submitted for fabrication, Calibre DRC/LVS clean &middot; overhead figures held until publication</dd></div>
           </dl>
-          <span class="proj-go">Case study &rarr;</span>
-        </a>
-
-        <a class="proj" href="projects/dft.html">
-          <div class="proj-head">
-            <span class="proj-num">07</span>
-            <h3>Error-Detection DFT Architectures</h3>
-            <span class="proj-cat">DFT &middot; Verification &middot; Research</span>
-          </div>
-          <p class="proj-sum">Designed and compared fault-detection architectures on 12&nbsp;nm benchmark circuits and RISC-V blocks, under identical synthesis, timing and operating conditions, from RTL through physical implementation.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; benchmark circuits &middot; RISC-V</dd></div>
-            <div><dt>Tools</dt><dd>Genus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Innovus</dd></div>
-            <div><dt>Flow</dt><dd>RTL &rarr; synthesis &rarr; DFT insertion &rarr; simulation &rarr; equivalence &rarr; STA &rarr; P&amp;R</dd></div>
-            <div><dt>Results</dt><dd>Per-scheme overhead held until publication</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
+          <span class="proj-go">Research page &rarr;</span>
         </a>
       </div>
     </div>

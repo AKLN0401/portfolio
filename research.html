@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20261125" />
+<link rel="stylesheet" href="css/style.css?v=20261125b" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -186,7 +186,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="delay-fault">
     <div class="wrap">
       <div class="section-head">
         <h2>Delay-fault detection on a 12-nm RISC-V core</h2>
@@ -207,6 +207,11 @@
               <tr><th>Process node</th><td>12 nm FinFET</td></tr>
               <tr><th>Target</th><td>RV32IM RISC-V core</td></tr>
               <tr><th>Technique</th><td>Variable D-Q delay flip-flop, transition-fault testing</td></tr>
+              <tr><th>Targets</th><td>12&nbsp;nm benchmark circuits &middot; RV32IM RISC-V blocks</td></tr>
+              <tr><th>Flow</th><td>RTL &rarr; synthesis &rarr; DFT insertion &rarr; simulation &rarr; equivalence &rarr; STA &rarr; place-and-route</td></tr>
+              <tr><th>Tools</th><td>Genus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Innovus</td></tr>
+              <tr><th>Test chip</th><td>2-core RV32IM, GF 12LP+, submitted for fabrication, Calibre DRC/LVS clean</td></tr>
+              <tr><th>Coverage</th><td>97.5% stuck-at &middot; 97.8&ndash;97.9% transition fault (Modus ATPG)</td></tr>
             </tbody>
           </table>
         </div>
