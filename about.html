@@ -9,7 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-<meta name="theme-color" content="#f4f4f2" />
+<meta name="theme-color" content="#f4f2ed" />
 <meta name="author" content="Khoi Nguyen" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
@@ -28,7 +28,7 @@
 <meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og/about.png?v=20261004" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css?v=20261125" />
 </head>
 <body>
@@ -38,38 +38,46 @@
   <div class="wrap">
     <a class="logo" href="index.html">
       <strong>Khoi Nguyen</strong>
-      <span>Digital IC &middot; ASIC physical design</span>
+      <span>Digital IC / ASIC · EE, U of Manitoba</span>
     </a>
     <nav aria-label="Primary">
       <ul class="nav-list" id="nav-list">
-        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#fabrication">Fabrication</a></li>
         <li><a href="research.html">Research</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
         <li><a href="about.html" aria-current="page">About</a></li>
-        <li><a class="nav-cv" href="assets/khoi-nguyen-cv.pdf">R&eacute;sum&eacute;</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a class="nav-cv" href="assets/khoi-nguyen-cv.pdf">Résumé</a></li>
       </ul>
     </nav>
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-list">
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
       <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
     </button>
   </div>
 </header>
 
 <main id="main">
-
-  <section class="about-hero">
+  <section class="page-hero">
     <div class="wrap">
       <p class="label">About</p>
       <h1>What happens between a device on a wafer and a working system.</h1>
-      <div class="about-body">
+    </div>
+  </section>
+
+  <section class="section" style="border-top: none; padding-top: 0;">
+    <div class="wrap about-columns">
       <div class="prose">
         <p>I am interested in what happens between a device on a wafer and a working hardware system. That has led me toward digital IC design first, and toward semiconductor fabrication alongside it — I like being able to trace a problem from a transistor's physical behavior all the way up to how a chip performs under load.</p>
         <p>I'm a fourth-year electrical engineering student at the University of Manitoba. From April to September 2026 I was an ASIC design co-op and visiting research fellow in Prof. Manoj Sachdev's CMOS Design and Reliability Group at the University of Waterloo, submitting a 2-core RV32IM test chip in GF 12LP+ (12-nm FinFET), owning my CPU block's RTL-to-GDSII flow, architecting delay-fault and timing-error detection flip-flops, and closing DFT with Modus. Before that, from May 2025 to April 2026, I was a student researcher at the Nano-Systems Fabrication Laboratory at Manitoba, running end-to-end CMOS and MEMS fabrication and 200-nm DUV lithography and etch process development in a Class 10 cleanroom.</p>
         <p>I care about the reliability side of hardware as much as the design side. A circuit that works in simulation and a circuit that survives years of operation are different problems, and a lot of my project work — DFT architectures, delay-fault detection, timing closure under realistic conditions — sits in that gap.</p>
         <p>Outside of coursework and lab hours, I spend time reading process and device physics papers, rebuilding flows I don't fully understand yet until I do, and looking for the next project that forces me to learn a new tool in the ASIC or fabrication stack.</p>
       </div>
-      </div>
-      <div class="about-side">
-        <p class="label" style="margin-bottom:12px;">Interests</p>
+
+      <div>
+        <p class="label" style="margin-bottom: 16px;">Interests</p>
         <ul class="interest-list">
           <li><span>ASIC design &amp; physical design</span><span>Digital</span></li>
           <li><span>Hardware reliability &amp; test</span><span>DFT</span></li>
@@ -81,59 +89,13 @@
     </div>
   </section>
 
-  <section class="section" id="experience">
+  <section class="section">
     <div class="wrap">
-      <div class="section-head"><h2>Experience</h2><span class="section-index">ASIC &amp; fabrication</span></div>
-      <div class="exp-list">
-        <article class="exp-item">
-          <div class="exp-when">Apr 2026 &ndash; Sep 2026<br />Waterloo, ON</div>
-          <div>
-            <h3 class="exp-role">ASIC Design Co-op / Visiting Research Fellow</h3>
-            <p class="exp-org">CMOS Design and Reliability Group, University of Waterloo &mdash; Prof. Manoj Sachdev</p>
-            <ul class="exp-points">
-              <li>Submitted a 2-core RV32IM test chip for fabrication in GF 12LP+ (12nm FinFET), with Calibre DRC/LVS clean. Owned my CPU block&rsquo;s full RTL-to-GDSII flow (Genus, Innovus, Joules, Modus).</li>
-              <li>Architected 6 variable D-Q delay flip-flop fault-detection architectures with custom scan chain/DFF designs for delay-fault and timing-error detection.</li>
-              <li>Ensured testability of the 12nm tape-out test chip with Cadence Modus DFT: scan insertion, ATPG and fault-simulation debug, reaching 97.5% stuck-at and 97.8&ndash;97.9% transition-fault coverage.</li>
-            </ul>
-            <p class="exp-tools">Genus &middot; Innovus &middot; Joules &middot; Modus &middot; Calibre</p>
-          </div>
-        </article>
-
-        <article class="exp-item">
-          <div class="exp-when">May 2025 &ndash; Apr 2026<br />Winnipeg, MB</div>
-          <div>
-            <h3 class="exp-role">Student Researcher</h3>
-            <p class="exp-org">Nano-Systems Fabrication Laboratory (Class 10 cleanroom), University of Manitoba</p>
-            <ul class="exp-points">
-              <li>Executed end-to-end CMOS and MEMS fabrication in a Class 10 cleanroom, including 200&nbsp;nm DUV photolithography, ion implantation, RIE/ICP etching, and PVD/CVD thin-film deposition.</li>
-              <li>Developed and optimized 200&nbsp;nm DUV lithography processes (alignment, exposure dose, focus tuning), achieving high pattern fidelity and sub-micron critical dimension (CD) control.</li>
-              <li>Optimized plasma etch and lithography recipes, reducing defect rate by 30&ndash;50% and improving etch throughput by 40%.</li>
-            </ul>
-          </div>
-        </article>
+      <div class="section-head">
+        <h2>Education</h2>
+        <span class="section-index">01 / RECORD</span>
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="publications">
-    <div class="wrap">
-      <div class="section-head"><h2>Publications</h2><span class="section-index">Peer-reviewed</span></div>
-      <ol class="pub-list">
-        <li>
-          <p class="pub-title"><a href="projects/mems-switch.html">A Low-Power Printed Flexible Lorentz Force MEMS Switch with Electrostatic Hold-down</a></p>
-          <p class="pub-authors">M. Meybodi, <strong>K. Nguyen</strong>, T. Chen, C. Shafai</p>
-          <p class="pub-venue"><i>EUROSENSORS 2026</i>, Actuators, paper 4.4.3, pp.&nbsp;152&ndash;153 &middot; DOI <a href="https://doi.org/10.5162/eurosensors2026/4.4.3">10.5162/eurosensors2026/4.4.3</a></p>
-          <p class="pub-links"><a href="assets/papers/meybodi-eurosensors2026-lorentz-mems-switch.pdf">PDF</a> &middot; <a href="projects/mems-switch.html">Project page</a></p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" id="education">
-    <div class="wrap two-col">
-      <div>
-        <div class="section-head"><h2>Education</h2></div>
-        <table class="spec-table">
+      <table class="spec-table">
         <tbody>
           <tr>
             <th>Program</th>
@@ -157,10 +119,16 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Certifications</h2>
+        <span class="section-index">02 / CREDENTIALS</span>
       </div>
-      <div>
-        <div class="section-head"><h2>Certifications</h2></div>
-        <ul class="cert-list">
+      <ul class="cert-list">
         <li>
           <span class="cert-name">Cadence Certified: Advanced Synthesis with Genus</span>
           <span class="cert-issuer">Cadence Design Systems</span>
@@ -172,61 +140,14 @@
           <span class="cert-date">May 2026</span>
         </li>
       </ul>
-      </div>
     </div>
   </section>
-
-  <section class="section" id="skills">
-    <div class="wrap">
-      <div class="section-head"><h2>Skills</h2><span class="section-index">Tools &amp; methods</span></div>
-      <div class="skill-grid">
-        <div class="skill-group">
-          <h3>Implementation</h3>
-          <p>Logic synthesis &middot; MMMC constraints &middot; floorplanning &middot; power planning &middot; placement &middot; CTS &middot; routing &middot; STA &middot; power analysis</p>
-        </div>
-        <div class="skill-group">
-          <h3>DFT &amp; verification</h3>
-          <p>Scan insertion &middot; ATPG &middot; fault simulation &middot; RTL simulation &middot; logic equivalence checking</p>
-        </div>
-        <div class="skill-group">
-          <h3>Design</h3>
-          <p>Verilog &middot; RISC-V (RV32IM) &middot; standard-cell layout &middot; DRC/LVS &middot; parasitic extraction</p>
-        </div>
-        <div class="skill-group">
-          <h3>Cadence tools</h3>
-          <p>Genus &middot; Innovus &middot; Tempus &middot; Voltus &middot; Pegasus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Virtuoso &middot; ADE/Spectre</p>
-        </div>
-        <div class="skill-group">
-          <h3>Fabrication &amp; metrology</h3>
-          <p>DUV photolithography &middot; ion implantation &middot; ICP-RIE &middot; PVD/CVD &middot; SEM &middot; profilometry &middot; ellipsometry</p>
-        </div>
-        <div class="skill-group">
-          <h3>Scripting &amp; systems</h3>
-          <p>Tcl &middot; Python &middot; MATLAB &middot; Linux/Unix &middot; ARM assembly</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
-<footer class="site-footer" id="contact">
-  <div class="wrap footer-grid">
-    <div class="footer-lead">
-      <h2>Get in touch</h2>
-      <p>Open to digital IC, ASIC and physical-design internship and co-op conversations.</p>
-    </div>
-    <ul class="footer-links">
-      <li><a href="mailto:anhkhoi_2005@icloud.com"><span>Email</span><span>anhkhoi_2005@icloud.com</span></a></li>
-      <li><a href="https://www.linkedin.com/in/anhkhoilenguyen/" target="_blank" rel="noopener"><span>LinkedIn</span><span>anhkhoilenguyen</span></a></li>
-      <li><a href="https://github.com/AKLN0401" target="_blank" rel="noopener"><span>GitHub</span><span>AKLN0401</span></a></li>
-      <li><a href="assets/khoi-nguyen-cv.pdf"><span>R&eacute;sum&eacute;</span><span>PDF</span></a></li>
-    </ul>
-    <p class="footer-copy"><button type="button" class="copy-email" data-email="anhkhoi_2005@icloud.com">Copy email address</button> <span class="copy-status" role="status" aria-live="polite"></span></p>
-    <div class="footer-base">
-      <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
-      <span>Winnipeg, Manitoba</span>
-    </div>
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
   </div>
 </footer>
 

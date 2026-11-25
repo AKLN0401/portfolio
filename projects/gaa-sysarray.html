@@ -9,7 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
-<meta name="theme-color" content="#f4f4f2" />
+<meta name="theme-color" content="#f4f2ed" />
 <meta name="author" content="Khoi Nguyen" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
@@ -28,11 +28,13 @@
 <meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og/gaa-sysarray.png?v=20261102" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/style.css?v=20261125" />
 <style>
 .a7 { --a7-text: #17191c;  }
 
+.a7 h1 { margin: 6px 0 20px; font-size: clamp(2.1rem, 1.4rem + 3vw, 3.4rem); line-height: 1.04; letter-spacing: -0.025em; font-weight: 300; }
+.a7 h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); line-height: 1.15; letter-spacing: -0.015em; font-weight: 300; }
 .a7 h4 { font-size: 1.05rem; line-height: 1.3; font-weight: 600; margin: 0 0 4px; }
 .a7 .prose p, .a7 .pd-lede { line-height: 1.65; }
 .a7 .section-index { color: var(--a7-text); }
@@ -57,7 +59,7 @@
 .a7 svg .mono { font-family: "IBM Plex Mono", Consolas, monospace; }
 .a7 svg .box { fill: #fff; stroke: #17191c; stroke-width: 1.3; }
 .a7 svg .macro { fill: #fff; stroke: #17191c; stroke-width: 2.2; }
-.a7 svg .soft { fill: #ececE9; stroke: #17191c; stroke-width: 1.3; }
+.a7 svg .soft { fill: #f0eee6; stroke: #17191c; stroke-width: 1.3; }
 .a7 svg .wire { stroke: #17191c; fill: none; stroke-width: 1.3; }
 .a7 svg .wire-d { stroke: #17191c; fill: none; stroke-width: 1.3; stroke-dasharray: 6 4; }
 .a7 svg .arrow { fill: #17191c; }
@@ -121,17 +123,22 @@
   <div class="wrap">
     <a class="logo" href="../index.html">
       <strong>Khoi Nguyen</strong>
-      <span>Digital IC &middot; ASIC physical design</span>
+      <span>Digital IC / ASIC · EE, U of Manitoba</span>
     </a>
     <nav aria-label="Primary">
       <ul class="nav-list" id="nav-list">
-        <li><a href="../index.html#work" aria-current="page">Work</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#fabrication">Fabrication</a></li>
         <li><a href="../research.html">Research</a></li>
+        <li><a href="../index.html#publications">Publications</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
         <li><a href="../about.html">About</a></li>
-        <li><a class="nav-cv" href="../assets/khoi-nguyen-cv.pdf">R&eacute;sum&eacute;</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a class="nav-cv" href="../assets/khoi-nguyen-cv.pdf">Résumé</a></li>
       </ul>
     </nav>
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-list">
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-list">
       <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
     </button>
   </div>
@@ -141,7 +148,7 @@
   <section class="page-hero">
     <div class="wrap two-col">
       <div>
-        <a class="breadcrumb" href="../index.html#work">&larr; All projects</a>
+        <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
         <p class="label">RISC-V &middot; INT8 systolic array &middot; CFET &middot; Backside power &middot; Hierarchical P&amp;R &middot; in progress</p>
         <h1>RISC-V + INT8 Systolic Array on a CFET PDK</h1>
         <p class="dek">A lowRISC Ibex RISC-V core with a memory-mapped 8&times;8 INT8 systolic-array accelerator, taken from RTL to GDS on MATRIX-A5, a research complementary-FET PDK with power delivered from the back of the wafer, using an industrial Cadence/Synopsys flow.</p>
@@ -242,12 +249,6 @@
         <figure><img src="../assets/gaa/ibex_cfet_top_routing.webp" alt="ibex_cfet_top routing" loading="lazy" width="1200" height="1284"><figcaption>ibex_cfet_top &middot; 70.04 &times; 70.13 &micro;m &middot; routing</figcaption></figure>
         <figure><img src="../assets/gaa/npu_acc_routing.webp" alt="npu_acc macro routing" loading="lazy" width="1200" height="1305"><figcaption>npu_acc &middot; 49.14 &times; 49.97 &micro;m &middot; routing</figcaption></figure>
         <figure><img src="../assets/gaa/lram_256x32_routing.webp" alt="lram_256x32 macro routing" loading="lazy" width="961" height="1710"><figcaption>lram_256x32 &middot; 30.03 &times; 49.97 &micro;m &middot; routing</figcaption></figure>
-      </div>
-      <p class="pd-lede" style="margin-top:32px;">The same three blocks before routing: placed standard cells only, from the same routed DEF files.</p>
-      <div class="fp-pair">
-        <figure><img src="../assets/gaa/ibex_cfet_top_placement.webp" alt="ibex_cfet_top placement" loading="lazy" width="1200" height="1284"><figcaption>ibex_cfet_top &middot; placement &middot; Ibex cells blue</figcaption></figure>
-        <figure><img src="../assets/gaa/npu_acc_placement.webp" alt="npu_acc macro placement" loading="lazy" width="1200" height="1305"><figcaption>npu_acc &middot; placement &middot; clock cells red</figcaption></figure>
-        <figure><img src="../assets/gaa/lram_256x32_placement.webp" alt="lram_256x32 macro placement" loading="lazy" width="961" height="1710"><figcaption>lram_256x32 &middot; placement &middot; clock cells red</figcaption></figure>
       </div>
     </div>
   </section>
@@ -547,23 +548,10 @@
   </section>
 </main>
 
-<footer class="site-footer" id="contact">
-  <div class="wrap footer-grid">
-    <div class="footer-lead">
-      <h2>Get in touch</h2>
-      <p>Open to digital IC, ASIC and physical-design internship and co-op conversations.</p>
-    </div>
-    <ul class="footer-links">
-      <li><a href="mailto:anhkhoi_2005@icloud.com"><span>Email</span><span>anhkhoi_2005@icloud.com</span></a></li>
-      <li><a href="https://www.linkedin.com/in/anhkhoilenguyen/" target="_blank" rel="noopener"><span>LinkedIn</span><span>anhkhoilenguyen</span></a></li>
-      <li><a href="https://github.com/AKLN0401" target="_blank" rel="noopener"><span>GitHub</span><span>AKLN0401</span></a></li>
-      <li><a href="../assets/khoi-nguyen-cv.pdf"><span>R&eacute;sum&eacute;</span><span>PDF</span></a></li>
-    </ul>
-    <p class="footer-copy"><button type="button" class="copy-email" data-email="anhkhoi_2005@icloud.com">Copy email address</button> <span class="copy-status" role="status" aria-live="polite"></span></p>
-    <div class="footer-base">
-      <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
-      <span>Winnipeg, Manitoba</span>
-    </div>
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
   </div>
 </footer>
 
