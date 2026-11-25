@@ -140,7 +140,6 @@
         <span class="section-index">Selected work</span>
       </div>
 
-      <p class="label proj-group is-active" style="margin:0 0 12px;">In progress</p>
       <div class="proj-list">
         <!-- HIDDEN for now (7nm NVDLA); restore by removing this comment wrapper
         <a class="proj" href="projects/nvdla-asap7.html">
@@ -160,10 +159,27 @@
         </a>
         -->
 
+        <a class="proj has-media" href="research.html#delay-fault">
+          <figure class="proj-media is-plate"><img src="assets/riscv/chip-layout.webp" width="880" height="1090" loading="lazy" decoding="async" alt="Full layout of the 12 nm RISC-V test chip, with the core region in the centre and the I/O ring around the edge" /></figure>
+          <div class="proj-head">
+            <span class="proj-num">01</span>
+            <h3>Delay-Fault Detection on a 12&nbsp;nm RISC-V Test Chip</h3>
+            <span class="proj-cat">DFT &middot; Reliability &middot; Research &middot; Submitted for fabrication</span>
+          </div>
+          <p class="proj-sum">With the CMOS Design and Reliability Group at the University of Waterloo: variable D-Q delay flip-flop fault-detection architectures for transition-fault testing on an RV32IM core, compared with established schemes on 12&nbsp;nm benchmark circuits and RISC-V blocks under identical synthesis, timing and operating conditions. On the 2-core test chip I owned my CPU block&rsquo;s RTL-to-GDSII flow and its DFT.</p>
+          <dl class="proj-spec">
+            <div><dt>Technology</dt><dd>GF 12LP+ (12&nbsp;nm FinFET) &middot; 2-core RV32IM test chip</dd></div>
+            <div><dt>Tools</dt><dd>Genus &middot; Innovus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Calibre</dd></div>
+            <div><dt>Results</dt><dd>97.5% stuck-at &middot; 97.8&ndash;97.9% transition-fault coverage &middot; 0 TNS at 1&nbsp;GHz</dd></div>
+            <div><dt>Status</dt><dd>Submitted for fabrication, Calibre DRC/LVS clean &middot; overhead figures held until publication</dd></div>
+          </dl>
+          <span class="proj-go">Research page &rarr;</span>
+        </a>
+
         <a class="proj has-media" href="projects/gaa-sysarray.html">
           <figure class="proj-media is-plate"><img src="assets/gaa/chip3d.webp" width="1190" height="700" loading="lazy" decoding="async" alt="ibex_npu_top rendered in 3D from the routed GDS: the CPU cell band on top, two SRAM macros and the systolic-array macro along the bottom" /></figure>
           <div class="proj-head">
-            <span class="proj-num">01</span>
+            <span class="proj-num">02</span>
             <h3>RISC-V + INT8 Systolic Array on a CFET PDK</h3>
             <span class="proj-cat">RTL &middot; Synthesis &middot; Hierarchical P&amp;R &middot; Signoff &middot; In progress</span>
           </div>
@@ -177,29 +193,12 @@
           <span class="proj-go">Case study &rarr;</span>
         </a>
 
-        <a class="proj has-media" href="projects/nvdla.html">
-          <figure class="proj-media is-sheet"><img src="assets/cards/nvdla.webp" width="1400" height="1237" loading="lazy" decoding="async" alt="Planned NVDLA floorplan drawn to scale: partition C with two mirrored SRAM banks on top, partition O in the middle, P and A below, and the two mirrored CMAC partitions along the sides" /></figure>
-          <div class="proj-head">
-            <span class="proj-num">02</span>
-            <h3>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h3>
-            <span class="proj-cat">Synthesis &middot; Place-and-route &middot; Physical verification &middot; In progress</span>
-          </div>
-          <p class="proj-sum">NVIDIA&rsquo;s open-source deep-learning accelerator, from RTL to a foundry-clean layout at 1.1&nbsp;GHz: three threshold-voltage flavours, clock gating, full scan, SRAM macros for a 13-metal stack, and hard-macro partitions in a mirror-symmetric floorplan.</p>
-          <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 13-metal stack &middot; 128 dual-port SRAM macros</dd></div>
-            <div><dt>Tools</dt><dd>Genus 25.1 &middot; Innovus 25.1 &middot; Calibre &middot; Modus</dd></div>
-            <div><dt>Signoff</dt><dd>Foundry DRC and LVS on the merged GDS</dd></div>
-            <div><dt>Status</dt><dd>SRAMs generated &middot; synthesis running &middot; place-and-route scripted</dd></div>
-          </dl>
-          <span class="proj-go">Case study &rarr;</span>
-        </a>
-
         <a class="proj has-media" href="projects/glove.html">
           <figure class="proj-media"><img src="assets/glove/09_printing_photo.webp" width="933" height="1400" loading="lazy" decoding="async" style="object-position:50% 62%" alt="The Voltera NOVA printing serpentine sensor traces onto film" /></figure>
           <div class="proj-head">
             <span class="proj-num">03</span>
             <h3>Tap-to-Click Glove, Printed Sensors</h3>
-            <span class="proj-cat">Printed electronics &middot; ECE 4600 capstone</span>
+            <span class="proj-cat">Printed electronics &middot; ECE 4600 capstone &middot; In progress</span>
           </div>
           <p class="proj-sum">A glove that works as a mouse: thumb taps on silver fingertip pads click, carbon strain sensors over the knuckles read a fist, and an IMU on the wrist moves the cursor. Sensors printed on stretchable TPU with a Voltera NOVA; interactive 3D models on the page.</p>
           <dl class="proj-spec">
@@ -211,10 +210,6 @@
           <span class="proj-go">Case study &rarr;</span>
         </a>
 
-      </div>
-
-      <p class="label proj-group is-done" style="margin:48px 0 12px;">Completed</p>
-      <div class="proj-list">
         <a class="proj has-media" href="projects/npu-tapeout.html">
           <figure class="proj-media is-sheet"><img src="assets/npu/gds.webp" width="1400" height="968" loading="lazy" decoding="async" alt="Top-down KLayout view of the final NPU tile GDS, all layers in SKY130 colours" /></figure>
           <div class="proj-head">
@@ -232,6 +227,7 @@
           </dl>
           <span class="proj-go">Case study &rarr;</span>
         </a>
+
         <a class="proj has-media" href="projects/mems-switch.html">
           <figure class="proj-media is-sheet"><img src="assets/mems/fig3-fabricated.webp" width="438" height="341" loading="lazy" decoding="async" alt="Photograph of the fabricated printed switch on polyimide, with the switch at the centre and printed contact pads, 5 mm scale bar" /></figure>
           <div class="proj-head">
@@ -248,22 +244,25 @@
           </dl>
           <span class="proj-go">Case study &rarr;</span>
         </a>
-        <a class="proj has-media" href="research.html#delay-fault">
-          <figure class="proj-media is-plate"><img src="assets/riscv/chip-layout.webp" width="880" height="1090" loading="lazy" decoding="async" alt="Full layout of the 12 nm RISC-V test chip, with the core region in the centre and the I/O ring around the edge" /></figure>
+
+        <!-- HIDDEN for now (12 nm NVDLA); restore by removing this comment wrapper
+        <a class="proj has-media" href="projects/nvdla.html">
+          <figure class="proj-media is-sheet"><img src="assets/cards/nvdla.webp" width="1400" height="1237" loading="lazy" decoding="async" alt="Planned NVDLA floorplan drawn to scale: partition C with two mirrored SRAM banks on top, partition O in the middle, P and A below, and the two mirrored CMAC partitions along the sides" /></figure>
           <div class="proj-head">
             <span class="proj-num">06</span>
-            <h3>Delay-Fault Detection on a 12&nbsp;nm RISC-V Test Chip</h3>
-            <span class="proj-cat">DFT &middot; Reliability &middot; Research &middot; Submitted for fabrication</span>
+            <h3>NVIDIA NVDLA 12&nbsp;nm: 1.1&nbsp;GHz, Multi-V<sub>t</sub>, Full Scan</h3>
+            <span class="proj-cat">Synthesis &middot; Place-and-route &middot; Physical verification &middot; In progress</span>
           </div>
-          <p class="proj-sum">With the CMOS Design and Reliability Group at the University of Waterloo: variable D-Q delay flip-flop fault-detection architectures for transition-fault testing on an RV32IM core, compared with established schemes on 12&nbsp;nm benchmark circuits and RISC-V blocks under identical synthesis, timing and operating conditions. On the 2-core test chip I owned my CPU block&rsquo;s RTL-to-GDSII flow and its DFT.</p>
+          <p class="proj-sum">NVIDIA&rsquo;s open-source deep-learning accelerator, from RTL to a foundry-clean layout at 1.1&nbsp;GHz: three threshold-voltage flavours, clock gating, full scan, SRAM macros for a 13-metal stack, and hard-macro partitions in a mirror-symmetric floorplan.</p>
           <dl class="proj-spec">
-            <div><dt>Technology</dt><dd>GF 12LP+ (12&nbsp;nm FinFET) &middot; 2-core RV32IM test chip</dd></div>
-            <div><dt>Tools</dt><dd>Genus &middot; Innovus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Calibre</dd></div>
-            <div><dt>Results</dt><dd>97.5% stuck-at &middot; 97.8&ndash;97.9% transition-fault coverage &middot; 0 TNS at 1&nbsp;GHz</dd></div>
-            <div><dt>Status</dt><dd>Submitted for fabrication, Calibre DRC/LVS clean &middot; overhead figures held until publication</dd></div>
+            <div><dt>Technology</dt><dd>12&nbsp;nm FinFET &middot; 13-metal stack &middot; 128 dual-port SRAM macros</dd></div>
+            <div><dt>Tools</dt><dd>Genus 25.1 &middot; Innovus 25.1 &middot; Calibre &middot; Modus</dd></div>
+            <div><dt>Signoff</dt><dd>Foundry DRC and LVS on the merged GDS</dd></div>
+            <div><dt>Status</dt><dd>SRAMs generated &middot; synthesis running &middot; place-and-route scripted</dd></div>
           </dl>
-          <span class="proj-go">Research page &rarr;</span>
+          <span class="proj-go">Case study &rarr;</span>
         </a>
+        -->
       </div>
     </div>
   </section>
