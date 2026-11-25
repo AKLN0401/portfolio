@@ -10,7 +10,7 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png" />
-<meta name="theme-color" content="#f4f2ed" />
+<meta name="theme-color" content="#f4f4f2" />
 <meta name="author" content="Khoi Nguyen" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Khoi Nguyen — Engineering Portfolio" />
@@ -29,13 +29,11 @@
 <meta name="twitter:image" content="https://akln0401.github.io/portfolio/assets/og/nvdla-asap7.png?v=20261004" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/style.css?v=20261013c" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css?v=20261125" />
 <style>
 .a7 { --a7-text: #17191c;  }
 
-.a7 h1 { margin: 6px 0 20px; font-size: clamp(2.1rem, 1.4rem + 3vw, 3.4rem); line-height: 1.04; letter-spacing: -0.025em; font-weight: 300; }
-.a7 h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); line-height: 1.15; letter-spacing: -0.015em; font-weight: 300; }
 .a7 h4 { font-size: 1.05rem; line-height: 1.3; font-weight: 600; margin: 0 0 4px; }
 .a7 .prose p, .a7 .pd-lede { line-height: 1.65; }
 .a7 .section-index { color: var(--a7-text); }
@@ -57,11 +55,35 @@
 .a7-status { display:block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--a7-text); margin-bottom: 6px; }
 </style>
 
-</head><main id="main" class="a7">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <strong>Khoi Nguyen</strong>
+      <span>Digital IC &middot; ASIC physical design</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list" id="nav-list">
+        <li><a href="../index.html#work" aria-current="page">Work</a></li>
+        <li><a href="../research.html">Research</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a class="nav-cv" href="../assets/khoi-nguyen-cv.pdf">R&eacute;sum&eacute;</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-list">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="a7">
   <section class="page-hero">
     <div class="wrap two-col">
       <div>
-        <a class="breadcrumb" href="../index.html#projects">&larr; All projects</a>
+        <a class="breadcrumb" href="../index.html#work">&larr; All projects</a>
         <p class="label">NPU &middot; ASAP7 7&nbsp;nm &middot; Clock gating &middot; Scan DFT &middot; MBIST &middot; in progress</p>
         <h1>NVIDIA NVDLA 7&nbsp;nm Full-Chip Implementation: Low-Power, PPA-Optimized, DFT</h1>
         <p class="dek">NVIDIA&rsquo;s open-source deep-learning accelerator, implemented on the open ASAP7 7&nbsp;nm predictive PDK, so the timing numbers and cell geometry here can be shown as they are.</p>
@@ -210,10 +232,22 @@
 
 </main>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
-    <span><a href="../index.html#contact" style="text-decoration:none;">Get in touch &rarr;</a></span>
+<footer class="site-footer" id="contact">
+  <div class="wrap footer-grid">
+    <div class="footer-lead">
+      <h2>Get in touch</h2>
+      <p>Open to digital IC, ASIC and physical-design internship and co-op conversations.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="mailto:anhkhoi_2005@icloud.com"><span>Email</span><span>anhkhoi_2005@icloud.com</span></a></li>
+      <li><a href="https://www.linkedin.com/in/anhkhoilenguyen/" target="_blank" rel="noopener"><span>LinkedIn</span><span>anhkhoilenguyen</span></a></li>
+      <li><a href="https://github.com/AKLN0401" target="_blank" rel="noopener"><span>GitHub</span><span>AKLN0401</span></a></li>
+      <li><a href="../assets/khoi-nguyen-cv.pdf"><span>R&eacute;sum&eacute;</span><span>PDF</span></a></li>
+    </ul>
+    <div class="footer-base">
+      <span>&copy; <span data-year>2026</span> Khoi Nguyen</span>
+      <span>Winnipeg, Manitoba</span>
+    </div>
   </div>
 </footer>
 
