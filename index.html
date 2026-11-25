@@ -92,7 +92,7 @@
         <span class="label">2025&ndash;2026</span>
       </div>
 
-      <p class="work-jump">Jump to <a href="#asic">ASIC &amp; physical design <span>(4)</span></a> <a href="#fab">Fabrication &amp; printed devices <span>(3)</span></a></p>
+      <p class="work-jump">Jump to <a href="#asic">ASIC &amp; physical design <span>(3)</span></a> <a href="#fab">Fabrication &amp; printed devices <span>(3)</span></a></p>
 
       <h3 class="work-group" id="asic">ASIC &amp; physical design</h3>
       <div class="work-grid">
@@ -123,20 +123,24 @@
             <li>0 TNS at 1&nbsp;GHz</li>
           </ul>
         </a>
-        <a class="card card--m" href="projects/npu-tapeout.html">
+        <a class="card card--w" href="projects/npu-tapeout.html">
           <figure class="card-media card-media--sheet">
             <img src="assets/npu/gds.webp" width="1400" height="968" loading="lazy" decoding="async"
                  alt="Top-down KLayout view of the final NPU tile GDS, all layers in SKY130 colours" />
           </figure>
-          <h4><span>One-tile int4 NPU for Tiny Tapeout</span></h4>
-          <p class="card-meta"><span>SKY130 &middot; Tiny Tapeout</span><span class="status is-live">Signed off</span></p>
-          <p class="card-sum">A 2&times;2 int4 MAC array with per-row clock gating and a 96-flop scan chain, from RTL to a signed-off layout in one 161&nbsp;&times;&nbsp;112&nbsp;&micro;m tile with an open-source flow. Target shuttle TTSKY26d.</p>
-          <ul class="card-facts">
-            <li>DRC, LVS clean</li>
-            <li>Timing met at 12 corners</li>
-            <li>Clock gating saves 45&ndash;59%</li>
-          </ul>
+          <div class="card-text">
+  
+            <h4><span>One-tile int4 NPU for Tiny Tapeout</span></h4>
+            <p class="card-meta"><span>SKY130 &middot; Tiny Tapeout</span><span class="status is-live">Signed off</span></p>
+            <p class="card-sum">A 2&times;2 int4 MAC array with per-row clock gating and a 96-flop scan chain, from RTL to a signed-off layout in one 161&nbsp;&times;&nbsp;112&nbsp;&micro;m tile with an open-source flow. Target shuttle TTSKY26d.</p>
+            <ul class="card-facts">
+              <li>DRC, LVS clean</li>
+              <li>Timing met at 12 corners</li>
+              <li>Clock gating saves 45&ndash;59%</li>
+            </ul>
+          </div>
         </a>
+        <!-- HIDDEN for now (12 nm NVDLA); restore by removing this comment wrapper
         <a class="card card--m" href="projects/nvdla.html">
           <figure class="card-media card-media--sheet">
             <img src="assets/cards/nvdla.webp" width="1400" height="1237" loading="lazy" decoding="async"
@@ -150,6 +154,7 @@
             <li>Block place-and-route under way</li>
           </ul>
         </a>
+        -->
       </div>
 
       <h3 class="work-group" id="fab">Fabrication &amp; printed devices</h3>
