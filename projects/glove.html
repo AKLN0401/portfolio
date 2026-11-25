@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/style.css?v=20261013c" />
+<link rel="stylesheet" href="../css/style.css?v=20261125b" />
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 <style>
 
@@ -55,6 +55,7 @@
 .gl-steps li::before { content: counter(s); display: block; font: 600 13px var(--font-mono); margin-bottom: 4px; }
 .gl-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .gl-gallery.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gl-gallery.photos img { aspect-ratio: 2 / 3; object-fit: cover; background: none; }
 .gl-gallery figure { margin: 0; min-width: 0; }
 .gl-gallery img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: contain; background: #f0eee6; display: block; }
 @media (max-width: 640px) { .gl-gallery, .gl-gallery.two { grid-template-columns: minmax(0, 1fr); } }
@@ -191,6 +192,10 @@
         <div class="gl-gallery two" style="margin-top:16px;">
           <figure><img src="../assets/glove/03_sensor_bending.jpg" alt="Render of a printed sensor stretching over a bent finger joint" loading="lazy" decoding="async" /><figcaption>Sensor stretching over a bent joint</figcaption></figure>
           <figure><img src="../assets/glove/06_printing_on_voltera.jpg" alt="Render of the Voltera NOVA dispenser printing a silver trace on film" loading="lazy" decoding="async" /><figcaption>Printing a silver trace on the Voltera NOVA</figcaption></figure>
+        </div>
+        <div class="gl-gallery two photos" style="margin-top:16px;">
+          <figure><img src="../assets/glove/09_printing_photo.webp" width="933" height="1400" alt="Photograph of the Voltera NOVA dispensing head printing serpentine sensor traces with square contact pads onto a white film" loading="lazy" decoding="async" /><figcaption>Printing serpentine sensors on the Voltera NOVA (photo)</figcaption></figure>
+          <figure><img src="../assets/glove/10_ink_prep_photo.webp" width="933" height="1400" alt="Photograph of a gloved hand preparing conductive ink at a lab bench, with an ink jar, wipes and wash bottles" loading="lazy" decoding="async" /><figcaption>Preparing conductive ink at the bench (photo)</figcaption></figure>
         </div>
       </div>
     </div>

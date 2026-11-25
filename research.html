@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20261013c" />
+<link rel="stylesheet" href="css/style.css?v=20261125b" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -186,7 +186,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="delay-fault">
     <div class="wrap">
       <div class="section-head">
         <h2>Delay-fault detection on a 12-nm RISC-V core</h2>
@@ -207,10 +207,21 @@
               <tr><th>Process node</th><td>12 nm FinFET</td></tr>
               <tr><th>Target</th><td>RV32IM RISC-V core</td></tr>
               <tr><th>Technique</th><td>Variable D-Q delay flip-flop, transition-fault testing</td></tr>
+              <tr><th>Targets</th><td>12&nbsp;nm benchmark circuits &middot; RV32IM RISC-V blocks</td></tr>
+              <tr><th>Flow</th><td>RTL &rarr; synthesis &rarr; DFT insertion &rarr; simulation &rarr; equivalence &rarr; STA &rarr; place-and-route</td></tr>
+              <tr><th>Tools</th><td>Genus &middot; Modus &middot; Joules &middot; Xcelium &middot; Conformal &middot; Innovus</td></tr>
+              <tr><th>Test chip</th><td>2-core RV32IM, GF 12LP+, submitted for fabrication, Calibre DRC/LVS clean</td></tr>
+              <tr><th>Coverage</th><td>97.5% stuck-at &middot; 97.8&ndash;97.9% transition fault (Modus ATPG)</td></tr>
             </tbody>
           </table>
         </div>
       </div>
+      <div class="fig-row">
+        <figure class="pd-figure"><a href="assets/riscv/core-routed.webp"><img src="assets/riscv/core-routed.webp" width="666" height="651" loading="lazy" decoding="async" alt="Innovus view of the routed RISC-V core block: dense multi-layer routing over the standard-cell rows, with pins entering from the top and bottom edges" /></a><figcaption><span>RISC-V CORE BLOCK &mdash; ROUTED</span><span>INNOVUS</span></figcaption></figure>
+        <figure class="pd-figure"><a href="assets/riscv/core-nets.webp"><img src="assets/riscv/core-nets.webp" width="730" height="715" loading="lazy" decoding="async" alt="The same core block in Innovus with placed cells in grey and the scan chain highlighted in red" /></a><figcaption><span>SAME BLOCK &mdash; SCAN CHAIN IN RED</span><span>INNOVUS</span></figcaption></figure>
+        <figure class="pd-figure"><a href="assets/riscv/chip-layout.webp"><img src="assets/riscv/chip-layout.webp" width="880" height="1090" loading="lazy" decoding="async" alt="Full layout view of the 12 nm RISC-V test chip, with the core region in the centre and the I/O ring around the edge" /></a><figcaption><span>12&nbsp;NM RISC-V TEST CHIP &mdash; FULL LAYOUT</span><span>GF 12LP+</span></figcaption></figure>
+      </div>
+
       <figure class="diagram-frame dq-figure dq-figure--pan schematic" style="max-width:760px;">
         <div class="fig-scroll"><svg viewBox="0 0 720 396" role="img" aria-label="How the variable D-Q delay flip-flop detects a delay fault. Panel A, as a logic schematic: the launch cell is a D flip-flop whose Q output passes through a variable delay element controlled by DLY_SEL before entering the combinational path; the capture D flip-flop is unmodified and both flip-flops share the clock. Panel B: on the first run at nominal delay the data arrives with slack; on the second run the added delay pushes arrival later, and a path carrying a delay fault crosses into the setup window so its captured value differs, while a healthy path still makes it.">
           <defs>
